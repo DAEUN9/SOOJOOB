@@ -1,0 +1,47 @@
+#보기편해서 propertise에서 yml으로 바꿈
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/user?serverTimezone=Asia/Seoul
+    username: root
+    password: tjrguswkd02!
+
+#  jpa:
+#    hibernate:
+#      ddl-auto: create-drop
+#    defer-datasource-initializations: true
+#    # show-sql: true # DDL 출력
+#  sql:
+#    init:
+#      data-locations:
+#        - classpath:data.sql
+
+  jpa:
+    hibernate:
+      # SessionFactory가 시작될때 Drop,Create, Alter 종료될 때 Drop
+      ddl-auto: create-drop
+    properties:
+      # sql보기좋게
+      # 로깅레벨 설정
+      hibernate:
+        format_sql: true
+        show_sql: true
+    defer-datasource-initialization: true
+
+jwt:
+  header: Authorization
+  #HS512 알고리즘을 사용할 것이기 때문에 512bit, 즉 64byte 이상의 secret key를 사용해야 한다.
+  #echo 'silvernine-tech-spring-boot-jwt-tutorial-secret-silvernine-tech-spring-boot-jwt-tutorial-secret'|base64
+  secret: c2lsdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQtc2lsdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQK
+  # 토큰 만료시간
+  token-validity-in-seconds: 86400
+
+logging:
+  level:
+    me.silvernine: DEBUG
+
+
+mysql:
+  console:
+    enabled: true
