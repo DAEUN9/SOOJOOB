@@ -9,8 +9,7 @@ import javax.validation.constraints.Size;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-@Getter
-@Setter
+@Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -38,6 +37,21 @@ public class UserDto {
    @NotNull
    private Integer age;
 
+   @NotNull
+   @Size(min = 1, max = 1)
+   private String gender;
+
+   @NotNull
+   @Size(min = 3, max = 50)
+   private String region;
+
+   @NotNull
+   private Integer weight;
+
+   @NotNull
+   private Integer height;
+
+
    private Set<AuthorityDto> authorityDtoSet;
 
    public static UserDto from(User user) {
@@ -46,6 +60,12 @@ public class UserDto {
       return UserDto.builder()
               .username(user.getUsername())
               .nickname(user.getNickname())
+              .email(user.getEmail())
+              .age(user.getAge())
+              .gender(user.getGender())
+              .region(user.getRegion())
+              .weight(user.getWeight())
+              .height(user.getHeight())
               .authorityDtoSet(user.getAuthorities().stream()
                       .map(authority -> AuthorityDto.builder().authorityName(authority.getAuthorityName()).build())
                       .collect(Collectors.toSet()))

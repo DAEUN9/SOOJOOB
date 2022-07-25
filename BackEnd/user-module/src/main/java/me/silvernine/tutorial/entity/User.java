@@ -40,6 +40,18 @@ public class User {
    @Column(name = "age")
    private Integer age;
 
+   @Column(name = "gender", length = 50)
+   private String gender;
+
+   @Column(name = "region", length = 50)
+   private String region;
+
+   @Column(name = "weight")
+   private Integer weight;
+
+   @Column(name = "height")
+   private Integer height;
+
    @Column(name = "activated")
    private boolean activated;
 

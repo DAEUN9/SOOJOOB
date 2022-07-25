@@ -39,6 +39,10 @@ public class UserService {
                 // 추가
                 .email(userDto.getEmail())
                 .age(userDto.getAge())
+                .gender(userDto.getGender())
+                .region(userDto.getRegion())
+                .weight(userDto.getWeight())
+                .height(userDto.getHeight())
                 .authorities(Collections.singleton(authority))
                 .activated(true)
                 .build();
