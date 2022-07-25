@@ -1,5 +1,3 @@
-#보기편해서 propertise에서 yml으로 바꿈
-
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -7,15 +5,18 @@ spring:
     username: root
     password: tjrguswkd02!
 
-#  jpa:
-#    hibernate:
-#      ddl-auto: create-drop
-#    defer-datasource-initializations: true
-#    # show-sql: true # DDL 출력
-#  sql:
-#    init:
-#      data-locations:
-#        - classpath:data.sql
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            clientId: 402729697775-tnidujqegr0ghu6a1gu5n27dsmfp3vll.apps.googleusercontent.com
+            clientSecret: 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
+            redirectUri: "{baseUrl}/oauth2/callback/{registrationId}"
+            scope:
+              - email
+              - profile
+
 
   jpa:
     hibernate:
@@ -36,12 +37,3 @@ jwt:
   secret: c2lsdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQtc2lsdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQK
   # 토큰 만료시간
   token-validity-in-seconds: 86400
-
-logging:
-  level:
-    me.silvernine: DEBUG
-
-
-mysql:
-  console:
-    enabled: true
