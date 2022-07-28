@@ -1,5 +1,5 @@
-#server:
-#  port: 8080
+server:
+  port: 9090
 #  servlet:
 #    context-path: /
 #    encoding:
@@ -11,13 +11,13 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/oauth2?serverTimezone=Asia/Seoul
-    username:
+    username: root
     password:
     
-#  mvc:
-#    view:
-#      prefix: /templates/
-#      suffix: .mustache
+  mvc:
+    view:
+      prefix: /templates/
+      suffix: .mustache
 
   jpa:
     hibernate:
