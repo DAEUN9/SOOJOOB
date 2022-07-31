@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Iterator;
 import java.util.List;
@@ -136,6 +137,7 @@ public class UserController {
 	@ResponseBody
 	public ResponseDto userInfoDetails(
 			@AuthenticationPrincipal UserDetailsImpl userDetails) {
+		System.out.println();
 		checkLogin(userDetails);
 		List<UserInfoDetailsDto> userInfoDetailsDto = userService.detailsUserInfo(userDetails);
 
@@ -143,33 +145,63 @@ public class UserController {
 
 	}
 
-//	@PutMapping("/users")
+//	@GetMapping("/users")
 //	@ResponseBody
-//	public ResponseDto editUserInfo(
-//			 @RequestBody EditUserRequestDto editUserInfoDto,
-//			@AuthenticationPrincipal UserDetailsImpl userDetails) {
-//		checkLogin(userDetails);
-//		EditUserResponseDto editUserResponseDto = userService.editUserInfo(editUserInfoDto, userDetails);
+//	public ResponseDto userInfoDetails(
+//			HttpServletRequest request
+//	) {
+//		System.out.println(request);
+//		String token = request.getHeader("X-AUTH-TOKEN");
+//		System.out.println(
+//				token
+//		);
+//		if (jwtTokenProvider.validateToken(token)) {
+//			Long userId = jwtTokenProvider.getUserIdFromJwt(token);
 //
-//		return new ResponseDto(200L, "회원 정보를 수정했습니다", editUserResponseDto);
-//
+//			// 토큰 유효성 검사를 거쳤기 때문에 무조건 정보가 존재한다.
+//			UserDTO userDto = userService.findById(userId);
+//			return new ResponseDto(200L, "회원 정보를 전송했습니다", userDto);
+//		} else {
+//			return new ResponseDto(500L, "회원조회 실패", "");
+//		}
 //	}
+
+//	@GetMapping("/{userId}/info")
+//	public ResponseDto getUserInfo(@PathVariable Long userId)
+//		throws CustomErrorException {
+//		Long id = jwtTokenProvider.getUserIdx();
+//		UserDTO userDTO = userService.findById(userId);
+//		return new ResponseDto(200L, "회원정보 전송", userDTO);
+//	}
+
+	@PutMapping("/users")
+	@ResponseBody
+	public ResponseDto editUserInfo(
+			 @RequestBody EditUserRequestDto editUserInfoDto,
+			@AuthenticationPrincipal UserDetailsImpl userDetails) {
+		checkLogin(userDetails);
+		EditUserResponseDto editUserResponseDto = userService.editUserInfo(editUserInfoDto, userDetails);
+
+		return new ResponseDto(200L, "회원 정보를 수정했습니다", editUserResponseDto);
+
+	}
 
 	private void checkLogin(
 			@AuthenticationPrincipal UserDetailsImpl userDetails) {
+		System.out.println(userDetails);
 		if (userDetails == null) {
-			throw new CustomErrorException("로그인이 필요합니다.");
+			throw new CustomErrorException("로그인이 필요합니다.2");
 		}
 	}
 
-//	@GetMapping("/checkName")
-//	public ResponseDto nickNameCheck(
-//			@RequestParam String nickname
-//	) {
-//		userService.nicknameCheck(nickname);
-//		return new ResponseDto(200L, "사용 가능한 닉네임입니다 !", "");
-//
-//	}
+	@GetMapping("/checkName")
+	public ResponseDto nickNameCheck(
+			@RequestParam String username
+	) {
+		userService.nicknameCheck(username);
+		return new ResponseDto(200L, "사용 가능한 닉네임입니다 !", "");
+
+	}
 
 
 	@GetMapping("/checkEmail")
