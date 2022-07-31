@@ -34,7 +34,7 @@ public class UserService {
         return id;
     }
 
-    @Transactional
+//    @Transactional
     public UserDTO findById(Long id){
         User user = userRepository.findById(id).orElseThrow(() ->  new IllegalArgumentException("해당 아이디가 없습니다."));
         return new UserDTO(user);
@@ -46,6 +46,7 @@ public class UserService {
         String username = requestDto.getUsername();
         String password = requestDto.getPassword();
         String role = "ROLE_USER";
+        Optional<User> usernameFound = userRepository.findByUsername(username);
         Optional<User> emailFound = userRepository.findByEmail(email);
 
 
@@ -53,6 +54,8 @@ public class UserService {
             throw new CustomErrorException("중복된 이메일 입니다 ");
         } else if (!isValidEmail(email)) {
             throw new CustomErrorException("이메일 형식이 올바르지 않습니다");
+        } else if (usernameFound.isPresent()) {
+            throw new CustomErrorException("중복된 닉네임 입니다 ");
         } else if (password.length() < 4 || password.length() > 12) {
             throw new CustomErrorException("비밀번호를 6자 이상  12자 이하로 입력하세요");
         } else if (password.contains(email)) {
@@ -100,13 +103,13 @@ public class UserService {
         return true;
     }
 
-//    public void nicknameCheck(String nickname) {
-//        User nicknameFound = userRepository.findByUsername(nickname);
-//
-//        if (nicknameFound.isPresent()) {
-//            throw new CustomErrorException("중복된 닉네임 입니다 ");
-//        }
-//    }
+    public void nicknameCheck(String username) {
+        Optional<User> usernameFound = userRepository.findByUsername(username);
+
+        if (usernameFound.isPresent()) {
+            throw new CustomErrorException("중복된 닉네임 입니다 ");
+        }
+    }
 
     //이메일 중복 검사
     public void emailCheck(String email) {
@@ -132,5 +135,42 @@ public class UserService {
         } else {
             throw new CustomErrorException("로그인이 필요합니다.");
         }
+    }
+
+    //회원 정보 수정
+    public EditUserResponseDto editUserInfo(EditUserRequestDto editUserInfoDto, UserDetailsImpl userDetails) {
+        User user = userDetails.getUser();
+        String username = editUserInfoDto.getUsername();
+        String email = editUserInfoDto.getEmail();
+
+        String password;
+        if (user.getPassword().equals(editUserInfoDto.getPassword())) {
+            password = user.getPassword();
+        } else {
+            password = editUserInfoDto.getPassword();
+        }
+
+        Integer age = editUserInfoDto.getAge();
+
+        Integer weight = editUserInfoDto.getWeight();
+
+        Integer height = editUserInfoDto.getHeight();
+
+        String region = editUserInfoDto.getRegion();
+
+
+
+
+        user.setUsername(username);
+        user.setEmail(email);
+        user.setPassword(passwordEncoder.encode(password));
+        user.setAge(age);
+        user.setWeight(weight);
+        user.setHeight(height);
+        user.setRegion(region);
+
+        userRepository.save(user);
+
+        return new EditUserResponseDto(user);
     }
 }

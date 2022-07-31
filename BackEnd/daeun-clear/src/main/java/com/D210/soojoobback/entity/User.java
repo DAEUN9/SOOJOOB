@@ -1,6 +1,7 @@
 package com.D210.soojoobback.entity;
 
 import com.D210.soojoobback.dto.user.LoginDetailResponseDto;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,6 +18,7 @@ import java.sql.Timestamp;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class User {
 	@Id // primary key
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -54,11 +56,11 @@ public class User {
 		this.password = password;
 		this.email = email;
 		this.role = role;
-		this.age = null;
-		this.weight = null;
-		this.height = null;
-		this.gender = null;
-		this.region = null;
+		this.age = age;
+		this.weight = weight;
+		this.height = height;
+		this.gender = gender;
+		this.region = region;
 		this.activated = activated;
 	}
 

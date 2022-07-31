@@ -11,8 +11,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
+import org.springframework.web.util.WebUtils;
 
 import javax.annotation.PostConstruct;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Base64;
 import java.util.Date;
@@ -37,12 +39,15 @@ public class JwtTokenProvider {
     }
 
     // JWT 토큰 생성
-    public String createToken(String userPk) {
-        Claims claims = Jwts.claims().setSubject(userPk); // JWT payload 에 저장되는 정보단위
+    public String createToken(String email) {
+        Claims claims = Jwts.claims().setSubject(email); // JWT payload 에 저장되는 정보단위
 //        claims.put("roles", roles); // 정보는 key / value 쌍으로 저장된다.
         Date now = new Date();
         return Jwts.builder()
+                .setHeaderParam("type", "jwt")
                 .setClaims(claims) // 정보 저장
+//                .claim("userIdx", userIdx)
+                .claim("email", email)
                 .setIssuedAt(now) // 토큰 발행 시간 정보
                 .setExpiration(new Date(now.getTime() + tokenValidTime)) // set Expire Time
                 // FrontEnd와 일치하게 설정해주기. 아마 그래야 FrontEnd와 통신에 문제 없음 //
@@ -66,9 +71,9 @@ public class JwtTokenProvider {
 
     // Request의 Header에서 token 값을 가져옵니다. "Authorization" : "TOKEN값'
     public String resolveToken(HttpServletRequest request) {
-//        String token = null;
-//        Cookie cookie = WebUtils.getCookie(request, "X-AUTH-TOKEN");
-//        if(cookie != null) token = cookie.getValue();
+        String token = null;
+        Cookie cookie = WebUtils.getCookie(request, "X-AUTH-TOKEN");
+        if(cookie != null) token = cookie.getValue();
         return request.getHeader("X-AUTH-TOKEN");
     }
 
@@ -83,5 +88,40 @@ public class JwtTokenProvider {
             return false;
         }
     }
+
+    /**
+     * Jwt Token을 복호화 하여 userPk를 얻는다.
+     */
+    public Long getUserIdFromJwt(String token) {
+        Jws<Claims> claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
+        return (Long) claims.getBody().get("userPk");
+    }
+
+    /*
+JWT에서 userIdx 추출
+@return int
+@throws BaseException
+ */
+//    public Long getUserIdx() throws CustomErrorException
+//    {
+//        //1. JWT 추출
+//        String accessToken = getUserPk();
+//        if (accessToken == null || accessToken.length() == 0) {
+//            throw new CustomErrorException("");
+//        }
+//
+//        // 2. JWT parsing
+//        Jws<Claims> claims;
+//        try {
+//            claims = Jwts.parser()
+//                    .setSigningKey(secretKey)
+//                    .parseClaimsJws(accessToken);
+//        } catch (Exception ignored) {
+//            throw new CustomErrorException("");
+//        }
+//
+//        // 3. userIdx 추출
+//        return claims.getBody().get("userIdx", Long.class);  // jwt 에서 userIdx를 추출합니다.
+//    }
 
 }
