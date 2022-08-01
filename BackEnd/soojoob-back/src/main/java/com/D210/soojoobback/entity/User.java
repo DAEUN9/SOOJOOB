@@ -51,6 +51,10 @@ public class User {
 	@CreationTimestamp
 	private Timestamp createDate;
 
+	@OneToMany(mappedBy = "ploggingUser", orphanRemoval = true, fetch = FetchType.LAZY)
+	@JsonIgnore
+	private List<Plogging> ploggings;
+
 	public User(String username, String password, String email, String role, Integer age, String gender, Integer weight, Integer height
 			,boolean activated, String region) {
 		this.username = username;

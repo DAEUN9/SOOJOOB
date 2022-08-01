@@ -1,6 +1,7 @@
 package com.D210.soojoobback.controller;
 
 
+
 import com.D210.soojoobback.dto.user.*;
 import com.D210.soojoobback.entity.User;
 import com.D210.soojoobback.exception.CustomErrorException;
@@ -132,7 +133,7 @@ public class UserController {
 	@ResponseBody
 	public ResponseDto userInfoDetails(
 			@AuthenticationPrincipal UserDetailsImpl userDetails) {
-		System.out.println();
+
 		checkLogin(userDetails);
 		List<UserInfoDetailsDto> userInfoDetailsDto = userService.detailsUserInfo(userDetails);
 
@@ -238,4 +239,6 @@ public class UserController {
 		UserDTO userDTO = userService.findById(id);
 		return new ResponseDto(200L, "ID에 해당하는 유저정보를 전송했습니다 !", userDTO);
 	}
+
+
 }
