@@ -2,14 +2,17 @@ package com.D210.soojoobback.entity;
 
 import com.D210.soojoobback.dto.user.LoginDetailResponseDto;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.List;
 
 // ORM - Object Relation Mapping
 
@@ -49,6 +52,11 @@ public class User {
 	private String providerId;
 	@CreationTimestamp
 	private Timestamp createDate;
+
+	@OneToMany(mappedBy = "ploggingUser", orphanRemoval = true, fetch = FetchType.LAZY)
+	@JsonIgnore
+	private List<Plogging> ploggings;
+
 
 	public User(String username, String password, String email, String role, Integer age, String gender, Integer weight, Integer height
 			,boolean activated, String region) {

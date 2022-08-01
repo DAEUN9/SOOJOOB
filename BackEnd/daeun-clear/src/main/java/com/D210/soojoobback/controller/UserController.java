@@ -138,7 +138,7 @@ public class UserController {
 	@ResponseBody
 	public ResponseDto userInfoDetails(
 			@AuthenticationPrincipal UserDetailsImpl userDetails) {
-		System.out.println();
+
 		checkLogin(userDetails);
 		List<UserInfoDetailsDto> userInfoDetailsDto = userService.detailsUserInfo(userDetails);
 
