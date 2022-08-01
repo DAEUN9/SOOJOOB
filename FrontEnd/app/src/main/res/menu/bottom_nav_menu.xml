@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_home"
+        android:icon="@drawable/ic_home_green_24dp"
+        android:title="@string/title_home" />
+
+    <item
+        android:id="@+id/navigation_communication"
+        android:icon="@drawable/ic_baseline_article_24"
+        android:title="@string/title_communication" />
+
+    <item
+        android:id="@+id/navigation_soojoob"
+        android:icon="@drawable/ic_launcher_foreground"
+        android:title="@string/title_soojoob" />
+
+    <item
+        android:id="@+id/navigation_data"
+        android:icon="@drawable/ic_baseline_bar_chart_24"
+        android:title="@string/title_data" />
+
+    <item
+        android:id="@+id/navigation_profile"
+        android:icon="@drawable/ic_baseline_person_24"
+        android:title="@string/title_profile" />
+
+</menu>
