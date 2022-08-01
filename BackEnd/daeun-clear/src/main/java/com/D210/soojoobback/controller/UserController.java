@@ -4,6 +4,7 @@ package com.D210.soojoobback.controller;
 import com.D210.soojoobback.JwtTokenProvider;
 import com.D210.soojoobback.UserDetailsImpl;
 //import com.D210.soojoobback.config.auth.PrincipalDetails;
+import com.D210.soojoobback.dto.plogging.PloggingInfoDto;
 import com.D210.soojoobback.dto.user.*;
 import com.D210.soojoobback.entity.User;
 import com.D210.soojoobback.exception.CustomErrorException;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -244,4 +246,6 @@ public class UserController {
 		UserDTO userDTO = userService.findById(id);
 		return new ResponseDto(200L, "ID에 해당하는 유저정보를 전송했습니다 !", userDTO);
 	}
+
+
 }

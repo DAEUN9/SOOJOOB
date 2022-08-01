@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -95,5 +96,36 @@ public class PloggingService {
         Plogging plogging = getPloggingById(ploggingId);
         PloggingInfoDto ploggingInfoDto = new PloggingInfoDto(plogging);
         return ploggingInfoDto;
+    }
+
+    // 내 플로깅 리스트
+    @Transactional(readOnly = true)
+    public List<PloggingInfoDto> getMyPloggingListByUser(User user) {
+        Long userId = user.getId();
+        User myUser = userRepository.findById(userId).orElseThrow(
+                () -> new CustomErrorException("유저 정보가 없습니다.")
+        );
+        List<Plogging> myPloggingList = myUser.getPloggings();
+        List<PloggingInfoDto> myPloggingListRes = new ArrayList<>();
+        for (Plogging plogging : myPloggingList) {
+            PloggingInfoDto responseDto = new PloggingInfoDto(plogging);
+            myPloggingListRes.add(responseDto);
+        }
+        return myPloggingListRes;
+    }
+
+    // 회원별 플로깅 리스트
+    @Transactional(readOnly = true)
+    public List<PloggingInfoDto> getPloggingListByUser(Long userId) {
+        User myUser = userRepository.findById(userId).orElseThrow(
+                () -> new CustomErrorException("유저 정보가 없습니다.")
+        );
+        List<Plogging> myPloggingList = myUser.getPloggings();
+        List<PloggingInfoDto> userPloggingListRes = new ArrayList<>();
+        for (Plogging plogging : myPloggingList) {
+            PloggingInfoDto responseDto = new PloggingInfoDto(plogging);
+            userPloggingListRes.add(responseDto);
+        }
+        return userPloggingListRes;
     }
 }
