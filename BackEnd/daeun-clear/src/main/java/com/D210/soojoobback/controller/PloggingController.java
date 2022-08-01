@@ -2,6 +2,7 @@ package com.D210.soojoobback.controller;
 
 import com.D210.soojoobback.JwtTokenProvider;
 import com.D210.soojoobback.UserDetailsImpl;
+import com.D210.soojoobback.dto.plogging.PloggingInfoDto;
 import com.D210.soojoobback.dto.plogging.PostPloggingReqDto;
 import com.D210.soojoobback.dto.user.*;
 import com.D210.soojoobback.entity.Plogging;
@@ -106,12 +107,23 @@ public class PloggingController {
 
     @DeleteMapping("/delete/{plogging_id}")
     public ResponseDto deletePlogging(
-            @AuthenticationPrincipal UserDetails userDetails,
+            @AuthenticationPrincipal UserDetailsImpl userDetails,
             @PathVariable("plogging_id") Long ploggingId
     ) {
-        User user = userService.userFromUserDetails(userDetails);
+        User user = userDetails.getUser();
         ploggingService.deletePlogging(ploggingId,user);
         return new ResponseDto(204L, "플로깅 기록 삭제에 성공하였습니다.", "");
+    }
+
+    @GetMapping("/{plogging_id}")
+    public ResponseDto getDetailPlogging(
+            @AuthenticationPrincipal UserDetailsImpl userDetails,
+            @PathVariable("plogging_id") Long ploggingId
+    ) {
+        PloggingInfoDto responseDto = ploggingService.getDetailPloggingById(ploggingId);
+
+        return new ResponseDto(200L,"플로깅 상세정보 불러오기에 성공하였습니다.", responseDto);
+
     }
 //
 //    @GetMapping("")

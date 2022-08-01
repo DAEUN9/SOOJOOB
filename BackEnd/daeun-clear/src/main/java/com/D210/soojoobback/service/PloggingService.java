@@ -72,17 +72,12 @@ public class PloggingService {
 
     }
 
-    public PloggingInfoDto findByPloggingId(Long id){
-        Plogging plogging = ploggingRepository.findByPloggingId(id).orElseThrow(() ->  new IllegalArgumentException("해당 플로깅이 없습니다."));
-        return new PloggingInfoDto(plogging);
-    }
-
     @Transactional
     public void deletePlogging(Long ploggingId, User user) {
         Plogging plogging = getPloggingById(ploggingId);
-        if(plogging.isrunnedBy(user)) {;
-        } else {
+        if(plogging.isrunnedBy(user)) {
             ploggingRepository.delete(plogging);
+        } else {
             throw new CustomErrorException("잘못된 사용자 입니다.");
         }
     }
@@ -91,8 +86,14 @@ public class PloggingService {
 
 
     public Plogging getPloggingById(Long ploggingId) {
-        return ploggingRepository.findByPloggingId(ploggingId).orElseThrow(
+        return ploggingRepository.findById(ploggingId).orElseThrow(
                 () -> new CustomErrorException("플로깅을 찾을 수 없습니다.")
         );
+    }
+
+    public PloggingInfoDto getDetailPloggingById(Long ploggingId) {
+        Plogging plogging = getPloggingById(ploggingId);
+        PloggingInfoDto ploggingInfoDto = new PloggingInfoDto(plogging);
+        return ploggingInfoDto;
     }
 }

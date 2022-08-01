@@ -12,7 +12,7 @@ import lombok.*;
 public class PloggingInfoDto {
 
     private Long id;
-    private User ploggingUser;
+    private Long ploggingUser;
     private Double distance;
     private String startTime;
     private String endTime;
@@ -23,10 +23,12 @@ public class PloggingInfoDto {
     private Double bpm;
 
 
-//    @Builder
+//
 //    public PloggingInfoDto(Long id, )
+    @Builder
     public PloggingInfoDto(Plogging plogging) {
         this.id = plogging.getId();
+        this.ploggingUser = plogging.getPloggingUser().getId();
         this.distance = plogging.getDistance();
         this.startTime = plogging.getStartTime();
         this.endTime = plogging.getEndTime();
