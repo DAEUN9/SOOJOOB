@@ -1,0 +1,22 @@
+package com.D210.soojoobback.dto.plogging;
+
+import com.D210.soojoobback.entity.User;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+
+@Getter
+@RequiredArgsConstructor
+public class PostPloggingReqDto {
+
+    private Long userId;
+    private Double distance;
+    private String startTime;
+    private String endTime;
+    private Integer stepCount;
+    private Integer trashCount;
+    private String floggingImg;
+    private Double calorie;
+    private Double bpm;
+
+
+}
