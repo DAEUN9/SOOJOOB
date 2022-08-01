@@ -11,8 +11,8 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/soojoop?serverTimezone=Asia/Seoul
-    username: cos
-    password: cos1234
+    username: ssafy
+    password: 1234
     
 #  mvc:
 #    view:
@@ -31,8 +31,8 @@ spring:
       client:
         registration:
           google: # /oauth2/authorization/google 이 주소를 동작하게 한다.
-            client-id:
-            client-secret:
+            client-id: 639304711953-issomobfsg2okv9v8fgm6un4psgffor5.apps.googleusercontent.com
+            client-secret: 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
             scope:
             - email
             - profile
