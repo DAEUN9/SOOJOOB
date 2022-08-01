@@ -1,28 +1,22 @@
 package com.D210.soojoobback.controller;
 
 
-import com.D210.soojoobback.JwtTokenProvider;
-import com.D210.soojoobback.UserDetailsImpl;
-//import com.D210.soojoobback.config.auth.PrincipalDetails;
 import com.D210.soojoobback.dto.user.*;
 import com.D210.soojoobback.entity.User;
 import com.D210.soojoobback.exception.CustomErrorException;
 import com.D210.soojoobback.repository.UserRepository;
+import com.D210.soojoobback.security.JwtTokenProvider;
+import com.D210.soojoobback.security.UserDetailsImpl;
 import com.D210.soojoobback.service.UserService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import lombok.extern.slf4j.Slf4j;
-
 import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Iterator;
 import java.util.List;
 
 @Slf4j

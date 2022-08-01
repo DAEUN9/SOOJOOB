@@ -1,5 +1,6 @@
 package com.D210.soojoobback.entity;
 
+import com.D210.soojoobback.dto.user.LoginDetailResponseDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,7 +20,7 @@ import java.sql.Timestamp;
 public class User {
 	@Id // primary key
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private Long id;
 
 	@Column(name="username", length=50, unique = true)
 	private String username;
@@ -46,4 +47,46 @@ public class User {
 	private String providerId;
 	@CreationTimestamp
 	private Timestamp createDate;
+
+	public User(String username, String password, String email, String role, Integer age, String gender, Integer weight, Integer height
+			,boolean activated, String region) {
+		this.username = username;
+		this.password = password;
+		this.email = email;
+		this.role = role;
+		this.age = age;
+		this.weight = weight;
+		this.height = height;
+		this.gender = gender;
+		this.region = region;
+		this.activated = activated;
+	}
+
+	public User( String username, String password, String email, String role) {
+		this.username = username;
+		this.password = password;
+		this.email = email;
+		this.role = role;
+	}
+
+	public void update(String username, String password, String email) {
+		this.email = email;
+		this.password = password;
+		this.username = username;
+	}
+
+	public LoginDetailResponseDto toBuildDetailUser() {
+		return LoginDetailResponseDto.builder()
+				.id(this.id)
+				.email(this.email)
+				.username(this.username)
+//                .password(this.password)
+				.role(this.role)
+				.gender(this.gender)
+				.age(this.age)
+				.weight(this.weight)
+				.height(this.height)
+				.region(this.region)
+				.build();
+	}
 }
