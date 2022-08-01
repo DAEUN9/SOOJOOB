@@ -11,5 +11,5 @@ public interface PloggingRepository extends JpaRepository<Plogging, Integer> {
     Optional<Plogging> findByPloggingUser(User ploggingUser);
 
 
-    Optional<Plogging> findByPloggingId(Long id);
+    Optional<Plogging> findById(Long id);
 }
