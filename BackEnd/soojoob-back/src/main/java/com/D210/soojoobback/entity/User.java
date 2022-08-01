@@ -1,6 +1,7 @@
 package com.D210.soojoobback.entity;
 
 import com.D210.soojoobback.dto.user.LoginDetailResponseDto;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -9,6 +10,8 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 // ORM - Object Relation Mapping
 
@@ -88,5 +91,14 @@ public class User {
 				.height(this.height)
 				.region(this.region)
 				.build();
+	}
+
+	@OneToMany(orphanRemoval = true, targetEntity = Badge.class)
+	@JsonIgnore
+	private List<Badge> badges = new ArrayList<>();
+
+
+	public void addBadge(Badge badge){
+		this.getBadges().add(badge);
 	}
 }
