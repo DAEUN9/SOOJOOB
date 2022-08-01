@@ -5,7 +5,6 @@ import com.D210.soojoobback.UserDetailsImpl;
 import com.D210.soojoobback.dto.plogging.PloggingInfoDto;
 import com.D210.soojoobback.dto.plogging.PostPloggingReqDto;
 import com.D210.soojoobback.dto.user.*;
-import com.D210.soojoobback.entity.Plogging;
 import com.D210.soojoobback.entity.User;
 import com.D210.soojoobback.exception.CustomErrorException;
 import com.D210.soojoobback.repository.PloggingRepository;
@@ -15,9 +14,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -125,6 +125,26 @@ public class PloggingController {
         return new ResponseDto(200L,"플로깅 상세정보 불러오기에 성공하였습니다.", responseDto);
 
     }
+
+    // 현재 유저 플로깅 리스트
+    @GetMapping("/all")
+    public ResponseDto currUserPloggings(
+            @AuthenticationPrincipal UserDetailsImpl userDetails
+    ) {
+        User user = userDetails.getUser();
+        List<PloggingInfoDto> data = ploggingService.getMyPloggingListByUser(user);
+        return new ResponseDto(200L,"내 플로깅 불러오기 성공", data);
+
+    }
+
+    // 회원별 플로깅 리스트
+    @GetMapping("/all/{user_id}")
+    public ResponseDto UserPloggings(
+            @PathVariable("user_id") Long userId) {
+        List<PloggingInfoDto> data = ploggingService.getPloggingListByUser(userId);
+        return new ResponseDto(200L, "해당 유저의 플로깅 불러오기 성공", data);
+    }
+
 //
 //    @GetMapping("")
 //    @ResponseBody
