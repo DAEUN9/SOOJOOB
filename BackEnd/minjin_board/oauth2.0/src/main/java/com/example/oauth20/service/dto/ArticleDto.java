@@ -4,15 +4,15 @@ import lombok.Builder;
 
 import java.time.LocalDateTime;
 
-public class ArticleResponseDto extends BaseTimeEntity{
+public class ArticleDto extends BaseTimeEntity{
     private Long id;
     private String author;
     private String title;
     private String contents;
     private LocalDateTime createdDate;
 
-    public ArticleResponseDto toEntity(){
-        ArticleResponseDto articleResponseDto = ArticleResponseDto.builder()
+    public ArticleDto toEntity(){
+        ArticleDto articleResponseDto = ArticleDto.builder()
                 .id(id)
                 .author(author)
                 .title(title)
@@ -22,7 +22,7 @@ public class ArticleResponseDto extends BaseTimeEntity{
     }
 
     @Builder
-    public ArticleResponseDto(Long id, String author, String title, String contents, LocalDateTime createdDate) {
+    public ArticleDto(Long id, String author, String title, String contents, LocalDateTime createdDate) {
         this.id = id;
         this.author = author;
         this.title = title;
@@ -41,6 +41,7 @@ public class ArticleResponseDto extends BaseTimeEntity{
         return title;
     }
 
+    public String getContents() {return contents;}
 
 
 }

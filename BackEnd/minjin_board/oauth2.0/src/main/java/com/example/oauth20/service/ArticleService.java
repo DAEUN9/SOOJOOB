@@ -2,8 +2,8 @@ package com.example.oauth20.service;
 
 import com.example.oauth20.model.Article;
 import com.example.oauth20.repository.ArticleRepository;
-import com.example.oauth20.service.dto.ArticleRequestDto;
-import com.example.oauth20.service.dto.ArticleResponseDto;
+import com.example.oauth20.service.dto.ArticleDto;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Log4j2
 public class ArticleService {
     private ArticleRepository articleRepository;
 
@@ -19,15 +20,15 @@ public class ArticleService {
     }
 
     @Transactional
-    public ArticleResponseDto create(ArticleRequestDto articleRequestDto) {
+    public ArticleDto create(ArticleDto articleRequestDto) {
         Article article = new Article(articleRequestDto.getAuthor(),
                 articleRequestDto.getTitle(),
                 articleRequestDto.getContents(),
                 articleRequestDto.getCreatedDate());
 
         Article savedArticle = articleRepository.save(article);
-
-        return new ArticleResponseDto(savedArticle.getId(),
+        log.info(savedArticle.getCreatedDate());
+        return new ArticleDto(savedArticle.getId(),
                 savedArticle.getAuthor(),
                 savedArticle.getTitle(),
                 savedArticle.getContents(),
@@ -35,10 +36,10 @@ public class ArticleService {
     }
 
     @Transactional(readOnly = true)
-    public List<ArticleResponseDto> showAll() {
+    public List<ArticleDto> showAll() {
         List<Article> articles = articleRepository.findAll();
         return articles.stream()
-                .map(article -> new ArticleResponseDto(article.getId(),
+                .map(article -> new ArticleDto(article.getId(),
                         article.getAuthor(),
                         article.getTitle(),
                         article.getContents(),
@@ -48,7 +49,7 @@ public class ArticleService {
     }
 
     @Transactional
-    public ArticleResponseDto update(Long articleId, ArticleRequestDto articleUpdateRequestDto) {
+    public ArticleDto update(Long articleId, ArticleDto articleUpdateRequestDto) {
         Article sourceArticle = articleRepository.findById(articleId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글을 찾을 수 없습니다."));
         Article targetArticle = new Article(articleUpdateRequestDto.getAuthor(),
@@ -56,7 +57,7 @@ public class ArticleService {
 
         sourceArticle.update(targetArticle);
 
-        return new ArticleResponseDto(sourceArticle.getId(),
+        return new ArticleDto(sourceArticle.getId(),
                 sourceArticle.getAuthor(),
                 sourceArticle.getTitle(),
                 sourceArticle.getContents(),
