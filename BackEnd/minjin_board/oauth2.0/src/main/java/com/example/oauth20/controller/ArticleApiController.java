@@ -1,8 +1,7 @@
 package com.example.oauth20.controller;
 
 import com.example.oauth20.service.ArticleService;
-import com.example.oauth20.service.dto.ArticleRequestDto;
-import com.example.oauth20.service.dto.ArticleResponseDto;
+import com.example.oauth20.service.dto.ArticleDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,8 +17,8 @@ public class ArticleApiController {
     }
 
     @PostMapping("/articles")
-    public ResponseEntity create(@RequestBody ArticleRequestDto articleRequestDto) {
-        ArticleResponseDto createdArticle = articleService.create(articleRequestDto);
+    public ResponseEntity create(@RequestBody ArticleDto articleRequestDto) {
+        ArticleDto createdArticle = articleService.create(articleRequestDto);
 
         return ResponseEntity
                 .created(URI.create("/articles/" + createdArticle.getId()))
@@ -28,14 +27,14 @@ public class ArticleApiController {
 
     @GetMapping("/articles")
     public ResponseEntity showAll() {
-        List<ArticleResponseDto> articles = articleService.showAll();
+        List<ArticleDto> articles = articleService.showAll();
         return ResponseEntity.ok(articles);
     }
 
     @PutMapping("/articles/{articleId}")
     public ResponseEntity update(@PathVariable("articleId") Long articleId,
-                                 @RequestBody ArticleRequestDto articleUpdateRequestDto) {
-        ArticleResponseDto updatedArticle = articleService.update(articleId, articleUpdateRequestDto);
+                                 @RequestBody ArticleDto articleUpdateRequestDto) {
+        ArticleDto updatedArticle = articleService.update(articleId, articleUpdateRequestDto);
 
         return ResponseEntity.ok(updatedArticle);
     }

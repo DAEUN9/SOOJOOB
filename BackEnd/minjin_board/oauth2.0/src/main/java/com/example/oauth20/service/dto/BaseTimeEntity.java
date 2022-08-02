@@ -21,8 +21,5 @@ public abstract class BaseTimeEntity {
     @Column(updatable = false)
     private LocalDateTime createdDate;
 
-    public LocalDateTime getCreatedDate() {
-        return createdDate;
-    }
 
 }
