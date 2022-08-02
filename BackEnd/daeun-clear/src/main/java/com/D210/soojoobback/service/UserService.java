@@ -46,7 +46,7 @@ public class UserService {
         String username = requestDto.getUsername();
         String password = requestDto.getPassword();
         String role = "ROLE_USER";
-        Optional<User> usernameFound = userRepository.findByUsername(username);
+        Optional<User> usernameFound = userRepository.findOByUsername(username);
         Optional<User> emailFound = userRepository.findByEmail(email);
 
 
@@ -104,7 +104,7 @@ public class UserService {
     }
 
     public boolean nicknameCheck(String username) {
-        Optional<User> usernameFound = userRepository.findByUsername(username);
+        Optional<User> usernameFound = userRepository.findOByUsername(username);
 
         if (usernameFound.isPresent()) {
             throw new CustomErrorException("중복된 닉네임 입니다 ");
