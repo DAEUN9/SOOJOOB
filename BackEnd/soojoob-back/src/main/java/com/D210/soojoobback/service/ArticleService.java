@@ -1,8 +1,8 @@
-package com.example.oauth20.service;
+package com.D210.soojoobback.service;
 
-import com.example.oauth20.model.Article;
-import com.example.oauth20.repository.ArticleRepository;
-import com.example.oauth20.service.dto.ArticleDto;
+import com.D210.soojoobback.entity.Article;
+import com.D210.soojoobback.repository.ArticleRepository;
+import com.D210.soojoobback.dto.article.ArticleDto;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,11 +23,10 @@ public class ArticleService {
     public ArticleDto create(ArticleDto articleRequestDto) {
         Article article = new Article(articleRequestDto.getAuthor(),
                 articleRequestDto.getTitle(),
-                articleRequestDto.getContents(),
-                articleRequestDto.getCreatedDate());
+                articleRequestDto.getContents());
 
         Article savedArticle = articleRepository.save(article);
-        log.info(savedArticle.getCreatedDate());
+
         return new ArticleDto(savedArticle.getId(),
                 savedArticle.getAuthor(),
                 savedArticle.getTitle(),
@@ -38,8 +37,7 @@ public class ArticleService {
     @Transactional(readOnly = true)
     public List<ArticleDto> showAll() {
         List<Article> articles = articleRepository.findAll();
-        Article first = articles.get(5);
-        log.info(first.getCreatedDate());
+
         return articles.stream()
                 .map(article -> new ArticleDto(article.getId(),
                         article.getAuthor(),

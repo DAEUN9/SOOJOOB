@@ -1,7 +1,7 @@
-package com.example.oauth20.controller;
+package com.D210.soojoobback.controller;
 
-import com.example.oauth20.service.ArticleService;
-import com.example.oauth20.service.dto.ArticleDto;
+import com.D210.soojoobback.service.ArticleService;
+import com.D210.soojoobback.dto.article.ArticleDto;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -30,9 +30,6 @@ public class ArticleApiController {
     @GetMapping("/articles")
     public ResponseEntity showAll() {
         List<ArticleDto> articles = articleService.showAll();
-        ArticleDto first = articles.get(0);
-        log.info(first.getCreatedDate());
-        log.info(first.getTitle());
         return ResponseEntity.ok(articles);
     }
 
