@@ -14,7 +14,7 @@ public class PostPloggingReqDto {
     private String endTime;
     private Integer stepCount;
     private Integer trashCount;
-    private String floggingImg;
+    private String ploggingImg;
     private Double calorie;
     private Double bpm;
 
