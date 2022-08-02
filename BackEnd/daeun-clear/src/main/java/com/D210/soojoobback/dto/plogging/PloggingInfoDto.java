@@ -18,7 +18,7 @@ public class PloggingInfoDto {
     private String endTime;
     private Integer stepCount;
     private Integer trashCount;
-    private String floggingImg;
+    private String ploggingImg;
     private Double calorie;
     private Double bpm;
 
@@ -33,7 +33,7 @@ public class PloggingInfoDto {
         this.startTime = plogging.getStartTime();
         this.endTime = plogging.getEndTime();
         this.trashCount = plogging.getTrashCount();
-        this.floggingImg = plogging.getFloggingImg();
+        this.ploggingImg = plogging.getPloggingImg();
         this.calorie = plogging.getCalorie();
         this.bpm = plogging.getBpm();
     }

@@ -211,20 +211,20 @@ public class UserController {
 
 	@GetMapping("/nickname-check")
 	public ResponseDto nickNameCheck(
-			String username
+			@RequestParam String username
 	) {
 		userService.nicknameCheck(username);
-		return new ResponseDto(200L, "사용 가능한 닉네임입니다 !", "");
+		return new ResponseDto(200L, "사용 가능한 닉네임입니다 !", username);
 
 	}
 
 
 	@GetMapping("/email-check")
 	public ResponseDto emailCheck(
-		String email
+			@RequestParam String email
 	) {
 		userService.emailCheck(email);
-		return new ResponseDto(200L, "사용 가능한 이메일입니다 !", "");
+		return new ResponseDto(200L, "사용 가능한 이메일입니다 !", email);
 
 	}
 
