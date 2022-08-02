@@ -13,16 +13,11 @@ public class UserDTO {
     private Long id;
     private String username;
     private String email;
-    private String password;
-
-    @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Builder
-    public UserDTO(Long id, String username, String email, String password){
+    public UserDTO(Long id, String username, String email){
         this.id = id;
         this.email = email;
-        this.password = password;
         this.username = username;
     }
 
@@ -37,7 +32,6 @@ public class UserDTO {
                 .id(id)
                 .username(username)
                 .email(email)
-                .password(password)
                 .build();
     }
 }

@@ -32,19 +32,19 @@ public class Plogging {
     private Integer stepCount;
 
     private Integer trashCount;
-    private String floggingImg;
+    private String ploggingImg;
     private Double calorie;
     private Double bpm;
 
 
-    public Plogging(User ploggingUser, Double distance, String startTime, String endTime, Integer stepCount, Integer trashCount, String floggingImg, Double calorie, Double bpm) {
+    public Plogging(User ploggingUser, Double distance, String startTime, String endTime, Integer stepCount, Integer trashCount, String ploggingImg, Double calorie, Double bpm) {
         this.ploggingUser = ploggingUser;
         this.distance = distance;
         this.startTime = startTime;
         this.endTime = endTime;
         this.stepCount = stepCount;
         this.trashCount = trashCount;
-        this.floggingImg = floggingImg;
+        this.ploggingImg = ploggingImg;
         this.calorie = calorie;
         this.bpm = bpm;
     }
@@ -54,7 +54,7 @@ public class Plogging {
         this.startTime = requestDto.getStartTime();
         this.endTime = requestDto.getEndTime();
         this.stepCount = requestDto.getStepCount();
-        this.floggingImg = requestDto.getFloggingImg();
+        this.ploggingImg = requestDto.getPloggingImg();
         this.calorie = requestDto.getCalorie();
         this.bpm = requestDto.getBpm();
         this.ploggingUser = user;

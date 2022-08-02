@@ -111,6 +111,7 @@ public class PloggingController {
             @AuthenticationPrincipal UserDetailsImpl userDetails,
             @PathVariable("plogging_id") Long ploggingId
     ) {
+        checkLogin(userDetails);
         User user = userDetails.getUser();
         ploggingService.deletePlogging(ploggingId,user);
         return new ResponseDto(204L, "플로깅 기록 삭제에 성공하였습니다.", "");
@@ -132,6 +133,7 @@ public class PloggingController {
     public ResponseDto currUserPloggings(
             @AuthenticationPrincipal UserDetailsImpl userDetails
     ) {
+        checkLogin(userDetails);
         User user = userDetails.getUser();
         List<PloggingInfoDto> data = ploggingService.getMyPloggingListByUser(user);
         return new ResponseDto(200L,"내 플로깅 불러오기 성공", data);

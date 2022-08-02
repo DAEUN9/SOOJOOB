@@ -27,16 +27,16 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
 
 
-    @Transactional
-    public Long update(Long id, UserDTO userDTO){
-        User user = userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 아이디가 없습니다."));
-        user.update(userDTO.getUsername(), userDTO.getEmail(), userDTO.getPassword());
-        return id;
-    }
+//    @Transactional
+//    public Long update(Long id, UserDTO userDTO){
+//        User user = userRepository.findById(id).orElseThrow(() -> new CustomErrorException("해당 아이디가 없습니다."));
+//        user.update(userDTO.getUsername(), userDTO.getEmail(), userDTO.getPassword());
+//        return id;
+//    }
 
 //    @Transactional
     public UserDTO findById(Long id){
-        User user = userRepository.findById(id).orElseThrow(() ->  new IllegalArgumentException("해당 아이디가 없습니다."));
+        User user = userRepository.findById(id).orElseThrow(() ->  new CustomErrorException("해당 아이디가 없습니다."));
         return new UserDTO(user);
     }
 
@@ -46,7 +46,7 @@ public class UserService {
         String username = requestDto.getUsername();
         String password = requestDto.getPassword();
         String role = "ROLE_USER";
-        Optional<User> usernameFound = userRepository.findByUsername(username);
+        Optional<User> usernameFound = userRepository.findOByUsername(username);
         Optional<User> emailFound = userRepository.findByEmail(email);
 
 
@@ -104,7 +104,7 @@ public class UserService {
     }
 
     public boolean nicknameCheck(String username) {
-        Optional<User> usernameFound = userRepository.findByUsername(username);
+        Optional<User> usernameFound = userRepository.findOByUsername(username);
 
         if (usernameFound.isPresent()) {
             throw new CustomErrorException("중복된 닉네임 입니다 ");
@@ -145,12 +145,6 @@ public class UserService {
         String username = editUserInfoDto.getUsername();
         String email = editUserInfoDto.getEmail();
 
-        String password;
-        if (user.getPassword().equals(editUserInfoDto.getPassword())) {
-            password = user.getPassword();
-        } else {
-            password = editUserInfoDto.getPassword();
-        }
 
         Integer age = editUserInfoDto.getAge();
 
@@ -165,7 +159,6 @@ public class UserService {
 
         user.setUsername(username);
         user.setEmail(email);
-        user.setPassword(passwordEncoder.encode(password));
         user.setAge(age);
         user.setWeight(weight);
         user.setHeight(height);
