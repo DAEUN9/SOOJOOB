@@ -61,6 +61,10 @@ public class User {
 	@JsonIgnore
 	private  List<Article> articleList;
 
+	@OneToOne(mappedBy = "userRecord")
+	@JsonIgnore
+	private Record record;
+
 	public void addArticle(Article article){
 		articleList.add(article);
 	}

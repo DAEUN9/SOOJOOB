@@ -1,8 +1,10 @@
 package com.D210.soojoobback.service;
 
 import com.D210.soojoobback.dto.user.*;
+import com.D210.soojoobback.entity.Record;
 import com.D210.soojoobback.entity.User;
 import com.D210.soojoobback.exception.CustomErrorException;
+import com.D210.soojoobback.repository.RecordRepository;
 import com.D210.soojoobback.repository.UserRepository;
 import com.D210.soojoobback.security.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +27,8 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+
+    private final RecordRepository recordRepository;
 
 
 //    @Transactional
@@ -68,7 +72,9 @@ public class UserService {
 
         User user = new User(username, password, email, role);
 
-        userRepository.save(user);
+        User user1 = userRepository.save(user);
+        Record record = new Record(user1);
+        recordRepository.save(record);
         return user;
     }
 
