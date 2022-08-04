@@ -57,6 +57,14 @@ public class User {
 	@JsonIgnore
 	private List<Plogging> ploggings;
 
+	@OneToOne(mappedBy = "userRecord")
+	@JsonIgnore
+	private Record record;
+//
+//	@OneToOne(mappedBy = "record", fetch = FetchType.LAZY)
+//	@JsonIgnore
+//	private Record record;
+
 
 	public User(String username, String password, String email, String role, Integer age, String gender, Integer weight, Integer height
 			,boolean activated, String region) {

@@ -2,8 +2,10 @@ package com.D210.soojoobback.service;
 
 import com.D210.soojoobback.UserDetailsImpl;
 import com.D210.soojoobback.dto.user.*;
+import com.D210.soojoobback.entity.Record;
 import com.D210.soojoobback.entity.User;
 import com.D210.soojoobback.exception.CustomErrorException;
+import com.D210.soojoobback.repository.RecordRepository;
 import com.D210.soojoobback.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,6 +26,7 @@ import java.util.regex.Pattern;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final RecordRepository recordRepository;
     private final PasswordEncoder passwordEncoder;
 
 
@@ -68,7 +71,9 @@ public class UserService {
 
         User user = new User(username, password, email, role);
 
-        userRepository.save(user);
+        User user1 = userRepository.save(user);
+        Record record = new Record(user1);
+        recordRepository.save(record);
         return user;
     }
 

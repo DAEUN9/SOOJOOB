@@ -7,9 +7,11 @@ import com.D210.soojoobback.dto.user.ResponseDto;
 import com.D210.soojoobback.dto.user.SignupRequestDto;
 import com.D210.soojoobback.dto.user.UserDTO;
 import com.D210.soojoobback.entity.Plogging;
+import com.D210.soojoobback.entity.Record;
 import com.D210.soojoobback.entity.User;
 import com.D210.soojoobback.exception.CustomErrorException;
 import com.D210.soojoobback.repository.PloggingRepository;
+import com.D210.soojoobback.repository.RecordRepository;
 import com.D210.soojoobback.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -33,6 +35,7 @@ public class PloggingService {
     private final UserRepository userRepository;
 
     private final UserService userService;
+    private final RecordRepository recordRepository;
 
 
 //    @Transactional
@@ -67,8 +70,29 @@ public class PloggingService {
         //유저에 플로깅 추가
         List<Plogging> ploggingList = ploggingUser.getPloggings();
         ploggingList.add(plogging);
+//
+
+        Double distance = requestDto.getDistance();
+
+        Integer trashCount = requestDto.getTrashCount();
+
+        Double calorie = requestDto.getCalorie();
+
+
+        Record record = recordRepository.findById(userId);
+
+        Double toCal = record.getTotalCalorie();
+        Double toDis = record.getTotalDistance();
+        Integer toTrash = record.getTotalTrashCount();
+
+        record.setTotalCalorie(toCal + calorie);
+        record.setTotalDistance(toDis + distance);
+        record.setTotalTrashCount(toTrash + trashCount);
+
+
 
         ploggingRepository.save(plogging);
+        recordRepository.save(record);
 
 
     }
