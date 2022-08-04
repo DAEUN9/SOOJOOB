@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.soojoob.googlemap">
+
+    <!--  정확한 위치가 필요한 경우 앱의 매니페스트 파일에
+ACCESS_COARSE_LOCATION 및 ACCESS_FINE_LOCATION 권한을 모두 추가  -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <!-- 외부 저장소 권한-->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.GoogleMap"
+        tools:targetApi="31">
+
+        <!-- MAPS_API_KEY -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/maps_api_key" />
+        <!--            android:value="${MAPS_API_KEY}" />-->
+
+        <!-- App 매니페스트 업데이트 -->
+        <!-- 컴파일된 Google Play 서비스의 버전 삽입-->
+        <!-- 정확한 사용자 위치를 제공하는 ACCESS_FINE_LOCATION과
+         정확도가 떨어지는 ACCESS_COARSE_LOCATION 중에서 선택할 수 있습니다. -->
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+        <!--  Apache HTTP Legacy 라이브러리 설정 -->
+        <uses-library android:name="org.apache.http.legacy" android:required="false" />
+
+        <activity
+            android:name=".MapsActivity"
+            android:exported="true"
+            android:label="@string/title_activity_maps">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>
