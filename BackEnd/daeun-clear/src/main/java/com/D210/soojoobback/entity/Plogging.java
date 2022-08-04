@@ -23,6 +23,7 @@ public class Plogging {
     @JoinColumn(name = "user_id", nullable = false)
     private User ploggingUser;
 
+    @Column(nullable = false)
     private Double distance;
 
     private String startTime;
@@ -31,8 +32,10 @@ public class Plogging {
 
     private Integer stepCount;
 
+    @Column(nullable = false)
     private Integer trashCount;
     private String ploggingImg;
+    @Column(nullable = false)
     private Double calorie;
     private Double bpm;
 
@@ -57,6 +60,7 @@ public class Plogging {
         this.ploggingImg = requestDto.getPloggingImg();
         this.calorie = requestDto.getCalorie();
         this.bpm = requestDto.getBpm();
+        this.trashCount = requestDto.getTrashCount();
         this.ploggingUser = user;
     }
 
