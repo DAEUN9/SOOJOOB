@@ -10,10 +10,10 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/d210?serverTimezone=Asia/Seoul
-    username: ssafy
-    password: 1234
-    
+    url: jdbc:mysql://localhost:3306/soojoop?serverTimezone=Asia/Seoul
+    username:
+    password:
+
 #  mvc:
 #    view:
 #      prefix: /templates/
@@ -21,7 +21,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: none #create update none
+      ddl-auto: create #create update none
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
     show-sql: true

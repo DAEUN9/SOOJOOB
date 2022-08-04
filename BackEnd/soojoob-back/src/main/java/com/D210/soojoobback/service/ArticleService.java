@@ -1,38 +1,29 @@
 package com.D210.soojoobback.service;
 
-import com.D210.soojoobback.entity.Article;
-import com.D210.soojoobback.repository.ArticleRepository;
 import com.D210.soojoobback.dto.article.ArticleDto;
-import lombok.extern.log4j.Log4j2;
+import com.D210.soojoobback.dto.article.ArticleSaveDto;
+import com.D210.soojoobback.entity.Article;
+import com.D210.soojoobback.entity.User;
+import com.D210.soojoobback.exception.CustomErrorException;
+import com.D210.soojoobback.repository.ArticleRepository;
+import com.D210.soojoobback.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@Log4j2
+@Slf4j
+@RequiredArgsConstructor
 public class ArticleService {
-    private ArticleRepository articleRepository;
+    private final ArticleRepository articleRepository;
+    private final UserRepository userRepository;
 
-    public ArticleService(ArticleRepository articleRepository) {
-        this.articleRepository = articleRepository;
-    }
 
-    @Transactional
-    public ArticleDto create(ArticleDto articleRequestDto) {
-        Article article = new Article(articleRequestDto.getAuthor(),
-                articleRequestDto.getTitle(),
-                articleRequestDto.getContents());
-
-        Article savedArticle = articleRepository.save(article);
-
-        return new ArticleDto(savedArticle.getId(),
-                savedArticle.getAuthor(),
-                savedArticle.getTitle(),
-                savedArticle.getContents(),
-                savedArticle.getCreatedDate());
-    }
 
     @Transactional(readOnly = true)
     public List<ArticleDto> showAll() {
@@ -40,35 +31,72 @@ public class ArticleService {
 
         return articles.stream()
                 .map(article -> new ArticleDto(article.getId(),
-                        article.getAuthor(),
                         article.getTitle(),
                         article.getContents(),
                         article.getCreatedDate()))
                 .collect(Collectors.toList());
 
     }
+    @Transactional
+    public List<ArticleSaveDto> searchTitle(String keyword){
+        return articleRepository.findByTitleContainingIgnoreCase(keyword)
+                .stream()
+                .map(ArticleSaveDto::new)
+                .collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
+    public List<ArticleSaveDto> showUser(Long userId){
+        User user = userRepository.findById(userId).orElseThrow(
+                ()->new CustomErrorException("유저 정보가 없습니다.")
+        );
+        List<Article> UserList = user.getArticleList();
+        List<ArticleSaveDto> userArticleList = new ArrayList<>();
+        for(Article article : UserList){
+            ArticleSaveDto addDto = new ArticleSaveDto(article);
+            userArticleList.add(addDto);
+        }
+        return userArticleList;
+    }
 
     @Transactional
-    public ArticleDto update(Long articleId, ArticleDto articleUpdateRequestDto) {
+    public void save(ArticleSaveDto articleSaveDto, User user){
+        Article article = Article.of(articleSaveDto, user);
+
+        Long userId = user.getId();
+        User Articleuser = userRepository.findById(userId).orElseThrow(
+                () -> new CustomErrorException("유저 정보를 찾을 수 없습니다.")
+        );
+        List<Article> articleList = Articleuser.getArticleList();
+        articleList.add(article);
+
+        articleRepository.save(article);
+    }
+
+    @Transactional
+    public void update(Long articleId, ArticleSaveDto articleUpdateRequestDto) {
+        System.out.println("update service1");
+
         Article sourceArticle = articleRepository.findById(articleId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글을 찾을 수 없습니다."));
-        Article targetArticle = new Article(articleUpdateRequestDto.getAuthor(),
-                articleUpdateRequestDto.getTitle(), articleUpdateRequestDto.getContents(), articleUpdateRequestDto.getCreatedDate());
+        System.out.println("update service");
 
-        sourceArticle.update(targetArticle);
+        sourceArticle.updateTitle(articleUpdateRequestDto.getTitle());
+        sourceArticle.updateContent(articleUpdateRequestDto.getContents());
 
-        return new ArticleDto(sourceArticle.getId(),
-                sourceArticle.getAuthor(),
-                sourceArticle.getTitle(),
-                sourceArticle.getContents(),
-                sourceArticle.getCreatedDate());
     }
 
     @Transactional
-    public void delete(Long articleId) {
+    public void delete(Long articleId, User user) {
         Article deleteArticle = articleRepository.findById(articleId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글을 찾을 수 없습니다."));
+        if(deleteArticle.isrunnedBy(user)) {
+            articleRepository.delete(deleteArticle);
+        } else {
+            throw new CustomErrorException("잘못된 사용자 입니다.");
+        }
 
-        articleRepository.delete(deleteArticle);
     }
+
+
 }
