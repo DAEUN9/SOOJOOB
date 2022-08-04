@@ -13,6 +13,8 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+import static javax.persistence.CascadeType.ALL;
+
 // ORM - Object Relation Mapping
 
 @Builder
@@ -54,6 +56,14 @@ public class User {
 	@OneToMany(mappedBy = "ploggingUser", orphanRemoval = true, fetch = FetchType.LAZY)
 	@JsonIgnore
 	private List<Plogging> ploggings;
+
+	@OneToMany(mappedBy = "user", cascade = ALL, orphanRemoval = true)
+	@JsonIgnore
+	private  List<Article> articleList;
+
+	public void addArticle(Article article){
+		articleList.add(article);
+	}
 
 	public User(String username, String password, String email, String role, Integer age, String gender, Integer weight, Integer height
 			,boolean activated, String region) {

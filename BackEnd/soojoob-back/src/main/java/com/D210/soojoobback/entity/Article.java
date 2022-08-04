@@ -1,5 +1,6 @@
 package com.D210.soojoobback.entity;
 
+import com.D210.soojoobback.dto.article.ArticleSaveDto;
 import com.D210.soojoobback.dto.article.BaseTimeEntity;
 import lombok.Builder;
 import lombok.Getter;
@@ -19,15 +20,19 @@ public class Article extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+//
+//    @Column(name = "AUTHOR")
+//    private String author;
 
-    @Column(name = "AUTHOR")
-    private String author;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "Userid")
+    private User user;
 
-    @Column(name = "TITLE", length = 200)
+    @Column(name = "TITLE", length = 200, nullable = false)
     private String title;
 
     @Lob
-    @Column(name = "CONTENTS")
+    @Column(name = "CONTENTS", nullable = false)
     private String contents;
 
     @Column(name = "createdDate", updatable = false)
@@ -37,19 +42,34 @@ public class Article extends BaseTimeEntity {
     protected Article() {
     }
 
+//    @Builder
+//    public Article(String author, String title, String contents, LocalDateTime createdDate) {
+//        this.author = author;
+//        this.title = title;
+//        this.contents = contents;
+//        this.createdDate = createdDate;
+//    }
+//
+//    @Builder
+//    public Article(String author, String title, String contents) {
+//        this.author = author;
+//        this.title = title;
+//        this.contents = contents;
+//    }
+
     @Builder
-    public Article(String author, String title, String contents, LocalDateTime createdDate) {
-        this.author = author;
+    public Article(User user, String title, String contents) {
+        this.user = user;
         this.title = title;
         this.contents = contents;
-        this.createdDate = createdDate;
     }
 
     @Builder
-    public Article(String author, String title, String contents) {
-        this.author = author;
+    public Article(User user, String title, String contents, LocalDateTime createdDate) {
+        this.user = user;
         this.title = title;
         this.contents = contents;
+        this.createdDate = createdDate;
     }
 
     public void update(Article another) {
@@ -57,13 +77,27 @@ public class Article extends BaseTimeEntity {
         this.contents = another.contents;
     }
 
+    public Article(ArticleSaveDto articledto, User user){
+        this.user = user;
+        this.contents = articledto.getContents();
+        this.title = articledto.getTitle();
+        this.createdDate = getCreatedDate();
+    }
+
+    public static Article of(ArticleSaveDto savedto, User user){
+        return new Article(savedto, user);
+    }
+
+    public boolean isrunnedBy(User user) {
+        return this.user.getId().equals(user.getId());
+    }
     public Long getId() {
         return id;
     }
-
-    public String getAuthor() {
-        return author;
-    }
+//
+//    public String getAuthor() {
+//        return author;
+//    }
 
     public String getTitle() {
         return title;
@@ -86,5 +120,18 @@ public class Article extends BaseTimeEntity {
     @Override
     public int hashCode() {
         return Objects.hash(getId());
+    }
+
+    public void confirmWriter(User user){
+        this.user = user;
+        user.addArticle(this);
+    }
+
+    public void updateTitle(String title){
+        this.title = title;
+    }
+
+    public void updateContent(String contents){
+        this.contents = contents;
     }
 }
