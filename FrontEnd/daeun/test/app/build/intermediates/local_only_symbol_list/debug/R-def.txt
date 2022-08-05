@@ -1,0 +1,37 @@
+R_DEF: Internal format may change without notice
+local
+color background_login_screen
+color black
+color black_login
+color purple_200
+color purple_500
+color purple_700
+color teal_200
+color teal_700
+color white
+drawable ic_launcher_background
+drawable ic_launcher_foreground
+id btn_sign_in_google
+id logout
+id text_display_name
+layout activity_google_sign_in
+layout activity_google_sign_inactivity
+layout activity_main
+mipmap ic_launcher
+mipmap ic_launcher_round
+string already_have_an_account
+string app_name
+string continue_google
+string create_an_account
+string default_web_client_id
+string email_adress
+string gcm_defaultSenderId
+string google_api_key
+string google_app_id
+string google_crash_reporting_api_key
+string google_storage_bucket
+string password
+string project_id
+style Theme.Googlelogin
+xml backup_rules
+xml data_extraction_rules

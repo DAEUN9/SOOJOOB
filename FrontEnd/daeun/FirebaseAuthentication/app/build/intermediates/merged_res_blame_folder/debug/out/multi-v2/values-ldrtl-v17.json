@@ -1,0 +1,19 @@
+{
+    "logs": [
+        {
+            "outputFile": "C:\\Users\\DANI\\ssafy7\\semester2\\S07P12D210\\FrontEnd\\daeun\\FirebaseAuthentication\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-ldrtl-v17\\values-ldrtl-v17.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\DANI\\.gradle\\caches\\transforms-3\\f47023e98c0a9f2d16e72148b30fa744\\transformed\\material-1.5.0\\res\\values-ldrtl-v17\\values-ldrtl-v17.xml",
+                    "from": {
+                        "startLines": "2,3",
+                        "startColumns": "4,4",
+                        "startOffsets": "55,191",
+                        "endColumns": "135,140",
+                        "endOffsets": "186,327"
+                    }
+                }
+            ]
+        }
+    ]
+}
