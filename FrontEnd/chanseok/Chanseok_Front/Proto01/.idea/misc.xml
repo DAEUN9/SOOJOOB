@@ -5,10 +5,12 @@
       <map>
         <entry key="..\:/Users/multicampus/ssafy7/team-pjt/1st-pjt/Backup/chanseok/Chanseok_Front/Proto01/app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="..\:/Users/multicampus/ssafy7/team-pjt/1st-pjt/Backup/chanseok/Chanseok_Front/Proto01/app/src/main/res/layout/fragment_community.xml" value="0.1" />
-        <entry key="..\:/Users/multicampus/ssafy7/team-pjt/1st-pjt/Backup/chanseok/Chanseok_Front/Proto01/app/src/main/res/layout/fragment_home.xml" value="0.1" />
+        <entry key="..\:/Users/multicampus/ssafy7/team-pjt/1st-pjt/Backup/chanseok/Chanseok_Front/Proto01/app/src/main/res/layout/fragment_home.xml" value="0.264" />
         <entry key="..\:/Users/multicampus/ssafy7/team-pjt/1st-pjt/Backup/chanseok/Chanseok_Front/Proto01/app/src/main/res/layout/fragment_mypage.xml" value="0.1" />
         <entry key="..\:/Users/multicampus/ssafy7/team-pjt/1st-pjt/Backup/chanseok/Chanseok_Front/Proto01/app/src/main/res/layout/fragment_plugging.xml" value="0.1" />
         <entry key="..\:/Users/multicampus/ssafy7/team-pjt/1st-pjt/Backup/chanseok/Chanseok_Front/Proto01/app/src/main/res/layout/fragment_record.xml" value="0.1" />
+        <entry key="..\:/Users/multicampus/ssafy7/team-pjt/1st-pjt/Backup/chanseok/Chanseok_Front/Proto01/app/src/main/res/layout/login.xml" value="0.2" />
+        <entry key="..\:/Users/multicampus/ssafy7/team-pjt/1st-pjt/Backup/chanseok/Chanseok_Front/Proto01/app/src/main/res/layout/signup.xml" value="0.18055555555555555" />
       </map>
     </option>
   </component>

@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">SOOJOOB</string>
+
+    // custom
+<!--    <string name="title_login">로그인</string>-->
+    <string name="btn_title_login">로그인</string>
+    <string name="title_email">이메일</string>
+    <string name="title_password">비밀번호</string>
+
 </resources>
