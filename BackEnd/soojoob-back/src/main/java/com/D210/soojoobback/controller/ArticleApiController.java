@@ -50,6 +50,13 @@ public class ArticleApiController {
         List<ArticleDto> articles = articleService.showAll();
         return ResponseEntity.ok(articles);
     }
+
+    @GetMapping("/detail/{id}")
+    public ResponseDto showDetail(@PathVariable("id") Long id){
+        ArticleSaveDto detailArticle = articleService.showDetail(id);
+
+        return new ResponseDto(200L,"게시글 상세정보 불러오기에 성공하였습니다.", detailArticle);
+    }
     @GetMapping("/{user_id}")
     public ResponseDto showUser(@PathVariable("user_id") Long userId){
         List<ArticleSaveDto> article = articleService.showUser(userId);
