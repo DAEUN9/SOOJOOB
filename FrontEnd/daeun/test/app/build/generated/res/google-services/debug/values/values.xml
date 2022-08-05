@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="default_web_client_id" translatable="false">639304711953-b2abpkijh5f29plt1rk9mo71umepsnmf.apps.googleusercontent.com</string>
+    <string name="gcm_defaultSenderId" translatable="false">639304711953</string>
+    <string name="google_api_key" translatable="false">AIzaSyAskQngFQ_t4uNjp5UVk1hwcNa9b8qs6sM</string>
+    <string name="google_app_id" translatable="false">1:639304711953:android:7d44b74da3e33ae83496b0</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyAskQngFQ_t4uNjp5UVk1hwcNa9b8qs6sM</string>
+    <string name="google_storage_bucket" translatable="false">soojoop.appspot.com</string>
+    <string name="project_id" translatable="false">soojoop</string>
+</resources>
