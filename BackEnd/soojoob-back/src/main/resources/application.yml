@@ -14,10 +14,10 @@ spring:
     username:
     password:
 
-#  mvc:
-#    view:
-#      prefix: /templates/
-#      suffix: .mustache
+  #  mvc:
+  #    view:
+  #      prefix: /templates/
+  #      suffix: .mustache
 
   jpa:
     hibernate:
@@ -25,7 +25,7 @@ spring:
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
     show-sql: true
-    
+
   security:
     oauth2:
       client:
@@ -34,9 +34,8 @@ spring:
             client-id: 639304711953-issomobfsg2okv9v8fgm6un4psgffor5.apps.googleusercontent.com
             client-secret: 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
             scope:
-            - email
-            - profile
-
+              - email
+              - profile
 #          facebook:
 #            client-id: 머시기
 #            client-secret: 머시기

@@ -37,6 +37,19 @@ public class ArticleService {
                 .collect(Collectors.toList());
 
     }
+
+    @Transactional(readOnly = true)
+    public ArticleSaveDto showDetail(Long id){
+        Article article = getArticleById(id);
+        ArticleSaveDto detailArticle = new ArticleSaveDto(article);
+        return detailArticle;
+    }
+
+    public Article getArticleById(Long id){
+        return articleRepository.findById(id).orElseThrow(
+                () -> new CustomErrorException("게시글을 찾을 수 없습니다.")
+        );
+    }
     @Transactional
     public List<ArticleSaveDto> searchTitle(String keyword){
         return articleRepository.findByTitleContainingIgnoreCase(keyword)
