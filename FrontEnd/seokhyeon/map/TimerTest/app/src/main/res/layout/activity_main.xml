@@ -4,23 +4,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MapsActivity">
+    tools:context=".MainActivity">
 
-
-
-<!--    <Button-->
-<!--        android:id="@+id/resetBtn"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:clickable="true"-->
-<!--        android:tint="#FFFFFF"-->
-<!--        android:text="초기화"-->
-<!--        app:layout_constraintBottom_toBottomOf="@+id/startBtn"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintHorizontal_bias="0.12"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="@+id/recordBtn"-->
-<!--        app:layout_constraintVertical_bias="1.0"/>-->
+    <Button
+        android:id="@+id/resetBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:tint="#FFFFFF"
+        android:text="초기화"
+        app:layout_constraintBottom_toBottomOf="@+id/startBtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.12"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/recordBtn"
+        app:layout_constraintVertical_bias="1.0"/>
 
     <Button
         android:id="@+id/startBtn"
@@ -103,5 +101,6 @@
         tools:layout_editor_absoluteX="10dp"
         tools:layout_editor_absoluteY="37dp"
         tools:ignore="MissingConstraints" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
