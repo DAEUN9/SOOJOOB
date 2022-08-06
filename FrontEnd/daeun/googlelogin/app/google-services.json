@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "639304711953",
+    "project_id": "soojoop",
+    "storage_bucket": "soojoop.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:639304711953:android:7d44b74da3e33ae83496b0",
+        "android_client_info": {
+          "package_name": "com.example.googlelogin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "639304711953-fhaenta93olklrq5ouvlhp8elhu2ncp9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.googlelogin",
+            "certificate_hash": "4f69b49c4bd51019d193a793c575c6d682c9b672"
+          }
+        },
+        {
+          "client_id": "639304711953-b2abpkijh5f29plt1rk9mo71umepsnmf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAskQngFQ_t4uNjp5UVk1hwcNa9b8qs6sM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "639304711953-b2abpkijh5f29plt1rk9mo71umepsnmf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
