@@ -42,6 +42,7 @@ import com.example.polylinetest01.MapsActivity.StartLocationCallBack as StartLoc
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
+    private var sumTime = ""
     private var time = 0
     private var isRunning = false
     private var timerTask: Timer? = null
@@ -176,7 +177,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 //        recordBtn.setOnClickListener {
 //            if(time!=0) lapTime()
 //        }
-
 
         end_button = findViewById(R.id.end_button)
 
@@ -314,10 +314,12 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             val sec = time / 100 // time/100, 나눗셈의 몫 (초 부분)
             val milli = time % 100 // time%100, 나눗셈의 나머지 (밀리초 부분)
 
+            sumTime = "$sec" + "\"" + "$milli"
             // UI조작을 위한 메서드
             runOnUiThread {
-                secText.text = "$sec"
+                secText.text = "$sec" + "\""
                 milliText.text = "$milli"
+
             }
         }
     }
