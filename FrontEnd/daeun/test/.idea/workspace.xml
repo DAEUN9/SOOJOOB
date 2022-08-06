@@ -10,35 +10,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="75b73e68-c79d-49b6-9c04-223fc9fb46cf" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../../../BackEnd/daeun-clear/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../../../BackEnd/daeun-clear/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../BackEnd/daeun-clear/src/main/java/com/D210/soojoobback/CustomAuthenticationEntryPoint.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../BackEnd/daeun-clear/src/main/java/com/D210/soojoobback/JwtAuthenticationFilter.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../BackEnd/daeun-clear/src/main/java/com/D210/soojoobback/JwtProperties.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../BackEnd/daeun-clear/src/main/java/com/D210/soojoobback/JwtTokenProvider.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../BackEnd/daeun-clear/src/main/java/com/D210/soojoobback/SoojoobBackApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../BackEnd/daeun-clear/src/main/java/com/D210/soojoobback/SoojoobBackApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../BackEnd/daeun-clear/src/main/java/com/D210/soojoobback/UserDetailsImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../BackEnd/daeun-clear/src/main/java/com/D210/soojoobback/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../BackEnd/daeun-clear/src/main/java/com/D210/soojoobback/config/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../BackEnd/daeun-clear/src/main/java/com/D210/soojoobback/config/oauth/PrincipalOauth2UserService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../BackEnd/daeun-clear/src/main/java/com/D210/soojoobback/controller/OauthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../BackEnd/daeun-clear/src/main/java/com/D210/soojoobback/controller/OauthController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../BackEnd/daeun-clear/src/main/java/com/D210/soojoobback/controller/PloggingController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../BackEnd/daeun-clear/src/main/java/com/D210/soojoobback/controller/PloggingController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../BackEnd/daeun-clear/src/main/java/com/D210/soojoobback/controller/RecordController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../BackEnd/daeun-clear/src/main/java/com/D210/soojoobback/controller/RecordController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../BackEnd/daeun-clear/src/main/java/com/D210/soojoobback/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../BackEnd/daeun-clear/src/main/java/com/D210/soojoobback/controller/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../BackEnd/daeun-clear/src/main/java/com/D210/soojoobback/dto/plogging/PloggingInfoDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../BackEnd/daeun-clear/src/main/java/com/D210/soojoobback/dto/plogging/PloggingInfoDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../BackEnd/daeun-clear/src/main/java/com/D210/soojoobback/dto/plogging/PostPloggingReqDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../BackEnd/daeun-clear/src/main/java/com/D210/soojoobback/dto/plogging/PostPloggingReqDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../BackEnd/daeun-clear/src/main/java/com/D210/soojoobback/entity/Plogging.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../BackEnd/daeun-clear/src/main/java/com/D210/soojoobback/entity/Plogging.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../BackEnd/daeun-clear/src/main/java/com/D210/soojoobback/entity/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../BackEnd/daeun-clear/src/main/java/com/D210/soojoobback/entity/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../BackEnd/daeun-clear/src/main/java/com/D210/soojoobback/provider/GoogleUser.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../BackEnd/daeun-clear/src/main/java/com/D210/soojoobback/provider/OAuthUserInfo.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../BackEnd/daeun-clear/src/main/java/com/D210/soojoobback/repository/RecordRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../BackEnd/daeun-clear/src/main/java/com/D210/soojoobback/repository/RecordRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../BackEnd/daeun-clear/src/main/java/com/D210/soojoobback/repository/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../BackEnd/daeun-clear/src/main/java/com/D210/soojoobback/repository/UserRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../BackEnd/daeun-clear/src/main/java/com/D210/soojoobback/service/PloggingService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../BackEnd/daeun-clear/src/main/java/com/D210/soojoobback/service/PloggingService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../BackEnd/daeun-clear/src/main/java/com/D210/soojoobback/service/RecordService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../BackEnd/daeun-clear/src/main/java/com/D210/soojoobback/service/RecordService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../BackEnd/daeun-clear/src/main/java/com/D210/soojoobback/service/UserDetailsServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../BackEnd/daeun-clear/src/main/java/com/D210/soojoobback/service/UserDetailsServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../BackEnd/daeun-clear/src/main/java/com/D210/soojoobback/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../BackEnd/daeun-clear/src/main/java/com/D210/soojoobback/service/UserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../BackEnd/daeun-clear/src/main/java/com/D210/soojoobback/service/service.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../BackEnd/daeun-clear/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../BackEnd/daeun-clear/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../BackEnd/daeun-clear/src/main/resources/templates/join.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../BackEnd/daeun-clear/src/main/resources/templates/login.html" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/../googlelogin2/app/src/main/java/com/example/googlelogin/GoogleSignInActivity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FirebaseAuthentication/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../FirebaseAuthentication/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -117,6 +91,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="RunOnceActivity.cidr.known.project.marker" value="true" />
     <property name="cidr.known.project.marker" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
   <component name="RecentsManager">
     <key name="android.template.-1562926012">

@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">googlelogin</string>
+
+    // Login Screen
+    <string name="create_an_account">Create an account</string>
+    <string name="email_adress">Email Address</string>
+    <string name="password">Password</string>
+    <string name="continue_google">Continue with Google</string>
+    <string name="already_have_an_account">Already have an account?</string>
+</resources>
