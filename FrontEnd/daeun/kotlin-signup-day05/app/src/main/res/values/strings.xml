@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">soojoob-signup</string>
+    <string name="main_text">회원가입</string>
+    <string name="email">이메일</string>
+    <string name="email_hint">ex) soojoob@soojoob.com </string>
+    <string name="username">닉네임</string>
+    <string name="password_hint">영문 대/소문자, 숫자, 특수문자(!@#$%) 8~16자</string>
+    <string name="password">비밀번호</string>
+    <string name="password_recheck">비밀번호 재확인</string>
+    <string name="next">다음</string>
+</resources>
