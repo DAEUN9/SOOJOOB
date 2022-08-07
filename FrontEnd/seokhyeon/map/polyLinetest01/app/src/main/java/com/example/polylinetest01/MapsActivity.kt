@@ -32,7 +32,9 @@ import android.widget.TextView
 import android.widget.Toast
 import com.google.android.gms.maps.model.Polyline
 import com.google.android.gms.maps.model.PolylineOptions
+import java.lang.Math.*
 import java.util.*
+import kotlin.math.pow
 import com.example.polylinetest01.MapsActivity.StartLocationCallBack as StartLocationCallBack
 
 //import kotlinx.android.synthetic.main.activity_maps.*
@@ -41,7 +43,10 @@ import com.example.polylinetest01.MapsActivity.StartLocationCallBack as StartLoc
 
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
-
+    private var prelat:Double = 0.0
+    private var prelon:Double = 0.0
+    private var sumDistance:Double = 0.0
+    private var dis:Double = 0.0
     private var sumTime = ""
     private var time = 0
     private var isRunning = false
@@ -112,6 +117,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         locationRequest.priority=LocationRequest.PRIORITY_HIGH_ACCURACY // 가장 정확한 위치를 요청한다,
         locationRequest.interval=10000 // 위치를 갱신하는데 필요한 시간 <밀리초 기준>
         locationRequest.fastestInterval=5000 // 다른 앱에서 위치를 갱신했을 때 그 정보를 가져오는 시간 <밀리초 기준>
+
     }
 
     // 위치 정보를 찾고 나서 인스턴스화되는 클래스
@@ -126,6 +132,12 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             location?.run{
                 // 현재 경도와 위도를 LatLng메소드로 설정한다.
                 val latLng=LatLng(latitude,longitude)
+
+                dis = DistanceManager.getDistance(prelat,prelon , latitude,longitude).toDouble()
+                println("좌표 사이 거리 : " + dis + "m")
+                sumDistance += dis
+                println("총 이동 거리 :" + sumDistance)
+
                 // 카메라를 이동한다.(이동할 위치,줌 수치)
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,20f))
                 // 마커를 추가한다.
@@ -134,13 +146,15 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 polyLineOptions.add(latLng)
                 // 선 그리기
                 mMap.addPolyline(polyLineOptions)
+
+                prelat = latitude
+                prelon = longitude
+
             }
+
         }
+
     }
-
-
-
-
 
     // 이 메소드부터 프로그램 시작
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -167,9 +181,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
         //버튼 클릭 리스너
         startBtn.setOnClickListener {
-//            isRunning = !isRunning
-//            if (isRunning) start() else pause()
-            start()
+            isRunning = !isRunning
+            if (isRunning) start() else pause()
         }
 //        resetBtn.setOnClickListener {
 //            reset()
@@ -185,6 +198,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         end_button.setOnClickListener { // 버튼 클릭시 할 행동
             pause()
             endIntent.putExtra("timeRecord",time)
+            endIntent.putExtra("sumDistance",sumDistance - 1.316256E7)
             startActivity(endIntent)  // 화면 전환하기
             finish()
         }
@@ -303,8 +317,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 //        }.show()
     }
 
-
-
     private fun start() {
         addLocationListener2()
         locationstart()
@@ -328,31 +340,53 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         startBtn.text ="재실행"
         timerTask?.cancel();
     }
+//
+//    private fun reset() {
+//        timerTask?.cancel() // timerTask가 null이 아니라면 cancel() 호출
+//
+//        time = 0 // 시간저장 변수 초기화
+//        isRunning = false // 현재 진행중인지 판별하기 위한 Boolean변수 false 세팅
+//        secText.text = "0" // 시간(초) 초기화
+//        milliText.text = "00" // 시간(밀리초) 초기화
+//
+//        startBtn.text ="시작"
+////        lap_Layout.removeAllViews() // Layout에 추가한 기록View 모두 삭제
+//        index = 1
+//    }
+//
+//    private fun lapTime() {
+//        val lapTime = time // 함수 호출 시 시간(time) 저장
+//
+//        // apply() 스코프 함수로, TextView를 생성과 동시에 초기화
+//        val textView = TextView(this).apply {
+//            setTextSize(20f) // fontSize 20 설정
+//        }
+//        textView.text = "${lapTime / 100}.${lapTime % 100}" // 출력할 시간 설정
+//
+////        lap_Layout.addView(textView,0) // layout에 추가, (View, index) 추가할 위치(0 최상단 의미)
+//        index++ // 추가된 View의 개수를 저장하는 index 변수
+//    }
 
-    private fun reset() {
-        timerTask?.cancel() // timerTask가 null이 아니라면 cancel() 호출
+    object DistanceManager {
 
-        time = 0 // 시간저장 변수 초기화
-        isRunning = false // 현재 진행중인지 판별하기 위한 Boolean변수 false 세팅
-        secText.text = "0" // 시간(초) 초기화
-        milliText.text = "00" // 시간(밀리초) 초기화
+        private const val R = 6372.8 * 1000
 
-        startBtn.text ="시작"
-//        lap_Layout.removeAllViews() // Layout에 추가한 기록View 모두 삭제
-        index = 1
-    }
-
-    private fun lapTime() {
-        val lapTime = time // 함수 호출 시 시간(time) 저장
-
-        // apply() 스코프 함수로, TextView를 생성과 동시에 초기화
-        val textView = TextView(this).apply {
-            setTextSize(20f) // fontSize 20 설정
+        /**
+         * 두 좌표의 거리를 계산한다.
+         *
+         * @param lat1 위도1
+         * @param lon1 경도1
+         * @param lat2 위도2
+         * @param lon2 경도2
+         * @return 두 좌표의 거리(m)
+         */
+        fun getDistance(lat1: Double, lon1: Double, lat2: Double, lon2: Double): Int {
+            val dLat = Math.toRadians(lat2 - lat1)
+            val dLon = Math.toRadians(lon2 - lon1)
+            val a = sin(dLat / 2).pow(2.0) + sin(dLon / 2).pow(2.0) * cos(Math.toRadians(lat1)) * cos(Math.toRadians(lat2))
+            val c = 2 * asin(sqrt(a))
+            return (R * c).toInt()
         }
-        textView.text = "${lapTime / 100}.${lapTime % 100}" // 출력할 시간 설정
 
-//        lap_Layout.addView(textView,0) // layout에 추가, (View, index) 추가할 위치(0 최상단 의미)
-        index++ // 추가된 View의 개수를 저장하는 index 변수
     }
-
 }

@@ -1,6 +1,7 @@
 package com.example.polylinetest01
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -20,19 +21,25 @@ import java.util.*
 
 open class EndActivity : AppCompatActivity() {
 
-
+    private lateinit var sumDistanceText: TextView
     private lateinit var timeRecordText: TextView
     private lateinit var btn_camera: Button
     private lateinit var iv_pre: ImageView
     private lateinit var now :TextView
 
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_end)
 
-        var value1 = intent.getIntExtra("timeRecord",0)
+        val timeRecord = intent.getIntExtra("timeRecord",0)
         timeRecordText = findViewById(R.id.TimeRecord)
-        timeRecordText.text = "총 시간 :" + "${value1 / 100}" + "\"" + "${value1 % 100}"
+        timeRecordText.text = "총 시간 :" + "${timeRecord / 100}" + "\"" + "${timeRecord % 100}"
+
+        val sumDistance = intent.getDoubleExtra("sumDistance", 0.0)
+        sumDistanceText = findViewById(R.id.sumDistance)
+        sumDistanceText.text = "이동 거리 " + "$sumDistance" + "m"
+
 
         btn_camera = findViewById(R.id.btn_camera)
         iv_pre = findViewById(R.id.iv_pre)
