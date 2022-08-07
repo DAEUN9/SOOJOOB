@@ -4,9 +4,16 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/multicampus/Documents/SSAFY/gitlab/S07P12D210/FrontEnd/hanhoon/googleMap/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.2145" />
+        <entry key="..\:/Users/multicampus/Documents/SSAFY/gitlab/S07P12D210/FrontEnd/hanhoon/googleMap/app/src/main/res/drawable/ic_android.xml" value="0.1285" />
+        <entry key="..\:/Users/multicampus/Documents/SSAFY/gitlab/S07P12D210/FrontEnd/hanhoon/googleMap/app/src/main/res/drawable/ic_android_foreground.xml" value="0.1285" />
         <entry key="..\:/Users/multicampus/Documents/SSAFY/gitlab/S07P12D210/FrontEnd/hanhoon/googleMap/app/src/main/res/drawable/ic_arrow.xml" value="0.1" />
+        <entry key="..\:/Users/multicampus/Documents/SSAFY/gitlab/S07P12D210/FrontEnd/hanhoon/googleMap/app/src/main/res/drawable/ic_baseline_local_florist_24.xml" value="0.1285" />
+        <entry key="..\:/Users/multicampus/Documents/SSAFY/gitlab/S07P12D210/FrontEnd/hanhoon/googleMap/app/src/main/res/drawable/ic_flowers.xml" value="0.1285" />
         <entry key="..\:/Users/multicampus/Documents/SSAFY/gitlab/S07P12D210/FrontEnd/hanhoon/googleMap/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2145" />
         <entry key="..\:/Users/multicampus/Documents/SSAFY/gitlab/S07P12D210/FrontEnd/hanhoon/googleMap/app/src/main/res/layout/activity_maps.xml" value="0.18802083333333333" />
+        <entry key="..\:/Users/multicampus/Documents/SSAFY/gitlab/S07P12D210/FrontEnd/hanhoon/googleMap/app/src/main/res/mipmap-anydpi-v26/ic_android.xml" value="0.1285" />
+        <entry key="..\:/Users/multicampus/Documents/SSAFY/gitlab/S07P12D210/FrontEnd/hanhoon/googleMap/app/src/main/res/mipmap-anydpi-v26/ic_boy.xml" value="0.1285" />
+        <entry key="..\:/Users/multicampus/Documents/SSAFY/gitlab/S07P12D210/FrontEnd/hanhoon/googleMap/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.1285" />
         <entry key="..\:/Users/multicampus/Documents/SSAFY/gitlab/S07P12D210/googleMap/app/src/main/res/layout/activity_maps.xml" value="0.5502717391304348" />
       </map>
     </option>
