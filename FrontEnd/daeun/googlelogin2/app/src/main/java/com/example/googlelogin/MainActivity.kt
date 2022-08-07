@@ -58,9 +58,12 @@ class MainActivity : AppCompatActivity() {
             try {
                 // Google Sign In was sccessful, authenticate with Firebase
                 val account = task.getResult(ApiException::class.java)!!
-                println(account.email)
-                println(account.displayName)
-                println(account.idToken)
+                val userData = SignUpRequestBody(
+                    account.email,
+                    account.displayName,
+                    account.id,
+                )
+                RetrofitWork().work(userData)
                 Log.d(ContentValues.TAG, "firebaseAuthWithGoogle:" + account.id)
                 firebaseAuthWithGoogle(account.idToken!!)
             } catch (e: ApiException) {

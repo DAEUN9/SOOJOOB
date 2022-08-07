@@ -1,10 +1,12 @@
 package com.D210.soojoobback.controller;
 
+
 import com.D210.soojoobback.JwtTokenProvider;
 import com.D210.soojoobback.dto.user.LoginDetailResponseDto;
 import com.D210.soojoobback.dto.user.LoginResponseDto;
 import com.D210.soojoobback.dto.user.ResponseDto;
 import com.D210.soojoobback.entity.User;
+
 import com.D210.soojoobback.provider.GoogleUser;
 import com.D210.soojoobback.provider.OAuthUserInfo;
 import com.D210.soojoobback.repository.UserRepository;
@@ -31,9 +33,8 @@ public class OauthController {
     @PostMapping("/oauth/jwt/google")
     public ResponseDto jwtCreate(@RequestBody Map<String, Object> data) {
         System.out.println("jwtCreate 실행됨");
-        System.out.println(data.get("profileObj"));
         OAuthUserInfo googleUser =
-                new GoogleUser((Map<String, Object>)data.get("profileObj"));
+                new GoogleUser((Map<String, Object>)data);
 
         User userEntity =
                 userRepository.findByUsername(googleUser.getProvider()+"_"+googleUser.getProviderId());
