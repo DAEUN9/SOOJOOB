@@ -17,6 +17,18 @@
         tools:layout_editor_absoluteX="29dp">
     </TextView>
 
+    <TextView
+        android:id="@+id/sumDistance"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="이동거리 : "
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/now"
+        app:layout_constraintVertical_bias="0.431"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="29dp">
+    </TextView>
+
 
 
     <Button
