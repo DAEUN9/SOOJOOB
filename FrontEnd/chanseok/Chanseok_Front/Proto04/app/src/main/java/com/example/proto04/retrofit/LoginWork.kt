@@ -31,7 +31,9 @@ class LoginWork(private val userInfo: LoginRequestBody) {
                 ) {
                     if (response.isSuccessful) {
                         val result = response.body()
+                        val token = response.body()?.data?.jwtToken
                         Log.d("로그인 성공", "$result")
+                        Log.d("jwtToken", "$token")
                     }
                 }
 

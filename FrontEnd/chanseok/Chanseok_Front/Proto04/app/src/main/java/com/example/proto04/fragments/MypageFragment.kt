@@ -9,7 +9,7 @@ import com.example.proto04.databinding.FragmentMypageBinding
 
 class MypageFragment : Fragment() {
 
-    private var mBinding : FragmentMypageBinding? = null
+    private var fBinding : FragmentMypageBinding? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -19,13 +19,13 @@ class MypageFragment : Fragment() {
 
         val binding = FragmentMypageBinding.inflate(inflater, container, false)
 
-        mBinding = binding
+        fBinding = binding
 
-        return mBinding?.root
+        return fBinding?.root
     }
 
     override fun onDestroyView() {
-        mBinding = null
+        fBinding = null
         super.onDestroyView()
     }
 }

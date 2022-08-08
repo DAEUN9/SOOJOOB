@@ -22,15 +22,15 @@
         <activity
             android:name="com.example.proto04.LoginActivity"
             android:exported="true">
+        </activity>
+        <activity
+            android:name="com.example.proto04.MainActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity
-            android:name="com.example.proto04.MainActivity"
-            android:exported="true">
         </activity>
     </application>
 

@@ -9,7 +9,7 @@ import com.example.proto04.databinding.FragmentCommunityBinding
 
 class CommunityFragment : Fragment() {
 
-    private var mBinding : FragmentCommunityBinding? = null
+    private var fBinding : FragmentCommunityBinding? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -19,13 +19,13 @@ class CommunityFragment : Fragment() {
 
         val binding = FragmentCommunityBinding.inflate(inflater, container, false)
 
-        mBinding = binding
+        fBinding = binding
 
-        return mBinding?.root
+        return fBinding?.root
     }
 
     override fun onDestroyView() {
-        mBinding = null
+        fBinding = null
         super.onDestroyView()
     }
 }

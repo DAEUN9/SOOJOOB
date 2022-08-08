@@ -9,7 +9,7 @@ import com.example.proto04.databinding.FragmentPluggingBinding
 
 class PluggingFragment : Fragment() {
 
-    private var mBinding : FragmentPluggingBinding? = null
+    private var fBinding : FragmentPluggingBinding? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -19,13 +19,13 @@ class PluggingFragment : Fragment() {
 
         val binding = FragmentPluggingBinding.inflate(inflater, container, false)
 
-        mBinding = binding
+        fBinding = binding
 
-        return mBinding?.root
+        return fBinding?.root
     }
 
     override fun onDestroyView() {
-        mBinding = null
+        fBinding = null
         super.onDestroyView()
     }
 }
