@@ -9,13 +9,15 @@ public class PostPloggingReqDto {
 
     private Long userId;
     private Double distance;
-    private String startTime;
-    private String endTime;
+//    private String startTime;
+//    private String endTime;
+    private Integer timeRecord;
+    private String dateTime;
     private Integer stepCount;
     private Integer trashCount;
     private String ploggingImg;
-    private Double calorie;
-    private Double bpm;
+//    private Double calorie;
+//    private Double bpm;
 
 
 }
