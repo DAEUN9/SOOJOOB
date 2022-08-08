@@ -17,7 +17,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("api")
+@RequestMapping("badges")
 public class BadgeController {
 
 
@@ -26,7 +26,7 @@ public class BadgeController {
     private final BadgeRepository badgeRepository;
 
 
-    @GetMapping("/badges/{user_id}")
+    @GetMapping("/{user_id}")
     public ResponseDto myBadges(@PathVariable("user_id") long user_id) {
         User user = userRepository.findById(user_id).orElseThrow(
                 () -> new CustomErrorException("유저가 존재하지 않습니다")
@@ -37,7 +37,7 @@ public class BadgeController {
     }
 
 //
-    @PostMapping("/badges/{user_id}/{badge_id}")
+    @PostMapping("/{user_id}/{badge_id}")
     public ResponseDto addBadges(@PathVariable("user_id") long user_id, @PathVariable("badge_id") long badge_id) {
         User user = userRepository.findById(user_id).orElseThrow(
                 () -> new CustomErrorException("유저가 존재하지 않습니다")
@@ -52,5 +52,19 @@ public class BadgeController {
         System.out.println("---------------------------------");
 //        System.out.println(user.getBadges());
         return new ResponseDto(200L,"추가된 뱃지", data);
+    }
+
+    @GetMapping("/{user_id}/no")
+    public ResponseDto addBadges(@PathVariable("user_id") long user_id) {
+        User user = userRepository.findById(user_id).orElseThrow(
+                () -> new CustomErrorException("유저가 존재하지 않습니다")
+        );
+
+        List<Badge> data = badgeService.noHaveBadges(user);
+
+        System.out.println(data);
+        System.out.println("---------------------------------");
+//        System.out.println(user.getBadges());
+        return new ResponseDto(200L,"미보유한 뱃지", data);
     }
 }
