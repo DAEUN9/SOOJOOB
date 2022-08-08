@@ -1,12 +1,12 @@
 package com.D210.soojoobback.service;
 
-import com.D210.soojoobback.UserDetailsImpl;
 import com.D210.soojoobback.dto.user.*;
 import com.D210.soojoobback.entity.Record;
 import com.D210.soojoobback.entity.User;
 import com.D210.soojoobback.exception.CustomErrorException;
 import com.D210.soojoobback.repository.RecordRepository;
 import com.D210.soojoobback.repository.UserRepository;
+import com.D210.soojoobback.security.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -26,13 +26,14 @@ import java.util.regex.Pattern;
 public class UserService {
 
     private final UserRepository userRepository;
-    private final RecordRepository recordRepository;
     private final PasswordEncoder passwordEncoder;
+
+    private final RecordRepository recordRepository;
 
 
 //    @Transactional
 //    public Long update(Long id, UserDTO userDTO){
-//        User user = userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 아이디가 없습니다."));
+//        User user = userRepository.findById(id).orElseThrow(() -> new CustomErrorException("해당 아이디가 없습니다."));
 //        user.update(userDTO.getUsername(), userDTO.getEmail(), userDTO.getPassword());
 //        return id;
 //    }
@@ -150,12 +151,6 @@ public class UserService {
         String username = editUserInfoDto.getUsername();
         String email = editUserInfoDto.getEmail();
 
-//        String password;
-//        if (user.getPassword().equals(editUserInfoDto.getPassword())) {
-//            password = user.getPassword();
-//        } else {
-//            password = editUserInfoDto.getPassword();
-//        }
 
         Integer age = editUserInfoDto.getAge();
 
@@ -170,7 +165,6 @@ public class UserService {
 
         user.setUsername(username);
         user.setEmail(email);
-//        user.setPassword(passwordEncoder.encode(password));
         user.setAge(age);
         user.setWeight(weight);
         user.setHeight(height);

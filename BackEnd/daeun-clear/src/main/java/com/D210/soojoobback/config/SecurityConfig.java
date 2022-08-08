@@ -1,11 +1,9 @@
 package com.D210.soojoobback.config;
 
-import com.D210.soojoobback.CustomAuthenticationEntryPoint;
-import com.D210.soojoobback.JwtAuthenticationFilter;
-import com.D210.soojoobback.JwtTokenProvider;
-//import com.D210.soojoobback.config.oauth.PrincipalOauth2UserService;
+import com.D210.soojoobback.security.CustomAuthenticationEntryPoint;
+import com.D210.soojoobback.security.JwtAuthenticationFilter;
+import com.D210.soojoobback.security.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;

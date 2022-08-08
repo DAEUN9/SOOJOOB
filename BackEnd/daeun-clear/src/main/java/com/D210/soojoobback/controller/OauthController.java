@@ -1,15 +1,14 @@
 package com.D210.soojoobback.controller;
 
 
-import com.D210.soojoobback.JwtTokenProvider;
 import com.D210.soojoobback.dto.user.LoginDetailResponseDto;
 import com.D210.soojoobback.dto.user.LoginResponseDto;
 import com.D210.soojoobback.dto.user.ResponseDto;
+import com.D210.soojoobback.entity.GoogleUser;
+import com.D210.soojoobback.entity.OAuthUserInfo;
 import com.D210.soojoobback.entity.User;
-
-import com.D210.soojoobback.provider.GoogleUser;
-import com.D210.soojoobback.provider.OAuthUserInfo;
 import com.D210.soojoobback.repository.UserRepository;
+import com.D210.soojoobback.security.JwtTokenProvider;
 import com.D210.soojoobback.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -18,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
-import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -62,5 +60,4 @@ public class OauthController {
         return new ResponseDto(200L, "구글 로그인에 성공했습니다", loginResponseDto);
 //        return jwtToken;
     }
-
 }

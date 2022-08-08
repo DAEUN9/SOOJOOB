@@ -1,9 +1,10 @@
 package com.D210.soojoobback.service;
 
-import com.D210.soojoobback.UserDetailsImpl;
+
 import com.D210.soojoobback.entity.User;
 import com.D210.soojoobback.exception.CustomErrorException;
 import com.D210.soojoobback.repository.UserRepository;
+import com.D210.soojoobback.security.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

@@ -1,4 +1,4 @@
-package com.D210.soojoobback;
+package com.D210.soojoobback.security;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.AuthenticationException;

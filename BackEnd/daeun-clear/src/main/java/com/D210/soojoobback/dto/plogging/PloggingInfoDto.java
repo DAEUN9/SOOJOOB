@@ -1,7 +1,6 @@
 package com.D210.soojoobback.dto.plogging;
 
 import com.D210.soojoobback.entity.Plogging;
-import com.D210.soojoobback.entity.User;
 import lombok.*;
 
 @Getter

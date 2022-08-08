@@ -14,10 +14,10 @@ import java.util.Optional;
  */
 
 // JpaRepository 를 상속하면 자동 컴포넌트 스캔됨.
-public interface UserRepository extends JpaRepository<User, Integer>{
+public interface UserRepository extends JpaRepository<User, Integer> {
 	// SELECT * FROM user WHERE username = ?1
-	User findByUsername(String username);
 
+	User findByUsername(String username);
 	Optional<User> findOByUsername(String username);
 
 	// SELECT * FROM user WHERE provider = ?1 and providerId = ?2
@@ -27,8 +27,6 @@ public interface UserRepository extends JpaRepository<User, Integer>{
 	Optional<User> findByEmail(String email);
 
 	Optional<User> findById(Long id);
-
-
 }
 
 

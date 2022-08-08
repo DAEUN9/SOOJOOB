@@ -1,4 +1,5 @@
-package com.D210.soojoobback;
+package com.D210.soojoobback.security;
+
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;

@@ -1,4 +1,4 @@
-package com.D210.soojoobback.provider;
+package com.D210.soojoobback.entity;
 
 public interface OAuthUserInfo {
 	String getProviderId();
