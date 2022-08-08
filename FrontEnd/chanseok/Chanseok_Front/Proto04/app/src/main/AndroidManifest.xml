@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.proto04">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -17,14 +17,16 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name="com.example.proto04.SignupActivity"
+            android:name=".MapsActivity"
             android:exported="false" />
         <activity
-            android:name="com.example.proto04.LoginActivity"
-            android:exported="true">
-        </activity>
+            android:name=".SignupActivity"
+            android:exported="false" />
         <activity
-            android:name="com.example.proto04.MainActivity"
+            android:name=".LoginActivity"
+            android:exported="true"></activity>
+        <activity
+            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
