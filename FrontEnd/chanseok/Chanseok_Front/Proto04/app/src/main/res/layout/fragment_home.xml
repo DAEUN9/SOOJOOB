@@ -7,7 +7,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:background="#FBFBFB"
     android:id="@+id/homeFragment"
-    tools:context="com.example.proto01.fragments.HomeFragment"
+    tools:context="com.example.proto04.fragments.HomeFragment"
     >
 
     <RelativeLayout
@@ -41,17 +41,17 @@
             android:layout_height="30dp"
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@+id/login"
-            android:src="@drawable/ic_baseline_notifications_24"
+            android:src="@drawable/ic_notifications"
             app:tint="@color/green" />
 
         <ImageView
             android:id="@+id/login"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
             android:layout_marginHorizontal="10dp"
-            android:src="@drawable/ic_baseline_login_24"
+            android:src="@drawable/ic_login"
             app:tint="#A8A8AA" />
 
     </RelativeLayout>
