@@ -6,16 +6,27 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <TextView
-        android:id="@+id/TimeRecord"
+        android:id="@+id/trashCount"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="총 시간 : "
+        android:text="쓰레기 개수 : "
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/iv_pre"
         app:layout_constraintVertical_bias="0.431"
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="29dp">
     </TextView>
+
+    <TextView
+        android:id="@+id/TimeRecord"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="총 시간 : "
+        app:layout_constraintBottom_toTopOf="@+id/trashCount"
+        app:layout_constraintTop_toBottomOf="@+id/iv_pre"
+        app:layout_constraintVertical_bias="0.431"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="29dp"></TextView>
 
     <TextView
         android:id="@+id/sumDistance"
@@ -61,4 +72,15 @@
         tools:layout_editor_absoluteX="29dp">
 
     </TextView>
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="134dp"
+        android:layout_height="73dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.449" />
 </androidx.constraintlayout.widget.ConstraintLayout>

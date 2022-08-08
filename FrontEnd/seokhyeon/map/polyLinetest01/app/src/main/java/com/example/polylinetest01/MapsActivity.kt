@@ -49,14 +49,16 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     private var dis:Double = 0.0
     private var sumTime = ""
     private var time = 0
+    private var trashCount = 0
     private var isRunning = false
     private var timerTask: Timer? = null
     private var index :Int = 1
     private lateinit var secText: TextView
     private lateinit var milliText: TextView
+    private lateinit var trashCountText: TextView
     private lateinit var startBtn: Button
     private lateinit var resetBtn: Button
-    private lateinit var recordBtn: Button
+    private lateinit var trashBtn: Button
     private lateinit var end_button: Button
 
 
@@ -91,6 +93,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             val location = locationResult?.lastLocation
 //            //  gps가 켜져 있고 위치 정보를 찾을 수 있을 때 다음 함수를 호출한다. <?. : 안전한 호출>
             location?.run{
+
+                prelat = latitude
+                prelon = longitude
 //                // 현재 경도와 위도를 LatLng메소드로 설정한다.
                 val latLng=LatLng(latitude,longitude)
 //                // 카메라를 이동한다.(이동할 위치,줌 수치)
@@ -175,9 +180,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         secText = findViewById(R.id.secText)
         milliText = findViewById(R.id.milliText)
         startBtn = findViewById(R.id.startBtn)
-//        resetBtn = findViewById(R.id.resetBtn)
-//        recordBtn = findViewById(R.id.recordBtn)
+        trashBtn = findViewById(R.id.trashBtn)
+        trashCountText = findViewById(R.id.trashCountText)
 //        lap_Layout = findViewById(R.id.lap_Layout)
+//        resetBtn = findViewById(R.id.resetBtn)
 
         //버튼 클릭 리스너
         startBtn.setOnClickListener {
@@ -190,6 +196,11 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 //        recordBtn.setOnClickListener {
 //            if(time!=0) lapTime()
 //        }
+        trashBtn.setOnClickListener {
+            trashCount ++
+            trashCountText.text = "$trashCount"
+            println(trashCount)
+        }
 
         end_button = findViewById(R.id.end_button)
 
@@ -198,7 +209,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         end_button.setOnClickListener { // 버튼 클릭시 할 행동
             pause()
             endIntent.putExtra("timeRecord",time)
-            endIntent.putExtra("sumDistance",sumDistance - 1.316256E7)
+            endIntent.putExtra("sumDistance",sumDistance)
+            endIntent.putExtra("trashCount", trashCount)
             startActivity(endIntent)  // 화면 전환하기
             finish()
         }

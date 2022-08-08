@@ -23,6 +23,8 @@ open class EndActivity : AppCompatActivity() {
 
     private lateinit var sumDistanceText: TextView
     private lateinit var timeRecordText: TextView
+    private lateinit var trashCountText: TextView
+
     private lateinit var btn_camera: Button
     private lateinit var iv_pre: ImageView
     private lateinit var now :TextView
@@ -40,6 +42,10 @@ open class EndActivity : AppCompatActivity() {
         sumDistanceText = findViewById(R.id.sumDistance)
         sumDistanceText.text = "이동 거리 " + "$sumDistance" + "m"
 
+
+        val trashCount = intent.getIntExtra("trashCount",0)
+        trashCountText = findViewById(R.id.trashCount)
+        trashCountText.text = "총 쓰레기 수 : " + "$trashCount"
 
         btn_camera = findViewById(R.id.btn_camera)
         iv_pre = findViewById(R.id.iv_pre)
