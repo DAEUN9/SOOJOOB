@@ -10,9 +10,9 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/soojoop?serverTimezone=Asia/Seoul
-    username:
-    password:
+    url: jdbc:mysql://i7d210.p.ssafy.io:3306/d210?serverTimezone=Asia/Seoul
+    username: d210
+    password: tjrgus777!
 
   #  mvc:
   #    view:

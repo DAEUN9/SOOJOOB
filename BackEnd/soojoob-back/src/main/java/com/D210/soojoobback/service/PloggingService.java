@@ -70,18 +70,21 @@ public class PloggingService {
 
         Integer trashCount = requestDto.getTrashCount();
 
-        Double calorie = requestDto.getCalorie();
+//        Double calorie = requestDto.getCalorie();
 
+        Integer timeRecord = requestDto.getTimeRecord();
 
         Record record = recordRepository.findById(userId);
 
-        Double toCal = record.getTotalCalorie();
+//        Double toCal = record.getTotalCalorie();
         Double toDis = record.getTotalDistance();
         Integer toTrash = record.getTotalTrashCount();
+        Integer toTimeRec = record.getTotalTimeRecord();
 
-        record.setTotalCalorie(toCal + calorie);
+//        record.setTotalCalorie(toCal + calorie);
         record.setTotalDistance(toDis + distance);
         record.setTotalTrashCount(toTrash + trashCount);
+        record.setTotalTimeRecord(toTimeRec + timeRecord);
 
 
         ploggingRepository.save(plogging);
