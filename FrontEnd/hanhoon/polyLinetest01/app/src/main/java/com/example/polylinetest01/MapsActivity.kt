@@ -60,7 +60,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var end_button: Button
 
 
-    private val polyLineOptions=PolylineOptions().width(5f).color(Color.RED) // 이동경로를 그릴 선
+    private val polyLineOptions=PolylineOptions().width(5f).color(Color.MAGENTA) // 이동경로를 그릴 선
     private lateinit var mMap: GoogleMap // 마커, 카메라 지정을 위한 구글 맵 객체
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient // 위치 요청 메소드 담고 있는 객체
     private lateinit var locationRequest:LocationRequest // 위치 요청할 때 넘겨주는 데이터에 관한 객체
