@@ -15,8 +15,6 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
 //import org.jetbrains.anko.alert
 //import org.jetbrains.anko.noButton
 //import org.jetbrains.anko.yesButton
@@ -30,8 +28,7 @@ import android.view.WindowManager
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
-import com.google.android.gms.maps.model.Polyline
-import com.google.android.gms.maps.model.PolylineOptions
+import com.google.android.gms.maps.model.*
 import java.lang.Math.*
 import java.util.*
 import kotlin.math.pow
@@ -42,25 +39,32 @@ import com.example.polylinetest01.MapsActivity.StartLocationCallBack as StartLoc
 
 
 
-class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
+class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListener,
+    GoogleMap.OnMyLocationClickListener,OnMapReadyCallback, GoogleMap.OnPolylineClickListener,
+    GoogleMap.OnPolygonClickListener {
     private var prelat:Double = 0.0
     private var prelon:Double = 0.0
     private var sumDistance:Double = 0.0
     private var dis:Double = 0.0
     private var sumTime = ""
     private var time = 0
+    private var trashCount = 0
     private var isRunning = false
     private var timerTask: Timer? = null
     private var index :Int = 1
     private lateinit var secText: TextView
     private lateinit var milliText: TextView
+    private lateinit var trashCountText: TextView
     private lateinit var startBtn: Button
     private lateinit var resetBtn: Button
-    private lateinit var recordBtn: Button
+    private lateinit var trashBtn: Button
     private lateinit var end_button: Button
 
+    // 현재 위치
+    private lateinit var latLng : LatLng
 
-    private val polyLineOptions=PolylineOptions().width(5f).color(Color.MAGENTA) // 이동경로를 그릴 선
+    // 이동경로를 그릴 선 설정 (10f, MAGENTA)
+    private var polyLineOptions=PolylineOptions().width(10f).color(Color.MAGENTA)
     private lateinit var mMap: GoogleMap // 마커, 카메라 지정을 위한 구글 맵 객체
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient // 위치 요청 메소드 담고 있는 객체
     private lateinit var locationRequest:LocationRequest // 위치 요청할 때 넘겨주는 데이터에 관한 객체
@@ -82,6 +86,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 //        locationRequest.fastestInterval=5000 // 다른 앱에서 위치를 갱신했을 때 그 정보를 가져오는 시간 <밀리초 기준>
     }
     // 위치 정보를 찾고 나서 인스턴스화되는 클래스
+    @SuppressLint("MissingPermission")
     inner class MyLocationCallBack:LocationCallback(){
         override fun onLocationResult(locationResult: LocationResult?) {
             super.onLocationResult(locationResult)
@@ -91,16 +96,44 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             val location = locationResult?.lastLocation
 //            //  gps가 켜져 있고 위치 정보를 찾을 수 있을 때 다음 함수를 호출한다. <?. : 안전한 호출>
             location?.run{
+                // 첫 위치 초기화
+                prelat = latitude
+                prelon = longitude
 //                // 현재 경도와 위도를 LatLng메소드로 설정한다.
-                val latLng=LatLng(latitude,longitude)
+//                val latLng=LatLng(latitude,longitude)
+                latLng=LatLng(latitude,longitude)
 //                // 카메라를 이동한다.(이동할 위치,줌 수치)
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,20f))
+                // **********************************한훈 참고용 시작*************************************
+                // 확대/축소 : 1-세계, 5-대륙, 10-도시, 15-거리, 20-건물
+//        // 영역 내에 카메라 중심 맞추기
+//        val gumi_example = LatLngBounds(
+//                iwc,
+//                LatLng(36.1040515, 128.4202060)
+//        )
+//        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(gumi_example.center, 10f))
+//        googleMap.moveCamera(CameraUpdateFactory.newLatLng(samsung_gumi))
+                // 삼성 구미를 중심으로 거리수준의 배율로 카메라 이동
+//                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(samsung_gumi, 15f))
+                // **********************************한훈 참고용 완료*************************************
 //                // 마커를 추가한다.
-                mMap.addMarker(MarkerOptions().position(latLng).title("Changed Location"))
+//                mMap.addMarker(MarkerOptions().position(latLng).title("Changed Location"))
+                // **********************************한훈 참고용 시작*************************************
+                // 마커 추가 (이하 option 설명)
+//                googleMap.addMarker(MarkerOptions().position(samsung_gumi).title("Marker in Samsung_Gumi"))
+                // .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_XXX)) -> 마커 색상 변경
+//        googleMap.addMarker(MarkerOptions().position(iwc).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)))
+                // .alpha(0.7f) -> 불투명도
+//        googleMap.addMarker(MarkerOptions().position(iwc).alpha(0.7f))
+                // 마커변경
+//        googleMap.addMarker(MarkerOptions().position(iwc).icon(BitmapDescriptorFactory.fromBitmap(R.drawable.boy)))
+                // **********************************한훈 참고용 완료*************************************
+
                 // polyLine에 좌표 추가
 //                polyLineOptions.add(latLng)
 //                // 선 그리기
 //                mMap.addPolyline(polyLineOptions)
+                mMap.isMyLocationEnabled = true
             }
         }
     }
@@ -115,7 +148,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         // (정보 요청할 때 넘겨줄 데이터)에 관한 객체 생성
         locationRequest=LocationRequest()
         locationRequest.priority=LocationRequest.PRIORITY_HIGH_ACCURACY // 가장 정확한 위치를 요청한다,
-        locationRequest.interval=10000 // 위치를 갱신하는데 필요한 시간 <밀리초 기준>
+//        locationRequest.interval=10000 // 위치를 갱신하는데 필요한 시간 <밀리초 기준>
+        // 위치를 갱신하는데 필요한 시간 <밀리초 기준> -> 5초
+        locationRequest.interval=5000
         locationRequest.fastestInterval=5000 // 다른 앱에서 위치를 갱신했을 때 그 정보를 가져오는 시간 <밀리초 기준>
 
     }
@@ -127,11 +162,12 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             // lastLocation프로퍼티가 가리키는 객체 주소를 받는다.
             // 그 객체는 현재 경도와 위도를 프로퍼티로 갖는다.
             // 그러나 gps가 꺼져 있거나 위치를 찾을 수 없을 때는 lastLocation은 null을 가진다.
+
             val location = locationResult?.lastLocation
             //  gps가 켜져 있고 위치 정보를 찾을 수 있을 때 다음 함수를 호출한다. <?. : 안전한 호출>
             location?.run{
                 // 현재 경도와 위도를 LatLng메소드로 설정한다.
-                val latLng=LatLng(latitude,longitude)
+                latLng=LatLng(latitude,longitude)
 
                 dis = DistanceManager.getDistance(prelat,prelon , latitude,longitude).toDouble()
                 println("좌표 사이 거리 : " + dis + "m")
@@ -142,10 +178,12 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,20f))
                 // 마커를 추가한다.
 //                mMap.addMarker(MarkerOptions().position(latLng).title("Changed Location"))
-                // polyLine에 좌표 추가
-                polyLineOptions.add(latLng)
-                // 선 그리기
-                mMap.addPolyline(polyLineOptions)
+                // 달리는 중일때만  polyLine에 좌표 추가
+                if(isRunning) {
+                    polyLineOptions.add(latLng)
+                    // 선 그리기
+                    mMap.addPolyline(polyLineOptions)
+                }
 
                 prelat = latitude
                 prelon = longitude
@@ -167,20 +205,31 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         // 위치 정보를 얻기 위한 각종 초기화
         locationInit()
 //        locationstart()
+        // 활동의 onCreate() 메서드에서 FragmentManager.findFragmentById()를 호출하여 지도 프래그먼트의 핸들을 가져옵니다.
         // 프래그먼트 매니저로부터 SupportMapFragment프래그먼트를 얻는다. 이 프래그먼트는 지도를 준비하는 기능이 있다.
         val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
+        // 그런 다음 getMapAsync()를 사용하여 지도 콜백에 등록합니다
         // 지도가 준비되면 알림을 받는다. (아마, get함수에서 다른 함수를 호출해서 처리하는 듯)
         mapFragment.getMapAsync(this)
+        // 여기까지가 기본 지도 설정 - 한훈 참고용
 
         secText = findViewById(R.id.secText)
         milliText = findViewById(R.id.milliText)
         startBtn = findViewById(R.id.startBtn)
-//        resetBtn = findViewById(R.id.resetBtn)
-//        recordBtn = findViewById(R.id.recordBtn)
+        trashBtn = findViewById(R.id.trashBtn)
+        trashCountText = findViewById(R.id.trashCountText)
 //        lap_Layout = findViewById(R.id.lap_Layout)
+//        resetBtn = findViewById(R.id.resetBtn)
 
         //버튼 클릭 리스너
+        var startflag = false
         startBtn.setOnClickListener {
+            if(!startflag) {
+                mMap.addMarker(MarkerOptions().position(latLng).title("Changed Location"))
+                //                mMap.addMarker(MarkerOptions().position(latLng).icon(BitmapDescriptorFactory.fromBitmap(R.drawable.boy)))
+
+                startflag = true
+            }
             isRunning = !isRunning
             if (isRunning) start() else pause()
         }
@@ -190,6 +239,13 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 //        recordBtn.setOnClickListener {
 //            if(time!=0) lapTime()
 //        }
+        trashBtn.setOnClickListener {
+            trashCount ++
+            trashCountText.text = "$trashCount"
+            println(trashCount)
+            // 줍깅 마칭
+            mMap.addMarker(MarkerOptions().position(latLng).title("Changed Location"))
+        }
 
         end_button = findViewById(R.id.end_button)
 
@@ -198,7 +254,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         end_button.setOnClickListener { // 버튼 클릭시 할 행동
             pause()
             endIntent.putExtra("timeRecord",time)
-            endIntent.putExtra("sumDistance",sumDistance - 1.316256E7)
+            endIntent.putExtra("sumDistance",sumDistance)
+            endIntent.putExtra("trashCount", trashCount)
             startActivity(endIntent)  // 화면 전환하기
             finish()
         }
@@ -241,7 +298,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     }
 
-
+    // OnMapReadyCallback 인터페이스를 구현하고, GoogleMap 객체를 사용할 수 있을 때
+    // 지도를 설정하도록 onMapReady() 메서드를 재정의
     override fun onMapReady(googleMap: GoogleMap) {
 //         googleMap객체 생성
 //         googleMap을 이용하여 마커나 카메라,선 등을 조정하는 것이다
@@ -261,6 +319,53 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 //        mMap.animateCamera(CameraUpdateFactory.zoomTo(20f))
 //        // P.s. onMapReady가 호출된 후에 위치 수정이 가능하다!!
 //        polyLineOptions.add(GUMI)
+
+        // **********************************한훈 참고용 시작*************************************
+//                PolylineOptions()
+//                    .clickable(true)
+//                    .width(25f)
+//                    .color(Color.RED)
+//                    .add(좌표1, 좌표2, ...)
+
+        // 다중선과 함께 데이터 객체를 저장한다.
+//                polyline1.tag = "A"
+//                polyline2.tag = "B"
+        // **********************************한훈 참고용 완료*************************************
+        // **********************************한훈 참고용 시작*************************************
+        // 폴리라인을 클릭하면 실행. 사용자가 다중선을 클릭할 때마다 실선과 점선 간의 패턴을 변경함
+        mMap.setOnPolylineClickListener(this)
+        // 지도를 클릭하면 실행. 지도에 영역을 나타내는 다각형
+        mMap.setOnPolygonClickListener(this)
+        // **********************************한훈 참고용 완료*************************************
+
+        // 지도 유형 설정하기
+        googleMap.mapType = GoogleMap.MAP_TYPE_NORMAL
+//        googleMap.mapType = GoogleMap.MAP_TYPE_SATELLITE
+//        googleMap.mapType = GoogleMap.MAP_TYPE_HYBRID
+//        googleMap.mapType = GoogleMap.MAP_TYPE_TERRAIN
+//        googleMap.mapType = GoogleMap.MAP_TYPE_NONE
+
+        // ui 세팅
+        val uisettings = googleMap.uiSettings
+        // 확대/축소 컨트롤 바
+        uisettings.setZoomControlsEnabled(true)
+        // 나침반 표시
+        uisettings.setCompassEnabled(true)
+        // 지도 툴바 삭제 (마커 누르면 우측밑에 필요 없는거)
+        uisettings.setMapToolbarEnabled(false)
+        // 기울이기 동작 제거 (두 손가락 대고 위아래 움직이기)
+        uisettings.setTiltGesturesEnabled(false)
+        // 회전 동작 제거 (두 손가락 대고 회전 하기)
+//        uisettings.setRotateGesturesEnabled(false)
+
+        // **********************************한훈 참고용 시작*************************************
+//        // 현재위치(내위치)로 이동 버튼 활성화
+//        googleMap.isMyLocationEnabled = true
+//        // 사용자가 내 위치 버튼을 클릭하면 앱이 GoogleMap.OnMyLocationButtonClickListener에서 onMyLocationButtonClick() 콜백을 수신
+        googleMap.setOnMyLocationButtonClickListener(this)
+//        // 사용자가 내 위치의 파란색 점을 클릭하면 앱이 GoogleMap.OnMyLocationClickListener에서 onMyLocationClick() 콜백을 수신
+        googleMap.setOnMyLocationClickListener(this)
+        // **********************************한훈 참고용 완료*************************************
     }
 
 
@@ -389,4 +494,41 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         }
 
     }
+    // 사용자가 다중선을 클릭할 때마다 실선과 점선 간의 패턴을 변경함
+    private val PATTERN_GAP_LENGTH_PX = 20
+    private val DOT: PatternItem = Dot()
+    private val GAP: PatternItem = Gap(PATTERN_GAP_LENGTH_PX.toFloat())
+
+    // Create a stroke pattern of a gap followed by a dot.
+    private val PATTERN_POLYLINE_DOTTED = listOf(GAP, DOT)
+    override fun onPolylineClick(polyline: Polyline) {
+        // Flip from solid stroke to dotted stroke pattern.
+        if (polyline.pattern == null || !polyline.pattern!!.contains(DOT)) {
+            polyline.pattern = PATTERN_POLYLINE_DOTTED
+            polyline.color = Color.GREEN
+        } else {
+            // The default pattern is a solid stroke.
+            polyline.pattern = null
+            polyline.color = Color.BLUE
+        }
+        Toast.makeText(this, "Route type " + polyline.tag.toString(),
+            Toast.LENGTH_SHORT).show()    }
+
+    override fun onPolygonClick(p0: Polygon) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onMyLocationButtonClick(): Boolean {
+        Toast.makeText(this, "MyLocation button clicked", Toast.LENGTH_SHORT)
+            .show()
+        // Return false so that we don't consume the event and the default behavior still occurs
+        // (the camera animates to the user's current position).
+        return false
+    }
+
+    override fun onMyLocationClick(location: Location) {
+        Toast.makeText(this, "Current location:\n$location", Toast.LENGTH_LONG)
+            .show()
+    }
+
 }
