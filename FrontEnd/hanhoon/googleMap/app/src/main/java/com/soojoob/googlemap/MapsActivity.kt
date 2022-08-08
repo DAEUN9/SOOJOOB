@@ -4,6 +4,7 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.content.pm.ActivityInfo
 import android.content.pm.PackageManager
+import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.location.Location
 import android.os.Bundle
@@ -25,12 +26,14 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
     ActivityCompat.OnRequestPermissionsResultCallback, GoogleMap.OnPolylineClickListener,
     GoogleMap.OnPolygonClickListener {
 
-    private var permissionDenied = false
+    // 이동경로를 그릴 선
+    private val polyLineOptions=PolylineOptions().width(5f).color(Color.RED)
+//    private var permissionDenied = false
     // 마커, 카메라 지정을 위한 구글 맵 객체
     private lateinit var mMap: GoogleMap
 
     // PlacesClient 객체(인터페이스는 기기의 현재 위치와 위치 근처의 장소를 검색)를 만듭니다.
-    private lateinit var placesClient : PlacesClient
+//    private lateinit var placesClient : PlacesClient
     // LocationServices 인터페이스는 Android 위치 서비스의 기본 진입점입니다.
     // 위치 요청 메소드 담고 있는 객체
     private lateinit var fusedLocationProviderClient : FusedLocationProviderClient
@@ -47,12 +50,12 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
         // 세로 모드로 화면 고정
         requestedOrientation= ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
-        // Places 객체(Android용 Places SDK의 클라이언트를 만들고 관리)를 초기화합니다.
-        Places.initialize(applicationContext, getString(R.string.maps_api_key))
-        // PlacesClient 객체(인터페이스는 기기의 현재 위치와 위치 근처의 장소를 검색)를 만듭니다.
-        placesClient = Places.createClient(this)
-        // LocationServices 인터페이스는 Android 위치 서비스의 기본 진입점입니다.
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
+//        // Places 객체(Android용 Places SDK의 클라이언트를 만들고 관리)를 초기화합니다.
+//        Places.initialize(applicationContext, getString(R.string.maps_api_key))
+//        // PlacesClient 객체(인터페이스는 기기의 현재 위치와 위치 근처의 장소를 검색)를 만듭니다.
+//        placesClient = Places.createClient(this)
+//        // LocationServices 인터페이스는 Android 위치 서비스의 기본 진입점입니다.
+//        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
 
         // 활동의 onCreate() 메서드에서 FragmentManager.findFragmentById()를 호출하여 지도 프래그먼트의 핸들을 가져옵니다.
         // 프래그먼트 매니저로부터 SupportMapFragment프래그먼트를 얻는다. 이 프래그먼트는 지도를 준비하는 기능이 있다.
@@ -71,8 +74,18 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
         // 위치 추가
         val iwc = LatLng(36.1019170, 128.4198704)
         val samsung_gumi = LatLng(36.1072574, 128.4151203)
-        // 마커 추가
+        // 마커 추가 (이하 option 설명)
         googleMap.addMarker(MarkerOptions().position(samsung_gumi).title("Marker in Samsung_Gumi"))
+        // .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_XXX)) -> 마커 색상 변경
+//        googleMap.addMarker(MarkerOptions().position(iwc).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)))
+        // .alpha(0.7f) -> 불투명도
+//        googleMap.addMarker(MarkerOptions().position(iwc).alpha(0.7f))
+        // 마커변경
+//        googleMap.addMarker(MarkerOptions().position(iwc).icon(BitmapDescriptorFactory.fromBitmap(R.drawable.boy)))
+
+
+
+
         // 확대/축소 : 1-세계, 5-대륙, 10-도시, 15-거리, 20-건물
 //        // 영역 내에 카메라 중심 맞추기
 //        val gumi_example = LatLngBounds(
@@ -122,8 +135,8 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
         // 지도 유형 설정하기
 //        googleMap.mapType = GoogleMap.MAP_TYPE_NORMAL
 //        googleMap.mapType = GoogleMap.MAP_TYPE_SATELLITE
-//        googleMap.mapType = GoogleMap.MAP_TYPE_HYBRID
-        googleMap.mapType = GoogleMap.MAP_TYPE_TERRAIN
+        googleMap.mapType = GoogleMap.MAP_TYPE_HYBRID
+//        googleMap.mapType = GoogleMap.MAP_TYPE_TERRAIN
 //        googleMap.mapType = GoogleMap.MAP_TYPE_NONE
 
         // ui 세팅
@@ -188,7 +201,7 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
                 Manifest.permission.ACCESS_COARSE_LOCATION
             ) == PackageManager.PERMISSION_GRANTED
         ) {
-            mMap.isMyLocationEnabled = true
+
             return
         }
 
@@ -267,11 +280,11 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
 
     override fun onResumeFragments() {
         super.onResumeFragments()
-        if (permissionDenied) {
-            // Permission was not granted, display error dialog.
-            showMissingPermissionError()
-            permissionDenied = false
-        }
+//        if (permissionDenied) {
+//            // Permission was not granted, display error dialog.
+//            showMissingPermissionError()
+//            permissionDenied = false
+//        }
         // 사용자에게 gps키라고 알리기
         Toast.makeText(this,"이 앱은 GPS(위치)를 켜야 이용 가능합니다!", Toast.LENGTH_SHORT).show()
     }
