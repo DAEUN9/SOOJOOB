@@ -36,23 +36,23 @@
             android:textSize="40dp"
             android:textStyle="bold" />
 
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_centerVertical="true"
-            android:layout_toLeftOf="@+id/login"
-            android:src="@drawable/ic_notifications"
-            app:tint="@color/green" />
+<!--        <ImageView-->
+<!--            android:layout_width="30dp"-->
+<!--            android:layout_height="30dp"-->
+<!--            android:layout_centerVertical="true"-->
+<!--            android:layout_toLeftOf="@+id/login"-->
+<!--            android:src="@drawable/ic_notifications"-->
+<!--            app:tint="@color/green" />-->
 
         <ImageView
             android:id="@+id/login"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginHorizontal="10dp"
             android:src="@drawable/ic_login"
-            app:tint="#A8A8AA" />
+            app:tint="#505050" />
 
     </RelativeLayout>
 

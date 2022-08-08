@@ -9,7 +9,7 @@ import com.example.proto04.databinding.FragmentRecordBinding
 
 class RecordFragment : Fragment() {
 
-    private var mBinding : FragmentRecordBinding? = null
+    private var fBinding : FragmentRecordBinding? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -19,13 +19,13 @@ class RecordFragment : Fragment() {
 
         val binding = FragmentRecordBinding.inflate(inflater, container, false)
 
-        mBinding = binding
+        fBinding = binding
 
-        return mBinding?.root
+        return fBinding?.root
     }
 
     override fun onDestroyView() {
-        mBinding = null
+        fBinding = null
         super.onDestroyView()
     }
 }

@@ -1,15 +1,17 @@
 package com.example.proto04.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.example.proto04.LoginActivity
 import com.example.proto04.databinding.FragmentHomeBinding
 
 class HomeFragment : Fragment() {
 
-    private var mBinding : FragmentHomeBinding? = null
+    private var fBinding : FragmentHomeBinding? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -18,15 +20,19 @@ class HomeFragment : Fragment() {
     ): View? {
 
         val binding = FragmentHomeBinding.inflate(inflater, container, false)
+        fBinding = binding
 
-        mBinding = binding
+        binding.login.setOnClickListener {
+            val intent = Intent(activity, LoginActivity::class.java)
+            startActivity(intent)
+        }
 
-        return mBinding?.root
+        return fBinding?.root
     }
 
     override fun onDestroyView() {
-        mBinding = null
         super.onDestroyView()
+        fBinding = null
     }
 
 
