@@ -1,4 +1,4 @@
-package com.example.polylinetest01
+package com.example.proto04
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -6,14 +6,15 @@ import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
-import android.graphics.drawable.BitmapDrawable
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
-import android.view.View
-import android.widget.*
+import android.widget.Button
+import android.widget.ImageView
+import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -23,7 +24,6 @@ import java.io.FileOutputStream
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
-
 
 open class EndActivity : AppCompatActivity() {
 
@@ -35,8 +35,10 @@ open class EndActivity : AppCompatActivity() {
     private lateinit var iv_pre: ImageView
     private lateinit var now :TextView
     private lateinit var imageSaveBtn: Button
-
     private lateinit var bitmap:Bitmap
+    private var imgCount:Int = 0
+
+
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,30 +64,21 @@ open class EndActivity : AppCompatActivity() {
         val currentDateTime = Calendar.getInstance().time
         var dateFormat = SimpleDateFormat("yyyy.MM.dd HH:mm:ss", Locale.KOREA).format(currentDateTime)
 
-       now.text = dateFormat
+        now.text = dateFormat
+
+        imageSaveBtn = findViewById(R.id.imageSaveBtn)
+        imageSaveBtn.setOnClickListener{
+            saveImage(bitmap, "plogging_result"+ "${imgCount}")
+            imgCount ++
+
+        }
 
         // 카메라 권한 가져오기
         if(checkPermission(STORAGE_PERMISSION,FLAG_PERM_STORAGE)){
             setViews()
         }
-
-        imageSaveBtn = findViewById(R.id.imageSaveBtn)
-        imageSaveBtn.setOnClickListener{
-            saveImage(bitmap, "plogging_result")
-        }
-//        imageSaveBtn.setOnClickListener(View.OnClickListener() {
-//            fun onClick(view: View?) {
-//                if (imageView == null) {
-//                    return
-//                }
-//                saveImage(
-//                    (bitmap.getDrawable() as BitmapDrawable).bitmap,
-//                    simpleDateFormat.format(Date())
-//                )
-//            }
-//        })
-
     }
+
 
 
 
@@ -174,12 +167,12 @@ open class EndActivity : AppCompatActivity() {
                         //카메라로 방금 촬영한 이미지를 미리 만들어 놓은 이미지뷰로 전달 합니다.
                         bitmap = data?.extras?.get("data") as Bitmap
                         iv_pre.setImageBitmap(bitmap)
-                        println("이미지" + bitmap)
                     }
                 }
             }
         }
     }
+
     open fun saveImage(bitmap: Bitmap?, saveImageName: String): Boolean {
         val saveDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM)
             .toString() + "/directoryName"
@@ -221,6 +214,8 @@ open class EndActivity : AppCompatActivity() {
         }
         return true
     }
+
+
 
 
 }
