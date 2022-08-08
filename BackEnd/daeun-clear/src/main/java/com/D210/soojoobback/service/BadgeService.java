@@ -51,6 +51,15 @@ public class BadgeService {
         userBadgeRepository.save(userBadge);
         return badge;
     }
+
+    public List<Badge> noHaveBadges(User user) {
+        List<Badge> noBadges = badgeRepository.findAll();
+        List<UserBadge> badgeIds = userBadgeRepository.findByUserId(user.getId());
+        for (UserBadge id : badgeIds) {
+            noBadges.remove(id.getBadge());
+        }
+        return noBadges;
+    }
 //
     public List<BadgeListResDto> checkAddAll(User user, Long totalCalorie, Long totalDistance, Integer totalTrashCount) {
 
