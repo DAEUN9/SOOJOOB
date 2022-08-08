@@ -31,9 +31,8 @@ public class OauthController {
     @PostMapping("/oauth/jwt/google")
     public ResponseDto jwtCreate(@RequestBody Map<String, Object> data) {
         System.out.println("jwtCreate 실행됨");
-        System.out.println(data.get("profileObj"));
         OAuthUserInfo googleUser =
-                new GoogleUser((Map<String, Object>)data.get("profileObj"));
+                new GoogleUser((Map<String, Object>)data);
 
         User userEntity =
                 userRepository.findByUsername(googleUser.getProvider()+"_"+googleUser.getProviderId());
@@ -61,5 +60,4 @@ public class OauthController {
         return new ResponseDto(200L, "구글 로그인에 성공했습니다", loginResponseDto);
 //        return jwtToken;
     }
-
 }
