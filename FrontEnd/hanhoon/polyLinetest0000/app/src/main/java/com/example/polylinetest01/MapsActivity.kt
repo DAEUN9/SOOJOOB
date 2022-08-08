@@ -31,6 +31,7 @@ import android.widget.Toast
 import com.google.android.gms.maps.model.*
 import java.lang.Math.*
 import java.util.*
+import kotlin.collections.ArrayList
 import kotlin.math.pow
 import com.example.polylinetest01.MapsActivity.StartLocationCallBack as StartLocationCallBack
 
@@ -57,14 +58,18 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnPolyli
     private lateinit var recordBtn: Button
     private lateinit var end_button: Button
 
-
-    // 이동경로를 그릴 선
-    private val polyLineOptions=PolylineOptions().width(5f).color(Color.MAGENTA)
+    // 이동경로를 그릴 선 설정
+    private var polyLineOptions=PolylineOptions().width(10f).color(Color.MAGENTA)
+    // 이동경로를 그릴 선 (동적리스트)
+//    private lateinit var polylineArray : ArrayList<Polyline>
     private lateinit var mMap: GoogleMap // 마커, 카메라 지정을 위한 구글 맵 객체
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient // 위치 요청 메소드 담고 있는 객체
     private lateinit var locationRequest:LocationRequest // 위치 요청할 때 넘겨주는 데이터에 관한 객체
     private lateinit var locationCallback: MyLocationCallBack // 위치 확인되고 호출되는 객체
     private var locationCallback2 = StartLocationCallBack()
+
+    // 현재 위치
+    private lateinit var latLng : LatLng
 
 
     // 위치 정보를 얻기 위한 각종 초기화
@@ -81,6 +86,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnPolyli
 //        locationRequest.fastestInterval=5000 // 다른 앱에서 위치를 갱신했을 때 그 정보를 가져오는 시간 <밀리초 기준>
     }
     // 위치 정보를 찾고 나서 인스턴스화되는 클래스
+    @SuppressLint("MissingPermission")
     inner class MyLocationCallBack:LocationCallback(){
         override fun onLocationResult(locationResult: LocationResult?) {
             super.onLocationResult(locationResult)
@@ -90,10 +96,14 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnPolyli
             val location = locationResult?.lastLocation
 //            //  gps가 켜져 있고 위치 정보를 찾을 수 있을 때 다음 함수를 호출한다. <?. : 안전한 호출>
             location?.run{
+                // 첫 위치 초기화
+                prelat = latitude
+                prelon = longitude
 //                // 현재 경도와 위도를 LatLng메소드로 설정한다.
-                val latLng=LatLng(latitude,longitude)
+//                val latLng=LatLng(latitude,longitude)
+                latLng=LatLng(latitude,longitude)
 //                // 카메라를 이동한다.(이동할 위치,줌 수치)
-                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,15f))
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,20f))
                 // **********************************한훈 참고용 시작*************************************
                 // 확대/축소 : 1-세계, 5-대륙, 10-도시, 15-거리, 20-건물
 //        // 영역 내에 카메라 중심 맞추기
@@ -107,7 +117,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnPolyli
 //                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(samsung_gumi, 15f))
                 // **********************************한훈 참고용 완료*************************************
 //                // 마커를 추가한다.
-                mMap.addMarker(MarkerOptions().position(latLng).title("Changed Location"))
+//                mMap.addMarker(MarkerOptions().position(latLng).title("Changed Location"))
                 // **********************************한훈 참고용 시작*************************************
                 // 마커 추가 (이하 option 설명)
 //                googleMap.addMarker(MarkerOptions().position(samsung_gumi).title("Marker in Samsung_Gumi"))
@@ -118,10 +128,12 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnPolyli
                 // 마커변경
 //        googleMap.addMarker(MarkerOptions().position(iwc).icon(BitmapDescriptorFactory.fromBitmap(R.drawable.boy)))
                 // **********************************한훈 참고용 완료*************************************
+
                 // polyLine에 좌표 추가
 //                polyLineOptions.add(latLng)
 //                // 선 그리기
 //                mMap.addPolyline(polyLineOptions)
+                mMap.isMyLocationEnabled = true
             }
         }
     }
@@ -136,7 +148,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnPolyli
         // (정보 요청할 때 넘겨줄 데이터)에 관한 객체 생성
         locationRequest=LocationRequest()
         locationRequest.priority=LocationRequest.PRIORITY_HIGH_ACCURACY // 가장 정확한 위치를 요청한다,
-        locationRequest.interval=10000 // 위치를 갱신하는데 필요한 시간 <밀리초 기준>
+//        locationRequest.interval=10000 // 위치를 갱신하는데 필요한 시간 <밀리초 기준>
+        locationRequest.interval=5000 // 위치를 갱신하는데 필요한 시간 <밀리초 기준>
         locationRequest.fastestInterval=5000 // 다른 앱에서 위치를 갱신했을 때 그 정보를 가져오는 시간 <밀리초 기준>
 
     }
@@ -149,10 +162,12 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnPolyli
             // 그 객체는 현재 경도와 위도를 프로퍼티로 갖는다.
             // 그러나 gps가 꺼져 있거나 위치를 찾을 수 없을 때는 lastLocation은 null을 가진다.
             val location = locationResult?.lastLocation
+
             //  gps가 켜져 있고 위치 정보를 찾을 수 있을 때 다음 함수를 호출한다. <?. : 안전한 호출>
             location?.run{
                 // 현재 경도와 위도를 LatLng메소드로 설정한다.
-                val latLng=LatLng(latitude,longitude)
+//                val latLng=LatLng(latitude,longitude)
+                latLng=LatLng(latitude,longitude)
 
                 dis = DistanceManager.getDistance(prelat,prelon , latitude,longitude).toDouble()
                 println("좌표 사이 거리 : " + dis + "m")
@@ -161,11 +176,15 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnPolyli
 
                 // 카메라를 이동한다.(이동할 위치,줌 수치)
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,20f))
+
                 // 마커를 추가한다.
 //                mMap.addMarker(MarkerOptions().position(latLng).title("Changed Location"))
-                // polyLine에 좌표 추가
-                polyLineOptions.add(latLng)
-
+                // 달리는 중일때만  polyLine에 좌표 추가
+                if(isRunning) {
+                    polyLineOptions.add(latLng)
+                    // 선 그리기
+                    mMap.addPolyline(polyLineOptions)
+                }
                 prelat = latitude
                 prelon = longitude
 
@@ -178,7 +197,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnPolyli
     // 이 메소드부터 프로그램 시작
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        // 콘텐츠 뷰 설정하기
         setContentView(R.layout.activity_maps)
         // 화면이 꺼지지 않게 하기
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
@@ -199,20 +217,26 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnPolyli
         milliText = findViewById(R.id.milliText)
         startBtn = findViewById(R.id.startBtn)
 //        resetBtn = findViewById(R.id.resetBtn)
-//        recordBtn = findViewById(R.id.recordBtn)
+        recordBtn = findViewById(R.id.recordBtn)
 //        lap_Layout = findViewById(R.id.lap_Layout)
 
         //버튼 클릭 리스너
+        var startflag = false
         startBtn.setOnClickListener {
+            if(!startflag) {
+                mMap.addMarker(MarkerOptions().position(latLng).title("Changed Location"))
+                startflag = true
+            }
             isRunning = !isRunning
             if (isRunning) start() else pause()
         }
 //        resetBtn.setOnClickListener {
 //            reset()
 //        }
-//        recordBtn.setOnClickListener {
+        recordBtn.setOnClickListener {
 //            if(time!=0) lapTime()
-//        }
+            mMap.addMarker(MarkerOptions().position(latLng).title("Changed Location"))
+        }
 
         end_button = findViewById(R.id.end_button)
 
@@ -221,10 +245,11 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnPolyli
         end_button.setOnClickListener { // 버튼 클릭시 할 행동
             pause()
             endIntent.putExtra("timeRecord",time)
-            endIntent.putExtra("sumDistance",sumDistance - 1.316256E7)
+            endIntent.putExtra("sumDistance",sumDistance)
             startActivity(endIntent)  // 화면 전환하기
             finish()
         }
+
     }
 
 
@@ -246,7 +271,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnPolyli
         super.onPause()
         fusedLocationProviderClient.removeLocationUpdates(locationCallback)
         fusedLocationProviderClient.removeLocationUpdates(locationCallback2)
-
     }
     // 위치 요청 메소드
     @SuppressLint("MissingPermission")
@@ -300,7 +324,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnPolyli
         // **********************************한훈 참고용 완료*************************************
         // **********************************한훈 참고용 시작*************************************
         // 폴리라인을 클릭하면 실행. 사용자가 다중선을 클릭할 때마다 실선과 점선 간의 패턴을 변경함
-//        mMap.setOnPolylineClickListener(this)
+        mMap.setOnPolylineClickListener(this)
         // 지도를 클릭하면 실행. 지도에 영역을 나타내는 다각형
         mMap.setOnPolygonClickListener(this)
         // **********************************한훈 참고용 완료*************************************
@@ -333,12 +357,13 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnPolyli
 //        // 사용자가 내 위치의 파란색 점을 클릭하면 앱이 GoogleMap.OnMyLocationClickListener에서 onMyLocationClick() 콜백을 수신
 //        googleMap.setOnMyLocationClickListener(this)
         // **********************************한훈 참고용 완료*************************************
+
     }
 
 
 
 
-    // 권환 관련 메서드
+    // 권한 관련 메서드
     private val gps_request_code=1000 // gps에 관한 권한 요청 코드(번호)
     private fun permissionCheck(cancel:()->Unit,ok:()->Unit){
         // 앱에 GPS이용하는 권한이 없을 때
@@ -359,7 +384,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnPolyli
         // 앱에 권한이 허용됨
         else{
             // 자기 위치 표시
-            mMap.isMyLocationEnabled = true
+//            mMap.isMyLocationEnabled = true
             ok()
         }
     }
@@ -384,8 +409,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnPolyli
 //        alert("지도 정보를 얻으려면 위치 권한이 필수로 필요합니다",""){
 //            yesButton{
 //                // 권한 요청
-        ActivityCompat.requestPermissions(this@MapsActivity,
-            arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),gps_request_code)
+                ActivityCompat.requestPermissions(this@MapsActivity,
+                    arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),gps_request_code)
 //            }
 //            noButton { toast("권한 거부 됨")
 //                finish() }

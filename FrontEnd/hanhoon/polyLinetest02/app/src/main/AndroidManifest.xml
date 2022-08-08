@@ -31,7 +31,7 @@
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="" />
+            android:value="AIzaSyAS9cn9ixRM5oW2ODVy9UY5aYJbQBe273g" />
         <!--            android:value="${MAPS_API_KEY}" />-->
 
         <!-- App 매니페스트 업데이트 -->
