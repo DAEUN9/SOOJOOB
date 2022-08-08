@@ -41,6 +41,11 @@ class LoginActivity : AppCompatActivity() {
             loginWork.work()
         }
 
+        binding.logoLogin.setOnClickListener {
+            val nextIntent = Intent(this, MainActivity::class.java)
+            startActivity(nextIntent)
+        }
+
         binding.nextSignup.setOnClickListener {
             val nextIntent = Intent(this, SignupActivity::class.java)
             startActivity(nextIntent)
