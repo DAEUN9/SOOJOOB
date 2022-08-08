@@ -1,4 +1,4 @@
-package com.D210.soojoobback;
+package com.D210.soojoobback.security;
 
 import com.D210.soojoobback.entity.User;
 import org.springframework.security.core.GrantedAuthority;

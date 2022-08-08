@@ -1,10 +1,10 @@
 package com.D210.soojoobback.controller;
 
-import com.D210.soojoobback.UserDetailsImpl;
+
 import com.D210.soojoobback.dto.user.ResponseDto;
-import com.D210.soojoobback.dto.user.UserInfoDetailsDto;
 import com.D210.soojoobback.entity.Record;
 import com.D210.soojoobback.exception.CustomErrorException;
+import com.D210.soojoobback.security.UserDetailsImpl;
 import com.D210.soojoobback.service.RecordService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,9 +13,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
-import java.util.Optional;
 
 @Slf4j
 @RequiredArgsConstructor

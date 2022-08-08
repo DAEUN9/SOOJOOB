@@ -1,4 +1,4 @@
-//package com.D210.soojoobback.config.oauth;
+//package com.D210.soojoobback.config.oauth.provider;//package com.D210.soojoobback.config.oauth;
 //
 //
 //import com.D210.soojoobback.config.auth.PrincipalDetails;

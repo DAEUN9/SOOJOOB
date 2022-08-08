@@ -1,11 +1,10 @@
 package com.D210.soojoobback.service;
 
 
+import com.D210.soojoobback.dto.badge.BadgeListResDto;
 import com.D210.soojoobback.dto.plogging.PloggingInfoDto;
 import com.D210.soojoobback.dto.plogging.PostPloggingReqDto;
-import com.D210.soojoobback.dto.user.ResponseDto;
-import com.D210.soojoobback.dto.user.SignupRequestDto;
-import com.D210.soojoobback.dto.user.UserDTO;
+import com.D210.soojoobback.entity.Badge;
 import com.D210.soojoobback.entity.Plogging;
 import com.D210.soojoobback.entity.Record;
 import com.D210.soojoobback.entity.User;
@@ -13,18 +12,16 @@ import com.D210.soojoobback.exception.CustomErrorException;
 import com.D210.soojoobback.repository.PloggingRepository;
 import com.D210.soojoobback.repository.RecordRepository;
 import com.D210.soojoobback.repository.UserRepository;
+import com.nimbusds.oauth2.sdk.util.ListUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -35,7 +32,10 @@ public class PloggingService {
     private final UserRepository userRepository;
 
     private final UserService userService;
+
     private final RecordRepository recordRepository;
+
+    private final BadgeService badgeService;
 
 
 //    @Transactional
@@ -59,7 +59,7 @@ public class PloggingService {
 //    }
 
     @Transactional
-    public void save(PostPloggingReqDto requestDto, User user) {
+    public List<BadgeListResDto> save(PostPloggingReqDto requestDto, User user) {
         Plogging plogging = Plogging.of(requestDto, user);
         System.out.println("plogging");
         // fetch Lazy 유저를 진짜 유저로 변환
@@ -70,7 +70,8 @@ public class PloggingService {
         //유저에 플로깅 추가
         List<Plogging> ploggingList = ploggingUser.getPloggings();
         ploggingList.add(plogging);
-//
+
+        //
 
         Double distance = requestDto.getDistance();
 
@@ -90,10 +91,14 @@ public class PloggingService {
         record.setTotalTrashCount(toTrash + trashCount);
 
 
-
         ploggingRepository.save(plogging);
         recordRepository.save(record);
 
+        List<BadgeListResDto> badgeListResDtos = badgeService.checkAddAll(ploggingUser, (long) (toCal + calorie), (long) (toDis+distance), toTrash+trashCount);
+        List<BadgeListResDto> badgeListResDtos1 = badgeService.checkAddOne(ploggingUser, calorie, distance, trashCount);
+        List<BadgeListResDto> joined = Stream.concat(badgeListResDtos1.stream(), badgeListResDtos.stream())
+                .collect(Collectors.toList());
+        return joined;
 
     }
 

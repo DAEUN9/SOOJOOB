@@ -35,6 +35,7 @@ public class Plogging {
     @Column(nullable = false)
     private Integer trashCount;
     private String ploggingImg;
+
     @Column(nullable = false)
     private Double calorie;
     private Double bpm;
@@ -57,10 +58,10 @@ public class Plogging {
         this.startTime = requestDto.getStartTime();
         this.endTime = requestDto.getEndTime();
         this.stepCount = requestDto.getStepCount();
+        this.trashCount = requestDto.getTrashCount();
         this.ploggingImg = requestDto.getPloggingImg();
         this.calorie = requestDto.getCalorie();
         this.bpm = requestDto.getBpm();
-        this.trashCount = requestDto.getTrashCount();
         this.ploggingUser = user;
     }
 

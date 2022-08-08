@@ -1,13 +1,15 @@
 package com.D210.soojoobback.controller;
 
-import com.D210.soojoobback.JwtTokenProvider;
-import com.D210.soojoobback.UserDetailsImpl;
+
+import com.D210.soojoobback.dto.badge.BadgeListResDto;
 import com.D210.soojoobback.dto.plogging.PloggingInfoDto;
 import com.D210.soojoobback.dto.plogging.PostPloggingReqDto;
-import com.D210.soojoobback.dto.user.*;
+import com.D210.soojoobback.dto.user.ResponseDto;
 import com.D210.soojoobback.entity.User;
 import com.D210.soojoobback.exception.CustomErrorException;
 import com.D210.soojoobback.repository.PloggingRepository;
+import com.D210.soojoobback.security.JwtTokenProvider;
+import com.D210.soojoobback.security.UserDetailsImpl;
 import com.D210.soojoobback.service.PloggingService;
 import com.D210.soojoobback.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -56,8 +58,8 @@ public class PloggingController {
     ) {
         checkLogin(userDetailsImpl);
         User user = userDetailsImpl.getUser();
-        ploggingService.save(requestDto, user);
-        return new ResponseDto(201L,"플로깅 생성에 성공했습니다 !", "");
+        List<BadgeListResDto> data = ploggingService.save(requestDto, user);
+        return new ResponseDto(201L,"플로깅 생성에 성공했습니다 !", data);
     }
 
     private void checkLogin(
@@ -146,7 +148,6 @@ public class PloggingController {
         List<PloggingInfoDto> data = ploggingService.getPloggingListByUser(userId);
         return new ResponseDto(200L, "해당 유저의 플로깅 불러오기 성공", data);
     }
-
 //
 //    @GetMapping("")
 //    @ResponseBody

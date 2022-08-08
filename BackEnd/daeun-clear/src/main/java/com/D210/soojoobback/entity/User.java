@@ -1,18 +1,20 @@
 package com.D210.soojoobback.entity;
 
 import com.D210.soojoobback.dto.user.LoginDetailResponseDto;
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
+import static javax.persistence.CascadeType.ALL;
 
 // ORM - Object Relation Mapping
 
@@ -21,7 +23,6 @@ import java.util.List;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class User {
 	@Id // primary key
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -57,14 +58,20 @@ public class User {
 	@JsonIgnore
 	private List<Plogging> ploggings;
 
+	@OneToMany(mappedBy = "user", cascade = ALL, orphanRemoval = true)
+	@JsonIgnore
+	private List<Article> articleList;
+
 	@OneToOne(mappedBy = "userRecord")
 	@JsonIgnore
 	private Record record;
-//
-//	@OneToOne(mappedBy = "record", fetch = FetchType.LAZY)
-//	@JsonIgnore
-//	private Record record;
 
+	@OneToMany(mappedBy = "user")
+	@JsonIgnore
+	private List<UserBadge> userBadges = new ArrayList<>();
+	public void addArticle(Article article){
+		articleList.add(article);
+	}
 
 	public User(String username, String password, String email, String role, Integer age, String gender, Integer weight, Integer height
 			,boolean activated, String region) {
@@ -108,5 +115,12 @@ public class User {
 				.build();
 	}
 
+//	@OneToMany(orphanRemoval = true, targetEntity = Badge.class)
+//	@JsonIgnore
 
+
+
+//	public void addBadge(Optional<Badge> badge){
+//		this.getBadges().add(badge);
+//	}
 }
