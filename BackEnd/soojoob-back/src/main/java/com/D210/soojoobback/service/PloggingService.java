@@ -1,6 +1,7 @@
 package com.D210.soojoobback.service;
 
 
+import com.D210.soojoobback.dto.badge.BadgeListResDto;
 import com.D210.soojoobback.dto.plogging.PloggingInfoDto;
 import com.D210.soojoobback.dto.plogging.PostPloggingReqDto;
 import com.D210.soojoobback.entity.Plogging;
@@ -17,6 +18,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -29,6 +32,8 @@ public class PloggingService {
     private final UserService userService;
 
     private final RecordRepository recordRepository;
+
+    private final BadgeService badgeService;
 
 
 //    @Transactional
@@ -52,7 +57,7 @@ public class PloggingService {
 //    }
 
     @Transactional
-    public void save(PostPloggingReqDto requestDto, User user) {
+    public List<BadgeListResDto> save(PostPloggingReqDto requestDto, User user) {
         Plogging plogging = Plogging.of(requestDto, user);
         System.out.println("plogging");
         // fetch Lazy 유저를 진짜 유저로 변환
@@ -91,6 +96,11 @@ public class PloggingService {
         recordRepository.save(record);
 
 
+        List<BadgeListResDto> badgeListResDtos = badgeService.checkAddAll(ploggingUser, timeRecord + toTimeRec, (long) (toDis+distance), toTrash+trashCount);
+        List<BadgeListResDto> badgeListResDtos1 = badgeService.checkAddOne(ploggingUser, timeRecord, distance, trashCount);
+        List<BadgeListResDto> joined = Stream.concat(badgeListResDtos1.stream(), badgeListResDtos.stream())
+                .collect(Collectors.toList());
+        return joined;
     }
 
     @Transactional

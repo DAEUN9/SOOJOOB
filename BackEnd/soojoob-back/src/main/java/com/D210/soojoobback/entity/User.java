@@ -65,6 +65,10 @@ public class User {
 	@JsonIgnore
 	private Record record;
 
+	@OneToMany(mappedBy = "user")
+	@JsonIgnore
+	private List<UserBadge> userBadges = new ArrayList<>();
+
 	public void addArticle(Article article){
 		articleList.add(article);
 	}
@@ -111,12 +115,12 @@ public class User {
 				.build();
 	}
 
-	@OneToMany(orphanRemoval = true, targetEntity = Badge.class)
-	@JsonIgnore
-	private List<Badge> badges = new ArrayList<>();
-
-
-	public void addBadge(Badge badge){
-		this.getBadges().add(badge);
-	}
+//	@OneToMany(orphanRemoval = true, targetEntity = Badge.class)
+//	@JsonIgnore
+//	private List<Badge> badges = new ArrayList<>();
+//
+//
+//	public void addBadge(Badge badge){
+//		this.getBadges().add(badge);
+//	}
 }

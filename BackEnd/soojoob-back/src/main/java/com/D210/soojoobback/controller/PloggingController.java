@@ -1,6 +1,7 @@
 package com.D210.soojoobback.controller;
 
 
+import com.D210.soojoobback.dto.badge.BadgeListResDto;
 import com.D210.soojoobback.dto.plogging.PloggingInfoDto;
 import com.D210.soojoobback.dto.plogging.PostPloggingReqDto;
 import com.D210.soojoobback.dto.user.ResponseDto;
@@ -57,8 +58,8 @@ public class PloggingController {
     ) {
         checkLogin(userDetailsImpl);
         User user = userDetailsImpl.getUser();
-        ploggingService.save(requestDto, user);
-        return new ResponseDto(201L,"플로깅 생성에 성공했습니다 !", "");
+        List<BadgeListResDto> data = ploggingService.save(requestDto, user);
+        return new ResponseDto(201L,"플로깅 생성에 성공했습니다 !", data);
     }
 
     private void checkLogin(
