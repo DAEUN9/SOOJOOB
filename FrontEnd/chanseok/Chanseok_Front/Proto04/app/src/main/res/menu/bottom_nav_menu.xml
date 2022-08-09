@@ -13,11 +13,11 @@
         android:icon="@drawable/ic_community"
         />
 
-    <item
-        android:id="@+id/pluggingFragment"
-        android:title="플러깅"
-        android:icon="@drawable/ic_plugging"
-        />
+    <!--   <item
+           android:id="@+id/pluggingFragment"
+           android:title="플러깅"
+           android:icon="@drawable/ic_plugging"
+           />    -->
 
     <item
         android:id="@+id/recordFragment"

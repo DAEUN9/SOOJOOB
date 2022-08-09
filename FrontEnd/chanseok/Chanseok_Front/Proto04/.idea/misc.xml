@@ -15,13 +15,18 @@
         <entry key="..\:/Users/multicampus/ssafy7/team-pjt/1st-pjt/Test/Proto04/app/src/main/res/drawable/ic_baseline_arrow_forward_24.xml" value="0.1855" />
         <entry key="..\:/Users/multicampus/ssafy7/team-pjt/1st-pjt/Test/Proto04/app/src/main/res/drawable/ic_baseline_notifications_24.xml" value="0.206" />
         <entry key="..\:/Users/multicampus/ssafy7/team-pjt/1st-pjt/Test/Proto04/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2315" />
+        <entry key="..\:/Users/multicampus/ssafy7/team-pjt/1st-pjt/Test/Proto04/app/src/main/res/drawable/ic_plugging.xml" value="0.1" />
+        <entry key="..\:/Users/multicampus/ssafy7/team-pjt/1st-pjt/Test/Proto04/app/src/main/res/drawable/round.xml" value="0.102" />
+        <entry key="..\:/Users/multicampus/ssafy7/team-pjt/1st-pjt/Test/Proto04/app/src/main/res/drawable/round2.xml" value="0.192" />
+        <entry key="..\:/Users/multicampus/ssafy7/team-pjt/1st-pjt/Test/Proto04/app/src/main/res/drawable/round3.xml" value="0.1" />
+        <entry key="..\:/Users/multicampus/ssafy7/team-pjt/1st-pjt/Test/Proto04/app/src/main/res/drawable/round_button.xml" value="0.102" />
         <entry key="..\:/Users/multicampus/ssafy7/team-pjt/1st-pjt/Test/Proto04/app/src/main/res/drawable/selector_text_input_color.xml" value="0.182" />
-        <entry key="..\:/Users/multicampus/ssafy7/team-pjt/1st-pjt/Test/Proto04/app/src/main/res/layout/activity_login.xml" value="0.2" />
-        <entry key="..\:/Users/multicampus/ssafy7/team-pjt/1st-pjt/Test/Proto04/app/src/main/res/layout/activity_main.xml" value="0.22083333333333333" />
+        <entry key="..\:/Users/multicampus/ssafy7/team-pjt/1st-pjt/Test/Proto04/app/src/main/res/layout/activity_login.xml" value="0.264" />
+        <entry key="..\:/Users/multicampus/ssafy7/team-pjt/1st-pjt/Test/Proto04/app/src/main/res/layout/activity_main.xml" value="0.18807339449541285" />
         <entry key="..\:/Users/multicampus/ssafy7/team-pjt/1st-pjt/Test/Proto04/app/src/main/res/layout/activity_maps.xml" value="0.14324324324324325" />
         <entry key="..\:/Users/multicampus/ssafy7/team-pjt/1st-pjt/Test/Proto04/app/src/main/res/layout/activity_signup.xml" value="0.2" />
         <entry key="..\:/Users/multicampus/ssafy7/team-pjt/1st-pjt/Test/Proto04/app/src/main/res/layout/fragment_community.xml" value="0.22083333333333333" />
-        <entry key="..\:/Users/multicampus/ssafy7/team-pjt/1st-pjt/Test/Proto04/app/src/main/res/layout/fragment_home.xml" value="0.22083333333333333" />
+        <entry key="..\:/Users/multicampus/ssafy7/team-pjt/1st-pjt/Test/Proto04/app/src/main/res/layout/fragment_home.xml" value="0.2" />
         <entry key="..\:/Users/multicampus/ssafy7/team-pjt/1st-pjt/Test/Proto04/app/src/main/res/layout/fragment_record.xml" value="0.22083333333333333" />
         <entry key="..\:/Users/multicampus/ssafy7/team-pjt/1st-pjt/Test/Proto04/app/src/main/res/layout/login.xml" value="0.264" />
         <entry key="..\:/Users/multicampus/ssafy7/team-pjt/1st-pjt/Test/Proto04/app/src/main/res/layout/signup.xml" value="0.22083333333333333" />
