@@ -12,5 +12,6 @@
     <string name="signup">회원가입</string>
     <string name="login">로그인</string>
     <string name="next_signup"><u>이메일로 가입</u></string>
+    <string name="sns_signup"><b>─ </b> SNS 계정으로 로그인하기 <b> ─</b></string>
 
 </resources>

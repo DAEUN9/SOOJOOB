@@ -15,7 +15,7 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:windowLightStatusBar" tools:targetApi="l">true</item>
-        <item name="boxStrokeColor">@color/purple_500</item>
+        <item name="boxStrokeColor">@color/green</item>
     </style>
 
     <style name="TextLabel" parent="TextAppearance.Design.Hint">

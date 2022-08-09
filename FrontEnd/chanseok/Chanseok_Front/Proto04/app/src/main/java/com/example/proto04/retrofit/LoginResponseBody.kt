@@ -8,12 +8,12 @@ data class LoginResponseBody(
     @SerializedName("msg")
     val msg: String?,
     @SerializedName("data")
-    val data: Data?
+    val data: List<Data>?
 )
 
 data class Data(
     @SerializedName("user")
-    val user: User?,
+    val user: List<User>?,
     @SerializedName("jwtToken")
     val jwtToken: String?
 )
