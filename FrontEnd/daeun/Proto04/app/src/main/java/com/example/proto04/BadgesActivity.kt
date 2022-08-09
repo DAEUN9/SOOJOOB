@@ -29,18 +29,20 @@ class BadgesActivity: AppCompatActivity() {
 
     // 어답터
     private lateinit var badgeGridRecyclerViewAdapter: BadgeGridRecyclerViewAdapter
-
+    private lateinit var badgeGridRecyclerViewAdapter1: BadgeGridRecyclerViewAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_badges)
 
         val bundle = intent.getBundleExtra("array_bundle")
+        val bundle1 = intent.getBundleExtra("array_bundle1")
 
+//        println(bundle)
 //        val searchTerm = intent.getStringExtra("search_term")
 
         badgeList = bundle?.getSerializable("my_badge_list") as ArrayList<Badge>
-        noBadgeList = bundle?.getSerializable("no_badge_list") as ArrayList<Badge>
+        noBadgeList = bundle1?.getSerializable("no_badge_list") as ArrayList<Badge>
 
         this.badgeGridRecyclerViewAdapter = BadgeGridRecyclerViewAdapter()
 
@@ -54,7 +56,8 @@ class BadgesActivity: AppCompatActivity() {
             false)
         my_badge_recycler_view.adapter = this.badgeGridRecyclerViewAdapter
 
-        this.badgeGridRecyclerViewAdapter.submitList(noBadgeList)
+        this.badgeGridRecyclerViewAdapter1 = BadgeGridRecyclerViewAdapter()
+        this.badgeGridRecyclerViewAdapter1.submitList(noBadgeList)
 
 
 
@@ -62,7 +65,7 @@ class BadgesActivity: AppCompatActivity() {
             2,
             GridLayoutManager.VERTICAL,
             false)
-        no_badge_recycler_view.adapter = this.badgeGridRecyclerViewAdapter
+        no_badge_recycler_view.adapter = this.badgeGridRecyclerViewAdapter1
 
 
     } //
