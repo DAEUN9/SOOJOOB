@@ -18,12 +18,13 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import java.io.File
-import java.io.FileNotFoundException
-import java.io.FileOutputStream
-import java.io.IOException
+import com.example.proto04.retrofit.PloggingRequestBody
+import com.google.gson.annotations.SerializedName
 import java.text.SimpleDateFormat
 import java.util.*
+import android.util.*
+import android.util.Base64
+import java.io.*
 
 open class EndActivity : AppCompatActivity() {
 
@@ -38,6 +39,10 @@ open class EndActivity : AppCompatActivity() {
     private lateinit var bitmap:Bitmap
     private var imgCount:Int = 0
 
+    private lateinit var nextButton:Button
+    private var ploggingImg:String = ""
+
+    private lateinit var getButton: Button
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -62,7 +67,7 @@ open class EndActivity : AppCompatActivity() {
         now = findViewById(R.id.now)
 
         val currentDateTime = Calendar.getInstance().time
-        var dateFormat = SimpleDateFormat("yyyy.MM.dd HH:mm:ss", Locale.KOREA).format(currentDateTime)
+        val dateFormat = SimpleDateFormat("yyyy.MM.dd HH:mm:ss", Locale.KOREA).format(currentDateTime)
 
         now.text = dateFormat
 
@@ -70,14 +75,42 @@ open class EndActivity : AppCompatActivity() {
         imageSaveBtn.setOnClickListener{
             saveImage(bitmap, "plogging_result"+ "${imgCount}")
             imgCount ++
+            ploggingImg = encodeImage(bitmap)
+            println(ploggingImg.length)
+        }
+
+        // Retrofit
+        nextButton = findViewById(R.id.nextButton)
+        nextButton.setOnClickListener {
+            val ploggingData = PloggingRequestBody(
+                sumDistance,
+                timeRecord,
+                trashCount,
+                dateFormat,
+                ploggingImg
+                )
+            val ploggingWork = PloggingWork(ploggingData)
+            ploggingWork.work()
 
         }
+
+        getButton = findViewById(R.id.getButton)
+        getButton.setOnClickListener {
+            val nextIntent = Intent(this, PloggingDataActivity::class.java)
+            startActivity(nextIntent)
+        }
+
+
+
+
 
         // 카메라 권한 가져오기
         if(checkPermission(STORAGE_PERMISSION,FLAG_PERM_STORAGE)){
             setViews()
         }
+
     }
+
 
 
 
@@ -187,9 +220,8 @@ open class EndActivity : AppCompatActivity() {
             if (tempFile.createNewFile()) {
                 output = FileOutputStream(tempFile)
                 // 이미지 줄이기
-                // TODO : 사진 비율로 압축하도록 수정할 것
+
                 val newBitmap = Bitmap.createScaledBitmap(bitmap!!, 200, 200, true)
-                // 이미지 압축. 압축된 파일은 output stream에 저장. 2번째 인자는 압축률인데 100으로 해도 많이 깨진다..
                 newBitmap.compress(Bitmap.CompressFormat.PNG, 100, output)
             } else {
                 // 같은 이름의 파일 존재
@@ -213,6 +245,13 @@ open class EndActivity : AppCompatActivity() {
             }
         }
         return true
+    }
+
+    private fun encodeImage(bm: Bitmap): String {
+        val baos = ByteArrayOutputStream()
+        bm.compress(Bitmap.CompressFormat.PNG, 100, baos)
+        val b = baos.toByteArray()
+        return Base64.encodeToString(b, Base64.DEFAULT)
     }
 
 
