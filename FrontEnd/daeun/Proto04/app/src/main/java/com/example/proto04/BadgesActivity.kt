@@ -3,6 +3,7 @@ package com.example.proto04
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.GridLayoutManager
+import com.example.proto04.fragments.HomeFragment
 import com.example.proto04.recyclerview.BadgeGridRecyclerViewAdapter
 import com.example.proto04.retrofit.Badge
 import kotlinx.android.synthetic.main.activity_badges.*
@@ -37,6 +38,10 @@ class BadgesActivity: AppCompatActivity() {
 
         val bundle = intent.getBundleExtra("array_bundle")
         val bundle1 = intent.getBundleExtra("array_bundle1")
+
+        var homeFragment = HomeFragment()
+        homeFragment.arguments = bundle
+
 
 //        println(bundle)
 //        val searchTerm = intent.getStringExtra("search_term")
