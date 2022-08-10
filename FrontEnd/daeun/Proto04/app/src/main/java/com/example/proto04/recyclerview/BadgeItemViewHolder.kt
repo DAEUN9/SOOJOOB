@@ -1,14 +1,21 @@
 package com.example.proto04.recyclerview
 
+import android.app.AlertDialog
 import android.content.ContentValues.TAG
+import android.content.Context
+import android.content.Intent
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.proto04.App
+import com.example.proto04.BadgesActivity
 import com.example.proto04.R
+import com.example.proto04.fragments.CustomDialog
 import com.example.proto04.retrofit.Badge
 import kotlinx.android.synthetic.main.layout_badge_item.view.*
+import kotlinx.coroutines.NonDisposableHandle.parent
 
 
 class BadgeItemViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
@@ -20,7 +27,6 @@ class BadgeItemViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
     private val badgeImageView = itemView.badge_image
     private val badgeTitle = itemView.badge_title
     private val badgeContent = itemView.badge_content
-
 
     // 데이터와 뷰를 묶는다.
     fun bindWithView(badgeItem: Badge){
@@ -37,8 +43,14 @@ class BadgeItemViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
             .placeholder(R.drawable.ic_baseline_insert_photo_24)
             .into(badgeImageView)
 
-
+//        itemView.badge_image.setOnClickListener{
+////            Toast.makeText(badgeItem.context, badgeItem.badgeDetail, Toast.LENGTH_SHORT).show()
+////            CustomDialog(badgeItem.badgeName.toString(), badgeItem.badgeDetail.toString())
+////                .show()
+//        }
     }
+
+
 
 
 }
