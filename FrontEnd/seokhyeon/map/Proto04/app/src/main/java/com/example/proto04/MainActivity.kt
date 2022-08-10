@@ -22,5 +22,10 @@ class MainActivity : AppCompatActivity() {
         val navController = navHostFragment.navController
 
         NavigationUI.setupWithNavController(mBinding.myBottomNav, navController)
+
+
+//        val getPlogging  = PloggingGetWork()
+//        getPlogging.work()
+//        println("플로깅 데이터 get 호출!!!!!!!!!!!!!!!!!!!!!!!!!!!")
     }
 }

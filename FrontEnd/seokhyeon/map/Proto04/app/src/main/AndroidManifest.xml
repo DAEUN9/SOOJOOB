@@ -51,6 +51,10 @@
             android:exported="true" />
 
         <activity
+            android:name=".PloggingDataActivity"
+            android:exported="true" />
+
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
