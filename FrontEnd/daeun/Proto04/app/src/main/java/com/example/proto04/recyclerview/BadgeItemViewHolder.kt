@@ -1,6 +1,7 @@
 package com.example.proto04.recyclerview
 
 import android.content.ContentValues.TAG
+import android.net.Uri
 import android.util.Log
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
@@ -29,7 +30,6 @@ class BadgeItemViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
         badgeContent.text = badgeItem.badgeDetail
 
         badgeTitle.text = badgeItem.badgeName
-
         // 이미지를 설정한다.
         Glide.with(itemView
         )

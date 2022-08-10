@@ -9,6 +9,8 @@ import android.text.TextWatcher
 import android.view.MotionEvent
 import android.view.inputmethod.InputMethodManager
 import com.example.proto04.databinding.ActivityLoginBinding
+import com.example.proto04.retrofit.Badge
+import com.example.proto04.retrofit.BadgeWork
 
 class LoginActivity : AppCompatActivity() {
 
@@ -30,7 +32,21 @@ class LoginActivity : AppCompatActivity() {
 
         binding.passwordTextInputLayout.editText?.addTextChangedListener(passwordListener)
 
-
+//        badgewWork.getMyBadge(userId = "1", completion = { responseBadgeArrayList ->
+//
+//            badgewWork.getNoBadge(userId = "1", completion = { responseBadgeArrayList1 ->
+//                bundle.putSerializable("my_badge_list", responseBadgeArrayList)
+//                intent.putExtra("array_bundle", bundle)
+//
+//                bundle1.putSerializable("no_badge_list", responseBadgeArrayList1)
+//                intent.putExtra("array_bundle1", bundle1)
+//
+//                startActivity(intent)
+//            })
+//        }
+//
+//
+//        )
 
         binding.nextButton.setOnClickListener {
             val userData = LoginRequestBody(
@@ -38,7 +54,14 @@ class LoginActivity : AppCompatActivity() {
                 binding.passwordTextInputLayout.editText?.text.toString()
             )
             val loginWork = LoginWork(userData)
-            loginWork.work()
+            val badgeWork = BadgeWork()
+            loginWork.work( completion = { status ->
+                badgeWork.Myplogging ( completion = { ploggingResponse ->
+                    println("end")
+                } )
+            }
+            )
+
         }
 
         binding.logoLogin.setOnClickListener {

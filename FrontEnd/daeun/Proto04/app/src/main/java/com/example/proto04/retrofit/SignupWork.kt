@@ -1,6 +1,7 @@
 package com.example.proto04
 
 import android.util.Log
+import com.example.proto04.retrofit.PloggingResponseBody
 import com.google.gson.Gson
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody.Companion.toRequestBody
@@ -40,4 +41,6 @@ class SignupWork(private val userInfo: SignUpRequestBody) {
                 }
             })
     }
-}
+
+
+    }

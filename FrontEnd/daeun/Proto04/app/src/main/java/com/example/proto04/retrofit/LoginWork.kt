@@ -1,6 +1,7 @@
 package com.example.proto04
 
 import android.util.Log
+import com.example.proto04.retrofit.Plogging
 import com.google.gson.Gson
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody.Companion.toRequestBody
@@ -8,7 +9,7 @@ import retrofit2.Call
 import retrofit2.Response
 
 class LoginWork(private val userInfo: LoginRequestBody) {
-    fun work() {
+    fun work(completion: (status:Boolean) -> Unit) {
         val service = RetrofitAPI.loginService
 
         // gson.toJson 을 이용해서 Json 으로 변경
@@ -34,6 +35,11 @@ class LoginWork(private val userInfo: LoginRequestBody) {
                         val token = response.body()?.data?.jwtToken
                         Log.d("로그인 성공", "$result")
                         Log.d("jwtToken", "$token")
+                        if (token != null) {
+                            App.prefs.setString("X-AUTH-TOKEN", token)
+                        }
+                        val status = response.isSuccessful
+                        completion(status as Boolean)
                     }
                 }
 
