@@ -2,6 +2,7 @@ package com.example.proto04
 
 
 import com.example.proto04.retrofit.BadgesResponseBody
+import com.example.proto04.retrofit.PloggingResponseBody
 import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.http.Body
@@ -20,5 +21,8 @@ interface SignUpService {
 
     @GET("badges/{userId}/no")
     fun getNoBadges(@Path("userId") userId: String):Call<BadgesResponseBody>
+
+    @GET("plogging/all")
+    fun getMyPloggings():Call<PloggingResponseBody>
 
 }

@@ -1,6 +1,7 @@
 package com.example.proto04
 
 import okhttp3.OkHttpClient
+import okhttp3.internal.addHeaderLenient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -22,9 +23,29 @@ object RetrofitAPI {
         Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
-            .client(okHttpClient) // 로그캣에서 패킷 내용을 모니터링 할 수 있음 (인터셉터)
+//            .client(okHttpClient) // 로그캣에서 패킷 내용을 모니터링 할 수 있음 (인터셉터)
             .build()
+
     }
+
+
+//    private val okHttpClient2: OkHttpClient by lazy {
+//        OkHttpClient.Builder()
+//            .addInterceptor(HttpLoggingInterceptor().apply {
+//                level = HttpLoggingInterceptor.Level.BODY
+//
+//            })
+//
+//            .build()
+//    }
+//    private val retrofit2: Retrofit by lazy {
+//        Retrofit.Builder()
+//            .baseUrl(BASE_URL)
+//
+//            .addConverterFactory(GsonConverterFactory.create())
+//            .client(okHttpClient2) // 로그캣에서 패킷 내용을 모니터링 할 수 있음 (인터셉터)
+//            .build()
+//    }
 
     val signUpService: SignUpService by lazy {
         retrofit.create(SignUpService::class.java)
@@ -32,5 +53,9 @@ object RetrofitAPI {
 
     val loginService: LoginService by lazy {
         retrofit.create(LoginService::class.java)
+    }
+
+    val ploggingService: PloggingService by lazy {
+        retrofit.create(PloggingService::class.java)
     }
 }

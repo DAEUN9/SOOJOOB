@@ -1,21 +1,16 @@
 package com.example.proto04.recyclerview
 
-import android.app.AlertDialog
 import android.content.ContentValues.TAG
-import android.content.Context
-import android.content.Intent
+import android.net.Uri
 import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.proto04.App
-import com.example.proto04.BadgesActivity
 import com.example.proto04.R
-import com.example.proto04.fragments.CustomDialog
 import com.example.proto04.retrofit.Badge
 import kotlinx.android.synthetic.main.layout_badge_item.view.*
-import kotlinx.coroutines.NonDisposableHandle.parent
+
 
 
 class BadgeItemViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
@@ -35,7 +30,6 @@ class BadgeItemViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
         badgeContent.text = badgeItem.badgeDetail
 
         badgeTitle.text = badgeItem.badgeName
-
         // 이미지를 설정한다.
         Glide.with(itemView
         )

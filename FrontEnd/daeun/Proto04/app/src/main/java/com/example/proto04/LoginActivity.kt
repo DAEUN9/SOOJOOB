@@ -8,7 +8,9 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.MotionEvent
 import android.view.inputmethod.InputMethodManager
+import androidx.core.app.NotificationCompat
 import com.example.proto04.databinding.ActivityLoginBinding
+import com.example.proto04.retrofit.BadgeWork
 
 class LoginActivity : AppCompatActivity() {
 
@@ -18,6 +20,10 @@ class LoginActivity : AppCompatActivity() {
 
     private var emailFlag = false
     private var passwordFlag = false
+
+
+    // Noti 객체 생성
+    private lateinit var notificationHelper: NotificationHelper
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,7 +36,21 @@ class LoginActivity : AppCompatActivity() {
 
         binding.passwordTextInputLayout.editText?.addTextChangedListener(passwordListener)
 
-
+//        badgewWork.getMyBadge(userId = "1", completion = { responseBadgeArrayList ->
+//
+//            badgewWork.getNoBadge(userId = "1", completion = { responseBadgeArrayList1 ->
+//                bundle.putSerializable("my_badge_list", responseBadgeArrayList)
+//                intent.putExtra("array_bundle", bundle)
+//
+//                bundle1.putSerializable("no_badge_list", responseBadgeArrayList1)
+//                intent.putExtra("array_bundle1", bundle1)
+//
+//                startActivity(intent)
+//            })
+//        }
+//
+//
+//        )
 
         binding.nextButton.setOnClickListener {
             val userData = LoginRequestBody(
@@ -38,7 +58,27 @@ class LoginActivity : AppCompatActivity() {
                 binding.passwordTextInputLayout.editText?.text.toString()
             )
             val loginWork = LoginWork(userData)
-            loginWork.work()
+            val badgeWork = BadgeWork()
+            var cnt = 0
+            loginWork.work( completion = { status ->
+                badgeWork.Myplogging ( completion = { ploggingResponse ->
+
+                    if (ploggingResponse != null) {
+                        for (plogging in ploggingResponse) {
+                            notificationHelper = NotificationHelper(this)
+                            cnt += 1
+                            val title: String = "${plogging.distance} 만큼 이동했어요"
+                            val message: String = "${plogging.ploggingUser}번 유저"
+
+                            // 알림 호출ㅇ
+                            showNotification(title, message, cnt)
+                        }
+
+                    }
+                } )
+            }
+            )
+
         }
 
         binding.logoLogin.setOnClickListener {
@@ -117,5 +157,11 @@ class LoginActivity : AppCompatActivity() {
             this.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(currentFocus?.windowToken, 0)
         return true
+    }
+
+    private fun showNotification(title: String, message: String, id: Int) {
+        val nb: NotificationCompat.Builder =
+            notificationHelper.getChannelNotification(title, message)
+        notificationHelper.getManager().notify(id, nb.build())
     }
 }
