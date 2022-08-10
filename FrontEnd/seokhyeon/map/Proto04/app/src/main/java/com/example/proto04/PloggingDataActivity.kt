@@ -8,23 +8,28 @@ import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import retrofit2.Call
 import retrofit2.Response
-import java.io.ByteArrayOutputStream
+import java.io.IOException
+import java.io.InputStream
+import java.net.HttpURLConnection
+import java.net.URL
 
 open class PloggingDataActivity : AppCompatActivity() {
 
-    private lateinit var getText:TextView
+    private var res: List<Any>? = null
+    private lateinit var recyler_view:RecyclerView
+    private lateinit var date:TextView
+    private lateinit var distance:TextView
+    private lateinit var recTime:TextView
+    private lateinit var trashCnt:TextView
+
     private lateinit var imageString:String
     private lateinit var image:ImageView
 //    private lateinit var imageBitmap:Bitmap
-
-    private fun encodeImage(bm: Bitmap): String {
-        val baos = ByteArrayOutputStream()
-        bm.compress(Bitmap.CompressFormat.PNG, 100, baos)
-        val b = baos.toByteArray()
-        return Base64.encodeToString(b, Base64.DEFAULT)
-    }
 
     fun String.toBitmap(): Bitmap?{
         Base64.decode(this,Base64.DEFAULT).apply {
@@ -32,7 +37,7 @@ open class PloggingDataActivity : AppCompatActivity() {
         }
     }
 
-    fun work() {
+    fun work(){
         val service = RetrofitAPI.ploggingService
 
         // gson.toJson 을 이용해서 Json 으로 변경
@@ -50,13 +55,21 @@ open class PloggingDataActivity : AppCompatActivity() {
                 ) {
                     if (response.isSuccessful) {
                         val result = response.body()
+                        result?.let {
+                            it.result?.let { it1 -> setAdapter(it1) }
+                        }
 //                        Log.d("플로깅 get 성공", "${result}")
-                        Log.d("타입 확인","${result?.result?.get(0)?.dateTime}")
-                        getText.text = "플로깅 날짜 : " + result?.result?.get(0)?.dateTime + "\n플로깅 시간 :  " + result?.result?.get(0)?.timeRecord + "\n쓰레기 수 :" + result?.result?.get(0)?.trashCount + "\n 플로깅 거리 : "  + result?.result?.get(0)?.distance
-                        println("이미지 타입" + result?.result?.get(0)?.ploggingImg?.javaClass)
-                        imageString = result?.result?.get(0)?.ploggingImg as String
-                        image = findViewById(R.id.image)
-                        image.setImageBitmap(imageString.toBitmap())
+//                        Log.d("타입 확인","${result?.result?.get(2)?.dateTime}")
+//                        getText.text = "플로깅 날짜 : " + result?.result?.get(2)?.dateTime + "\n플로깅 시간 :  " + result?.result?.get(2)?.timeRecord + "\n쓰레기 수 :" + result?.result?.get(2)?.trashCount + "\n 플로깅 거리 : "  + result?.result?.get(2)?.distance
+//                        date.text = result?.result?.get(2)?.dateTime
+//                        distance.text = result?.result?.get(2)?.distance.toString()
+//                        recTime.text = result?.result?.get(2)?.timeRecord.toString()
+//                        trashCnt.text = result?.result?.get(2)?.trashCount.toString()
+////                        println("이미지 타입" + result?.result?.get(2)?.ploggingImg?.javaClass)
+//                        imageString = result?.result?.get(2)?.ploggingImg as String
+//                        image.setImageBitmap(imageString.toBitmap())
+//                        res = result?.result
+
 
                     }
                 }
@@ -71,17 +84,34 @@ open class PloggingDataActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_plogging_data)
+        setContentView(R.layout.activity_rec)
 
+        recyler_view = findViewById(R.id.recyler_view)
+//        val mAdapter = PloggingAdapter(this, res)
+//        RecyclerView.adapter = mAdapter
+//
+//        val lm = LinearLayoutManager(this)
+//        mRecyclerView.layoutManager = lm
+//        mRecyclerView.setHasFixedSize(true)
 
-        getText = findViewById(R.id.data)
-
+//        date = findViewById(R.id.date)
+//        image = findViewById(R.id.image)
+//        recTime = findViewById(R.id.recTime)
+//        trashCnt = findViewById(R.id.trashCnt)
+//        distance = findViewById(R.id.distance)
         this.work()
         println("플로깅 데이터 get 호출!!")
 
-//        image.setImageBitmap(bitmap)
     }
 
+    private fun setAdapter(PloggingList : List<Result>){
+        val mAdapter = PloggingAdapter(this, PloggingList)
+        recyler_view.adapter = mAdapter
+        recyler_view.layoutManager = GridLayoutManager(this,2,GridLayoutManager.VERTICAL,
+            false)
+
+        recyler_view.setHasFixedSize(false)
+    }
 
 
 }
