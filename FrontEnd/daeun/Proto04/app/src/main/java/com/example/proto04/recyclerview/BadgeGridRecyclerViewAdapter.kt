@@ -31,7 +31,6 @@ class BadgeGridRecyclerViewAdapter : RecyclerView.Adapter<BadgeItemViewHolder>()
 
     // 뷰가 묶였을때 데이터를 뷰홀더에 넘겨준다.
     override fun onBindViewHolder(holder: BadgeItemViewHolder, position: Int) {
-
         holder.bindWithView(this.badgeList[position])
 
     }
