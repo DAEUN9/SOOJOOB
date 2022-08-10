@@ -73,7 +73,7 @@ open class EndActivity : AppCompatActivity() {
 
         imageSaveBtn = findViewById(R.id.imageSaveBtn)
         imageSaveBtn.setOnClickListener{
-            saveImage(bitmap, "plogging_result"+ "${imgCount}")
+            saveImage(bitmap, "plogging_result"+ "${getRandomString(15)}")
             imgCount ++
             ploggingImg = encodeImage(bitmap)
             println(ploggingImg.length)
@@ -111,8 +111,13 @@ open class EndActivity : AppCompatActivity() {
 
     }
 
-
-
+    // 이미지 파일 중복 방지를 위한 랜덤 스트링 함수
+    fun getRandomString(length: Int) : String {
+        val charset = "ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz0123456789"
+        return (1..length)
+            .map { charset.random() }
+            .joinToString("")
+    }
 
 
     //Manifest 에서 설정한 권한을 가지고 온다.

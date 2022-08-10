@@ -31,8 +31,10 @@
         <entry key="..\:/Users/multicampus/ssafy7/team-pjt/1st-pjt/Test/Proto04/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.2315" />
         <entry key="..\:/Users/multicampus/ssafy7/team-pjt/1st-pjt/Test/Proto04/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.136" />
         <entry key="app/src/main/res/layout/activity_end.xml" value="0.18568840579710144" />
-        <entry key="app/src/main/res/layout/activity_plogging_data.xml" value="0.21965579710144928" />
+        <entry key="app/src/main/res/layout/activity_plogging_data.xml" value="0.11" />
+        <entry key="app/src/main/res/layout/activity_rec.xml" value="0.2586050724637681" />
         <entry key="app/src/main/res/layout/activity_signup.xml" value="0.1897644927536232" />
+        <entry key="app/src/main/res/layout/item_rec.xml" value="0.4689655172413793" />
       </map>
     </option>
   </component>
