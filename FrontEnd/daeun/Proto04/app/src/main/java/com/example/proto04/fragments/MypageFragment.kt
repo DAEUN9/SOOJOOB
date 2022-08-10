@@ -41,10 +41,10 @@ class MypageFragment : Fragment() {
 
             badgewWork.getMyBadge(userId = "1", completion = { responseBadgeArrayList ->
 
-
                     badgewWork.getNoBadge(userId = "1", completion = { responseBadgeArrayList1 ->
                         bundle.putSerializable("my_badge_list", responseBadgeArrayList)
                         intent.putExtra("array_bundle", bundle)
+
                         bundle1.putSerializable("no_badge_list", responseBadgeArrayList1)
                         intent.putExtra("array_bundle1", bundle1)
 

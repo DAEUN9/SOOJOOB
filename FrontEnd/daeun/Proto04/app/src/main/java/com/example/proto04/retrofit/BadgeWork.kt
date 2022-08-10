@@ -77,4 +77,28 @@ class BadgeWork() {
 
         }
     }
+
+    fun Myplogging(completion: (ArrayList<Plogging>?) -> Unit) {
+        val service = RetrofitAPI.signUpService
+
+        service.getMyPloggings()
+            .enqueue(object : retrofit2.Callback<PloggingResponseBody> {
+                override fun onResponse(
+                    call: Call<PloggingResponseBody>,
+                    response: Response<PloggingResponseBody>
+                ) {
+                    if (response.isSuccessful) {
+                        val result = response.body()
+                        var ploggings = result?.data
+                        completion(ploggings as ArrayList<Plogging>)
+                        Log.d("플로깅 조회 성공", "$result")
+
+                    }
+                }
+
+                override fun onFailure(call: Call<PloggingResponseBody>, t: Throwable) {
+                    Log.d("플로깅 조회 실패", t.message.toString())
+                }
+            })
+    }
 }
