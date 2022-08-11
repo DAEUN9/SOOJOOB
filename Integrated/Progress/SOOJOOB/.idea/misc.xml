@@ -46,6 +46,11 @@
         <entry key="..\:/Users/ssafy/S07P12D210/Integrated/Progress/SOOJOOB/app/src/main/res/layout/activity_maps.xml" value="0.10030395136778116" />
         <entry key="..\:/Users/ssafy/S07P12D210/Integrated/Progress/SOOJOOB/app/src/main/res/layout/fragment_mypage.xml" value="0.1" />
         <entry key="..\:/Users/ssafy/S07P12D210/Integrated/Progress/SOOJOOB/app/src/main/res/layout/layout_badge_item.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_end.xml" value="0.15520833333333334" />
+        <entry key="app/src/main/res/layout/activity_maps.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_record.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/item_rec.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/item_rec2.xml" value="0.1" />
       </map>
     </option>
   </component>
