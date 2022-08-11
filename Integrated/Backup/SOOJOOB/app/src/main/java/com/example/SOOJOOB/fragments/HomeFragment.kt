@@ -5,13 +5,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.SOOJOOB.MapsActivity
 import com.example.SOOJOOB.databinding.FragmentHomeBinding
+import com.example.SOOJOOB.retrofit.UserWork
 
 class HomeFragment : Fragment() {
 
     private var fBinding : FragmentHomeBinding? = null
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -21,6 +24,11 @@ class HomeFragment : Fragment() {
 
         val binding = FragmentHomeBinding.inflate(inflater, container, false)
         fBinding = binding
+
+//        binding.homeNotification.setOnClickListener {
+//            val intent = Intent(activity, NotificationActivity::class.java)
+//            startActivity(intent)
+//        }
 
 //        binding.logout.setOnClickListener {
 //            val intent = Intent(activity, LogoutActivity::class.java)
@@ -32,11 +40,15 @@ class HomeFragment : Fragment() {
             startActivity(intent)
         }
 
-
-        val username = "김다은"
-
-        binding.homeUsername.text = username
-
+        val userWork = UserWork()
+        userWork.work(completion = { status, username, trash, exp ->
+            if (status in 200..300) {
+                binding.homeUsername.text = username
+                binding.homeTrash.text = trash.toString()
+                binding.homeExp.text = exp.toString()
+                binding.homeProgress.progress = exp!!.toInt()
+            }
+        })
 
         return fBinding?.root
     }

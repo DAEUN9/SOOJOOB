@@ -1,4 +1,4 @@
-package com.example.SOOJOOB
+package com.example.SOOJOOB.retrofit
 
 import android.util.Log
 import com.google.gson.Gson
@@ -35,6 +35,8 @@ class SignupWork(private val userInfo: SignUpRequestBody){
                         Log.d("회원가입 성공", "$response.body()")
                         val result = response.body()?.msg
                         completion(response.code(), result)
+
+
                     } else {
                         Log.d("회원가입 실패", "$response")
                         val result = response.errorBody()?.string()
