@@ -3,6 +3,8 @@ package com.D210.soojoobback.dto.plogging;
 import com.D210.soojoobback.entity.Plogging;
 import lombok.*;
 
+import java.sql.Blob;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -19,7 +21,7 @@ public class PloggingInfoDto {
     private String dateTime;
     private Integer stepCount;
     private Integer trashCount;
-    private String ploggingImg;
+    private Blob ploggingImg;
 //    private Double calorie;
 //    private Double bpm;
 

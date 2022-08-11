@@ -85,12 +85,13 @@ public class PloggingService {
         Double toDis = record.getTotalDistance();
         Integer toTrash = record.getTotalTrashCount();
         Integer toTimeRec = record.getTotalTimeRecord();
+        Double exp = record.getExp();
 
 //        record.setTotalCalorie(toCal + calorie);
         record.setTotalDistance(toDis + distance);
         record.setTotalTrashCount(toTrash + trashCount);
         record.setTotalTimeRecord(toTimeRec + timeRecord);
-
+        record.setExp(exp + trashCount * 0.1);
 
         ploggingRepository.save(plogging);
         recordRepository.save(record);
