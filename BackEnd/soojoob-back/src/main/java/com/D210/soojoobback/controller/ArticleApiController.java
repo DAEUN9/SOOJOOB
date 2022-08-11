@@ -46,9 +46,10 @@ public class ArticleApiController {
         }
     }
     @GetMapping("")
-    public ResponseEntity showAll() {
+    public ResponseDto showAll() {
         List<ArticleDto> articles = articleService.showAll();
-        return ResponseEntity.ok(articles);
+                return new ResponseDto(200L,"전체 게시글 불러오기 성공", articles);
+
     }
 
     @GetMapping("/detail/{id}")
