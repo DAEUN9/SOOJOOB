@@ -7,8 +7,10 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.Call
 import retrofit2.Response
 
-class SignupWork(private val userInfo: SignUpRequestBody) {
-    fun work() {
+class SignupWork(private val userInfo: SignUpRequestBody){
+
+
+    fun work(completion : (statusCode:Int, msg:String?) -> Unit) {
         val service = RetrofitAPI.signUpService
 
         // gson.toJson 을 이용해서 Json 으로 변경
@@ -30,14 +32,22 @@ class SignupWork(private val userInfo: SignUpRequestBody) {
                     response: Response<SignUpResponseBody>
                 ) {
                     if (response.isSuccessful) {
-                        val result = response.body()
-                        Log.d("회원가입 성공", "$result")
+                        Log.d("회원가입 성공", "$response.body()")
+                        val result = response.body()?.msg
+                        completion(response.code(), result)
+                    } else {
+                        Log.d("회원가입 실패", "$response")
+                        val result = response.errorBody()?.string()
+                        completion(response.code(), result)
+
                     }
                 }
 
                 override fun onFailure(call: Call<SignUpResponseBody>, t: Throwable) {
-                    Log.d("회원가입 실패", t.message.toString())
+                    Log.d("응답 실패", t.message.toString())
                 }
             })
     }
 }
+
+

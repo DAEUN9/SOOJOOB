@@ -1,6 +1,7 @@
 package com.example.proto04
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class LoginResponseBody(
     @SerializedName("statusCode")
@@ -8,12 +9,12 @@ data class LoginResponseBody(
     @SerializedName("msg")
     val msg: String?,
     @SerializedName("data")
-    val data: List<Data>?
+    val data: Data?
 )
 
 data class Data(
     @SerializedName("user")
-    val user: List<User>?,
+    val user: User?,
     @SerializedName("jwtToken")
     val jwtToken: String?
 )
@@ -37,4 +38,4 @@ data class User(
     val height: Any?,
     @SerializedName("region")
     val region: Any?
-)
+) : Serializable {}

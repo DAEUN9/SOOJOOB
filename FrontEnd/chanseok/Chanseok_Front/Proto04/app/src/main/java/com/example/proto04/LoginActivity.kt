@@ -8,7 +8,9 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.MotionEvent
 import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import com.example.proto04.databinding.ActivityLoginBinding
+
 
 class LoginActivity : AppCompatActivity() {
 
@@ -30,21 +32,25 @@ class LoginActivity : AppCompatActivity() {
 
         binding.passwordTextInputLayout.editText?.addTextChangedListener(passwordListener)
 
-
-
         binding.nextButton.setOnClickListener {
             val userData = LoginRequestBody(
                 binding.emailTextInputLayout.editText?.text.toString(),
                 binding.passwordTextInputLayout.editText?.text.toString()
             )
+
+
             val loginWork = LoginWork(userData)
-            loginWork.work()
+            val intent = Intent(this, MainActivity::class.java)
+            loginWork.work(completion = { status ->
+                if (status in 200..300) {
+                    Toast.makeText(this@LoginActivity, "로그인에 성공하였습니다!", Toast.LENGTH_SHORT).show()
+                    startActivity(intent)
+                } else {
+                    Toast.makeText(this@LoginActivity, "이메일 혹은 비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show()
+                }
+            })
         }
 
-        binding.logoLogin.setOnClickListener {
-            val nextIntent = Intent(this, MainActivity::class.java)
-            startActivity(nextIntent)
-        }
 
         binding.nextSignup.setOnClickListener {
             val nextIntent = Intent(this, SignupActivity::class.java)

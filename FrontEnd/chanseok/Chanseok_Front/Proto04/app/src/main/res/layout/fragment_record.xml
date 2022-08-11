@@ -6,7 +6,7 @@
     android:background="#2FC0B3"
     android:id="@+id/recordFragment"
     tools:context="com.example.proto04.fragments.RecordFragment">
-    >
+
 
     <TextView
         android:id="@+id/record_Fragment_title"
