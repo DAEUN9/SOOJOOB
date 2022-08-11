@@ -30,7 +30,13 @@ class LoginWork(private val userInfo: LoginRequestBody ) {
                     response: Response<LoginResponseBody>
                 ) {
                     if (response.isSuccessful) {
-                        Log.d("로그인 성공", "$response.body()")
+                        val result = response.body()
+                        Log.d("로그인 성공", "$result")
+                        val token = response.body()?.data?.jwtToken
+                        Log.d("jwtToken", "$token")
+                        if (token != null) {
+                            App.prefs.setString("X-AUTH-TOKEN", token)
+                        }
                     }
                     else {
                         Log.d("로그인 실패", "$response")
