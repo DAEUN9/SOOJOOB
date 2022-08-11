@@ -13,35 +13,58 @@
     android:orientation="vertical"
     >
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:liftOnScroll="true"
-        app:liftOnScrollTargetViewId="@id/my_badge_recycler_view"
-        >
+<!--    <com.google.android.material.appbar.AppBarLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        app:liftOnScroll="true"-->
+<!--        app:liftOnScrollTargetViewId="@id/my_badge_recycler_view"-->
+<!--        >-->
 
-    </com.google.android.material.appbar.AppBarLayout>
+<!--    </com.google.android.material.appbar.AppBarLayout>-->
+<!--    <TextView-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="보유 뱃지"-->
+<!--        />-->
+<!--    <androidx.recyclerview.widget.RecyclerView-->
+<!--        android:id="@+id/my_badge_recycler_view"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        />-->
+<!--    <TextView-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="미보유 뱃지"-->
+<!--        />-->
+
+<!--    <androidx.recyclerview.widget.RecyclerView-->
+<!--        android:id="@+id/no_badge_recycler_view"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content" />-->
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="보유 뱃지"
+        android:text="보유뱃지"
         />
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/my_badge_recycler_view"
+    <GridView
+        android:id="@+id/myBadges"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        />
+        android:layout_height="match_parent"
+        android:numColumns="3"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="미보유 뱃지"
         />
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/no_badge_recycler_view"
+    <GridView
+        android:id="@+id/noBadges"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        />
+        android:layout_height="match_parent"
+        android:numColumns="3"/>
     </LinearLayout>
+
+
 </androidx.core.widget.NestedScrollView>
 
 
