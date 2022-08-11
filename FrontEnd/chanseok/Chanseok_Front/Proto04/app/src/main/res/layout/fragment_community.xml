@@ -6,7 +6,6 @@
     android:background="#9C2BAF"
     android:id="@+id/communityFragment"
     tools:context="com.example.proto04.fragments.CommunityFragment">
-    >
 
     <TextView
         android:id="@+id/community_Fragment_title"

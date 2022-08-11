@@ -8,6 +8,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.MotionEvent
 import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import com.example.proto04.databinding.ActivitySignupBinding
 
 class SignupActivity : AppCompatActivity() {
@@ -20,6 +21,7 @@ class SignupActivity : AppCompatActivity() {
     private var usernameFlag = false
     private var passwordFlag = false
     private var passwordCheckFlag = false
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -62,12 +64,24 @@ class SignupActivity : AppCompatActivity() {
                 binding.usernameTextInputLayout.editText?.text.toString(),
                 binding.passwordTextInputLayout.editText?.text.toString()
             )
+
             val signupWork = SignupWork(userData)
-            signupWork.work()
+            val intent = Intent(this, LoginActivity::class.java)
+            signupWork.work(completion = { status, msg ->
+                if (status in 200..300) {
+                    Toast.makeText(this@SignupActivity, "$msg", Toast.LENGTH_SHORT).show()
+                    startActivity(intent)
+                } else {
+                    val msg = msg?.substring(25 until 37)
+                    Toast.makeText(this@SignupActivity, "$msg", Toast.LENGTH_SHORT).show()
+                }
+            })
         }
+
         binding.backSignup.setOnClickListener {
             super.onBackPressed()
         }
+
     }
 
     private val emailListener = object : TextWatcher {

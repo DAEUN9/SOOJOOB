@@ -4,32 +4,21 @@
     <item
         android:id="@+id/homeFragment"
         android:title="홈"
-        android:icon="@drawable/ic_home"
-        />
+        android:icon="@drawable/ic_home" />
 
     <item
         android:id="@+id/communityFragment"
         android:title="수줍생활"
-        android:icon="@drawable/ic_community"
-        />
-
-    <!--   <item
-           android:id="@+id/pluggingFragment"
-           android:title="플러깅"
-           android:icon="@drawable/ic_plugging"
-           />    -->
+        android:icon="@drawable/ic_community" />
 
     <item
         android:id="@+id/recordFragment"
         android:title="기록"
-        android:icon="@drawable/ic_record"
-        />
+        android:icon="@drawable/ic_record" />
 
     <item
         android:id="@+id/mypageFragment"
         android:title="마이페이지"
-        android:icon="@drawable/ic_mypage"
-        />
-
+        android:icon="@drawable/ic_mypage" />
 
 </menu>

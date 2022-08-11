@@ -7,8 +7,8 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.Call
 import retrofit2.Response
 
-class LoginWork(private val userInfo: LoginRequestBody) {
-    fun work() {
+class LoginWork(private val userInfo: LoginRequestBody ) {
+    fun work(completion : (statusCode:Int) -> Unit) {
         val service = RetrofitAPI.loginService
 
         // gson.toJson 을 이용해서 Json 으로 변경
@@ -30,15 +30,16 @@ class LoginWork(private val userInfo: LoginRequestBody) {
                     response: Response<LoginResponseBody>
                 ) {
                     if (response.isSuccessful) {
-                        val result = response.body()
-                        val token = response.body()?.data?.jwtToken
-                        Log.d("로그인 성공", "$result")
-                        Log.d("jwtToken", "$token")
+                        Log.d("로그인 성공", "$response.body()")
                     }
+                    else {
+                        Log.d("로그인 실패", "$response")
+                    }
+                    completion(response.code())
                 }
 
                 override fun onFailure(call: Call<LoginResponseBody>, t: Throwable) {
-                    Log.d("로그인 실패", t.message.toString())
+                    Log.d("응답 실패", t.message.toString())
                 }
             })
     }

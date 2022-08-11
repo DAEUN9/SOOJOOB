@@ -8,10 +8,11 @@
     android:gravity="center"
     tools:context=".MapsActivity">
 
-    <Button
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="지도"/>
+        android:text="안녕하세요."/>
+
 
 </LinearLayout>
