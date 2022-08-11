@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.example.proto04">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+<!--    위치 권한-->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+<!--    카메라 권한-->
+    <uses-permission android:name="android.permission.CAMERA"/> <!-- 카메라 사용권한 -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/> <!--저장소 읽기 권한-->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/><!--저장소 쓰기 권한-->
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher_soojoob"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_soojoob_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Proto04"
+        android:usesCleartextTraffic="true"
+        tools:targetApi="31">
+
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyBeszhi-7poqvl1ykblw6cOS6dIj5gVpFo" />
+
+        <activity
+            android:name=".MapsActivity"
+            android:exported="true"
+            android:label="MapsActivity">
+
+        </activity>
+
+        <activity
+            android:name=".EndActivity"
+            android:exported="true">
+        </activity>
+        <activity
+            android:name=".SignupActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".LoginActivity"
+            android:exported="true" />
+
+        <activity
+            android:name=".PloggingDataActivity"
+            android:exported="true" />
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>
