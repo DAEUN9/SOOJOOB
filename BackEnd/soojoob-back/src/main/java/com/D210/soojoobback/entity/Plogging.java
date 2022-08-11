@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.sql.Blob;
 
 @Getter
 @Setter
@@ -39,14 +40,14 @@ public class Plogging {
     @Column(nullable = false)
     private Integer trashCount;
 
-    private String ploggingImg;
+    private Blob ploggingImg;
 
 //    @Column(nullable = false)
 //    private Double calorie;
 //    private Double bpm;
 
 
-    public Plogging(User ploggingUser, Double distance, Integer timeRecord, String dateTime,Integer stepCount, Integer trashCount, String ploggingImg) {
+    public Plogging(User ploggingUser, Double distance, Integer timeRecord, String dateTime,Integer stepCount, Integer trashCount, Blob ploggingImg) {
         this.ploggingUser = ploggingUser;
         this.distance = distance;
         this.timeRecord = timeRecord;

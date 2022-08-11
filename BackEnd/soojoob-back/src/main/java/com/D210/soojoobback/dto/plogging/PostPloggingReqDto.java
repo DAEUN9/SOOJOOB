@@ -3,6 +3,8 @@ package com.D210.soojoobback.dto.plogging;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
+import java.sql.Blob;
+
 @Getter
 @RequiredArgsConstructor
 public class PostPloggingReqDto {
@@ -15,7 +17,7 @@ public class PostPloggingReqDto {
     private String dateTime;
     private Integer stepCount;
     private Integer trashCount;
-    private String ploggingImg;
+    private Blob ploggingImg;
 //    private Double calorie;
 //    private Double bpm;
 

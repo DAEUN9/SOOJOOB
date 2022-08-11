@@ -27,6 +27,8 @@ public class Record {
 //    private Double totalCalorie;
     private Integer totalTimeRecord;
 
+    private Double exp;
+
     @Builder
     public Record(User userRecord) {
         this.userRecord = userRecord;
@@ -34,6 +36,7 @@ public class Record {
 //        this.totalCalorie = 0.0;
         this.totalTrashCount = 0;
         this.totalTimeRecord = 0;
+        this.exp = 0.0;
     }
 }
 
