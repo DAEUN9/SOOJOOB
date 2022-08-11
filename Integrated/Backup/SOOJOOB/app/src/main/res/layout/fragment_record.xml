@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:background="#2FC0B3"
     android:id="@+id/recordFragment"
-    tools:context="com.example.SOOJOOB.fragments.RecordFragment">
+    tools:context="com.example.SOOJOOB.RecordFragment">
 
 
     <TextView

@@ -1,4 +1,4 @@
-package com.example.SOOJOOB
+package com.example.SOOJOOB.retrofit
 
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -32,5 +32,9 @@ object RetrofitAPI {
 
     val loginService: LoginService by lazy {
         retrofit.create(LoginService::class.java)
+    }
+
+    val userService: UserService by lazy {
+        retrofit.create(UserService::class.java)
     }
 }

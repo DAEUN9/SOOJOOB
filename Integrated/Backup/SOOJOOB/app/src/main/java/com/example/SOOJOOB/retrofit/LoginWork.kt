@@ -1,4 +1,4 @@
-package com.example.SOOJOOB
+package com.example.SOOJOOB.retrofit
 
 import android.util.Log
 import com.google.gson.Gson
