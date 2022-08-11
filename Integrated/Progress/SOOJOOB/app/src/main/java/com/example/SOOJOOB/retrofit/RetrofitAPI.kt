@@ -53,4 +53,8 @@ object RetrofitAPI {
             proceed(newRequest)
         }
     }
+    val ploggingService: PloggingService by lazy {
+        retrofit().create(PloggingService::class.java)
+    }
+
 }
