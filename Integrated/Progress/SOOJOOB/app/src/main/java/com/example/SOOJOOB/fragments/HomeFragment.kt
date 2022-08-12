@@ -35,11 +35,6 @@ class HomeFragment : Fragment() {
         val binding = FragmentHomeBinding.inflate(inflater, container, false)
         fBinding = binding
 
-//        val view = inflater.inflate(R.layout.fragment_home, container, false)
-//        binding.homeNotification.setOnClickListener {
-//            val intent = Intent(activity, NotificationActivity::class.java)
-//            startActivity(intent)
-//        }
 
         binding.logout.setOnClickListener {
             LogoutWork().logout()

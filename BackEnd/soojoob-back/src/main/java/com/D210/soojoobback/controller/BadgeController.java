@@ -9,8 +9,10 @@ import com.D210.soojoobback.entity.User;
 import com.D210.soojoobback.exception.CustomErrorException;
 import com.D210.soojoobback.repository.BadgeRepository;
 import com.D210.soojoobback.repository.UserRepository;
+import com.D210.soojoobback.security.UserDetailsImpl;
 import com.D210.soojoobback.service.BadgeService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,11 +28,17 @@ public class BadgeController {
     private final BadgeRepository badgeRepository;
 
 
-    @GetMapping("/{user_id}")
-    public ResponseDto myBadges(@PathVariable("user_id") long user_id) {
-        User user = userRepository.findById(user_id).orElseThrow(
-                () -> new CustomErrorException("유저가 존재하지 않습니다")
-        );
+    private void checkLogin(
+            @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        System.out.println(userDetails);
+        if (userDetails == null) {
+            throw new CustomErrorException("로그인이 필요합니다.2");
+        }
+    }
+    @GetMapping("")
+    public ResponseDto myBadges(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+        checkLogin(userDetails);
+        User user = userDetails.getUser();
         List<Badge> data = badgeService.getMyBadgeListByUser(user);
         System.out.println(data);
         return new ResponseDto(200L,"내 뱃지 불러오기", data);
@@ -54,12 +62,10 @@ public class BadgeController {
         return new ResponseDto(200L,"추가된 뱃지", data);
     }
 
-    @GetMapping("/{user_id}/no")
-    public ResponseDto addBadges(@PathVariable("user_id") long user_id) {
-        User user = userRepository.findById(user_id).orElseThrow(
-                () -> new CustomErrorException("유저가 존재하지 않습니다")
-        );
-
+    @GetMapping("no")
+    public ResponseDto addBadges(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+        checkLogin(userDetails);
+        User user = userDetails.getUser();
         List<Badge> data = badgeService.noHaveBadges(user);
 
         System.out.println(data);

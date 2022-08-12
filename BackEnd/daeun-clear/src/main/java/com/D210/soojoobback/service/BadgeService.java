@@ -61,7 +61,7 @@ public class BadgeService {
         return noBadges;
     }
 //
-    public List<BadgeListResDto> checkAddAll(User user, Long totalCalorie, Long totalDistance, Integer totalTrashCount) {
+    public List<BadgeListResDto> checkAddAll(User user, Long totalTime, Long totalDistance, Integer totalTrashCount) {
 
         List<BadgeListResDto> newBadges = new ArrayList<>();
 //        List<Badge> allBadges = badgeRepository.findAll();
@@ -95,7 +95,7 @@ public class BadgeService {
         return newBadges;
     }
 
-    public List<BadgeListResDto> checkAddOne(User user, Double calorie, Double distance, Integer trashCount) {
+    public List<BadgeListResDto> checkAddOne(User user, Double time, Double distance, Integer trashCount) {
         List<BadgeListResDto> newBadges = new ArrayList<>();
 //        List<Badge> allBadges = badgeRepository.findAll();
         List<Badge> currBadge = new ArrayList<>();

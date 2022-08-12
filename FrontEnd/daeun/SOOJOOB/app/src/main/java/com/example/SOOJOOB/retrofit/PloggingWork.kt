@@ -1,6 +1,8 @@
 package com.example.SOOJOOB
 
 import android.util.Log
+import com.example.SOOJOOB.retrofit.Badge
+import com.example.SOOJOOB.retrofit.Plogging
 
 import com.google.gson.Gson
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -9,7 +11,7 @@ import retrofit2.Call
 import retrofit2.Response
 
 class PloggingWork(private val ploggingInfo: PloggingRequestBody) {
-    fun work() {
+    fun work(completion: (ArrayList<Badge>?) -> Unit) {
         val service = RetrofitAPI.ploggingService
 
         // gson.toJson 을 이용해서 Json 으로 변경
@@ -32,6 +34,8 @@ class PloggingWork(private val ploggingInfo: PloggingRequestBody) {
                 ) {
                     if (response.isSuccessful) {
                         val result = response.body()
+                        var badges = result?.data
+                        completion(badges as ArrayList<Badge>)
                         Log.d("플로깅  성공", "$result")
                     }
                 }
