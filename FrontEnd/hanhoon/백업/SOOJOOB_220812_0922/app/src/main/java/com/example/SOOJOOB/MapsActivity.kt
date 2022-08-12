@@ -368,7 +368,6 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
                     mMap.isMyLocationEnabled = false
                     Handler().postDelayed({
                         // 모두 정지
-                        end_button.isEnabled = true
                         onStop()
                     }, 500)
                 }, 1000)
@@ -396,7 +395,6 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
         }
 
         end_button = findViewById(R.id.end_button)
-        end_button.isEnabled = false
 
         val endIntent = Intent(this, EndActivity::class.java) // 인텐트를 생성
 
@@ -418,7 +416,7 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
 
                 startActivity(endIntent)  // 화면 전환하기
                 finish()
-//                onDestroy()
+                onDestroy()
             }
         }
         capture_imageView = findViewById(R.id.capture_imageView)
