@@ -15,6 +15,27 @@
 
         tools:context=".feature.record_badge.RecFragment">
 
+        <Button
+            android:id="@+id/trashSort"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+
+            app:layout_constraintBottom_toTopOf="@+id/recyler_view"
+            android:text="많은 순"
+            tools:ignore="MissingConstraints">
+
+        </Button>
+
+        <Button
+            android:id="@+id/dateSort"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="최신 순"
+            app:layout_constraintBottom_toTopOf="@+id/recyler_view"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/trashSort">
+        </Button>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyler_view"
 
@@ -27,8 +48,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.473"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:spanCount="2"
+            app:layout_constraintTop_toTopOf="@id/trashSort"
             tools:listitem="@layout/item_rec2">
 
         </androidx.recyclerview.widget.RecyclerView>
