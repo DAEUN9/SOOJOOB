@@ -22,7 +22,9 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.ActivityInfo
+import android.graphics.BitmapFactory
 import android.graphics.Color
+import android.graphics.drawable.BitmapDrawable
 import android.os.SystemClock
 import android.view.WindowManager
 import android.widget.Button
@@ -225,9 +227,8 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
         var startflag = false
         startBtn.setOnClickListener {
             if(!startflag) {
-                mMap.addMarker(MarkerOptions().position(latLng).title("Changed Location"))
-                //                mMap.addMarker(MarkerOptions().position(latLng).icon(BitmapDescriptorFactory.fromBitmap(R.drawable.boy)))
-
+//                mMap.addMarker(MarkerOptions().position(latLng).title("Changed Location"))
+                mMap.addMarker(MarkerOptions().position(latLng).icon(BitmapDescriptorFactory.fromResource(R.drawable.boy)))
                 startflag = true
             }
             isRunning = !isRunning
@@ -243,8 +244,9 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
             trashCount ++
             trashCountText.text = "$trashCount"
             println(trashCount)
-            // 줍깅 마칭
-            mMap.addMarker(MarkerOptions().position(latLng).title("Changed Location"))
+            // 줍깅 마킹
+//            mMap.addMarker(MarkerOptions().position(latLng).title("Changed Location"))
+            mMap.addMarker(MarkerOptions().position(latLng).icon(BitmapDescriptorFactory.fromResource(R.drawable.flower)))
         }
 
         end_button = findViewById(R.id.end_button)

@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MapsActivity"
+    android:orientation="vertical"
+    >
+    <!--    android:weightSum="2"-->
+
+    <FrameLayout
+        android:id="@+id/scroll1"
+        android:layout_width="match_parent"
+        android:layout_height="450dp"
+        >
+<!--    android:layout_weight="1"-->
+
+        <fragment
+            android:id="@+id/map"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <ImageView
+            android:id="@+id/capture_imageView"
+            android:layout_width="126dp"
+            android:layout_height="198dp"
+            tools:srcCompat="@tools:sample/avatars" />
+    </FrameLayout>
+
+
+<!--    android:layout_weight="1"-->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/bottom_View"
+        android:layout_width="wrap_content"
+        android:layout_height="300dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:orientation="horizontal">
+
+
+        <TextView
+            android:id="@+id/secText"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:freezesText="false"
+            android:text="0"
+            android:textAllCaps="false"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textSize="50dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.100000024" />
+
+        <TextView
+            android:id="@+id/milliText"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginBottom="20dp"
+            android:text="초"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            app:layout_constraintBottom_toBottomOf="@+id/secText"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/secText" />
+
+        <Button
+            android:id="@+id/end_button"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:text="플로깅 끝" />
+
+        <Button
+            android:id="@+id/trashBtn"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:text="쓰레기 줍기" />
+
+        <Button
+            android:id="@+id/startBtn"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:text="시작"
+            android:tint="#FFFFFF" />
+
+        <TextView
+            android:id="@+id/trashCountText"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:freezesText="false"
+            android:text="쓰레기 개수"
+            android:textAllCaps="false"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textSize="30sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/secText"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/capture_button"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:text="캡쳐" />
+
+        <Button
+            android:id="@+id/bottom_bar"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:text="바 크기 변경"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

@@ -64,6 +64,14 @@ open class EndActivity : AppCompatActivity() {
         iv_pre = findViewById(R.id.iv_pre)
         now = findViewById(R.id.now)
 
+        // 이미지 캡쳐 적용 (안됨 ㅠㅠ)
+        val captureImage = intent?.getParcelableExtra<Bitmap>("captureImage")
+        val captureImageTest = intent?.getParcelableExtra<Bitmap>("captureImageTest")
+        println("captureImage : " + captureImage)
+        println("captureImageTest : " + captureImageTest)
+        iv_pre.setImageBitmap(captureImageTest)
+
+
         val currentDateTime = Calendar.getInstance().time
         val dateFormat = SimpleDateFormat("yyyy.MM.dd HH:mm:ss", Locale.KOREA).format(currentDateTime)
 
