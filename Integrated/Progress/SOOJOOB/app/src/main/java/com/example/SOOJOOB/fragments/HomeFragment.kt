@@ -9,14 +9,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.SOOJOOB.LoginActivity
 import com.example.SOOJOOB.MapsActivity
 import com.example.SOOJOOB.R
 import com.example.SOOJOOB.RecyclerAdapter
 import com.example.SOOJOOB.databinding.FragmentHomeBinding
-import com.example.SOOJOOB.retrofit.PloggingGetResponseBody
-import com.example.SOOJOOB.retrofit.PloggingResult
-import com.example.SOOJOOB.retrofit.RetrofitAPI
-import com.example.SOOJOOB.retrofit.UserWork
+import com.example.SOOJOOB.retrofit.*
 import retrofit2.Call
 import retrofit2.Response
 
@@ -43,10 +41,11 @@ class HomeFragment : Fragment() {
 //            startActivity(intent)
 //        }
 
-//        binding.logout.setOnClickListener {
-//            val intent = Intent(activity, LogoutActivity::class.java)
-//            startActivity(intent)
-//        }
+        binding.logout.setOnClickListener {
+            LogoutWork().logout()
+            val intent = Intent(activity, LoginActivity::class.java)
+            startActivity(intent)
+        }
 
         binding.nextMaps.setOnClickListener {
             val intent = Intent(activity, MapsActivity::class.java)
