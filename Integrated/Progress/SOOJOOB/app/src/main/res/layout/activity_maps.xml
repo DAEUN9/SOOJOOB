@@ -6,22 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".MapsActivity">
 
-
-
-    <!--    <Button-->
-    <!--        android:id="@+id/resetBtn"-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:clickable="true"-->
-    <!--        android:tint="#FFFFFF"-->
-    <!--        android:text="초기화"-->
-    <!--        app:layout_constraintBottom_toBottomOf="@+id/startBtn"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-    <!--        app:layout_constraintHorizontal_bias="0.12"-->
-    <!--        app:layout_constraintStart_toStartOf="parent"-->
-    <!--        app:layout_constraintTop_toTopOf="@+id/recordBtn"-->
-    <!--        app:layout_constraintVertical_bias="1.0"/>-->
-
     <Button
         android:id="@+id/startBtn"
         android:layout_width="wrap_content"
@@ -120,5 +104,25 @@
         app:layout_constraintBottom_toBottomOf="@+id/startBtn"
         app:layout_constraintEnd_toStartOf="@+id/startBtn"
         app:layout_constraintTop_toTopOf="@+id/startBtn" />
+
+    <!--아래부분들은 임시 소스입니다-->
+    <ImageView
+        android:id="@+id/capture_imageView"
+        android:layout_width="126dp"
+        android:layout_height="198dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <Button
+        android:id="@+id/capture_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="캡쳐"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="166dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
