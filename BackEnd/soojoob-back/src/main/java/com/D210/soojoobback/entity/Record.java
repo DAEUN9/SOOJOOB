@@ -36,7 +36,7 @@ public class Record {
 //        this.totalCalorie = 0.0;
         this.totalTrashCount = 0;
         this.totalTimeRecord = 0;
-        this.exp = 0.0;
+        this.exp = 36.5;
     }
 }
 

@@ -6,7 +6,9 @@ import com.D210.soojoobback.dto.user.LoginResponseDto;
 import com.D210.soojoobback.dto.user.ResponseDto;
 import com.D210.soojoobback.entity.GoogleUser;
 import com.D210.soojoobback.entity.OAuthUserInfo;
+import com.D210.soojoobback.entity.Record;
 import com.D210.soojoobback.entity.User;
+import com.D210.soojoobback.repository.RecordRepository;
 import com.D210.soojoobback.repository.UserRepository;
 import com.D210.soojoobback.security.JwtTokenProvider;
 import com.D210.soojoobback.service.UserService;
@@ -30,6 +32,8 @@ public class OauthController {
     private final UserService userService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
+    private final RecordRepository recordRepository;
+
     private final JwtTokenProvider jwtTokenProvider;
     @PostMapping("/oauth/jwt/google")
     @ResponseBody
@@ -52,6 +56,8 @@ public class OauthController {
                     .build();
 
             userEntity = userRepository.save(userRequest);
+            Record record = new Record(userEntity);
+            recordRepository.save(record);
         }
 
         String jwtToken = jwtTokenProvider.createToken(userEntity.getEmail());
@@ -68,6 +74,8 @@ public class OauthController {
         LoginDetailResponseDto loginDetailResponseDto = userService.toSetLoginDetailResponse(userEntity);
         loginResponseDto.setUser(loginDetailResponseDto);
         loginResponseDto.setJwtToken(jwtToken);
+
+
 
 
 
