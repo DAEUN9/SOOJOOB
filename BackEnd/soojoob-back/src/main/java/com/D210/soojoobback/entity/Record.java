@@ -27,6 +27,8 @@ public class Record {
 //    private Double totalCalorie;
     private Integer totalTimeRecord;
 
+    private Integer badgeCount;
+
     private Double exp;
 
     @Builder
@@ -35,6 +37,7 @@ public class Record {
         this.totalDistance = 0.0;
 //        this.totalCalorie = 0.0;
         this.totalTrashCount = 0;
+        this.badgeCount = 0;
         this.totalTimeRecord = 0;
         this.exp = 36.5;
     }

@@ -43,11 +43,11 @@ public class OauthController {
                 new GoogleUser((Map<String, Object>)data);
 
         User userEntity =
-                userRepository.findByUsername(googleUser.getProvider()+"_"+googleUser.getProviderId());
+                userRepository.findOByEmail(googleUser.getEmail());
 
         if(userEntity == null) {
             User userRequest = User.builder()
-                    .username(googleUser.getProvider()+"_"+googleUser.getProviderId())
+                    .username(googleUser.getProvider()+"_"+googleUser.getName())
                     .password(bCryptPasswordEncoder.encode("skldjficmnwl123kclknmcnfklsdkskmxxfofohue"))
                     .email(googleUser.getEmail())
                     .provider(googleUser.getProvider())
