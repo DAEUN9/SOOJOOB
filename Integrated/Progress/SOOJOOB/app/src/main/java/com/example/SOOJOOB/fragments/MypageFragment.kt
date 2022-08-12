@@ -31,9 +31,9 @@ class MypageFragment : Fragment() {
             val bundle1 = Bundle()
             val intent = Intent(activity, BadgesActivity::class.java)
 
-            badgewWork.getMyBadge(userId = "3", completion = { responseBadgeArrayList ->
+            badgewWork.getMyBadge(completion = { responseBadgeArrayList ->
 
-                badgewWork.getNoBadge(userId = "3", completion = { responseBadgeArrayList1 ->
+                badgewWork.getNoBadge(completion = { responseBadgeArrayList1 ->
                     bundle.putSerializable("my_badge_list", responseBadgeArrayList)
                     intent.putExtra("array_bundle", bundle)
 
@@ -44,8 +44,10 @@ class MypageFragment : Fragment() {
                 })
             }
 
-
             )
+
+
+
 
 
 

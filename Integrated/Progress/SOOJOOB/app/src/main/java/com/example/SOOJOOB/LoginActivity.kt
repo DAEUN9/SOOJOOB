@@ -87,6 +87,8 @@ class LoginActivity : AppCompatActivity() {
 
         googleSignInClient = GoogleSignIn.getClient(this, gso)
 
+        googleSignInClient.signOut()
+
 
 
         binding.googleLogin.setOnClickListener{

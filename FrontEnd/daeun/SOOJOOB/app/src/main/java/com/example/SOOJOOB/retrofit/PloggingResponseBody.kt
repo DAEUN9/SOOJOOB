@@ -1,5 +1,6 @@
 package com.example.SOOJOOB
 
+import com.example.SOOJOOB.retrofit.Badge
 import com.google.gson.annotations.SerializedName
 
 data class PloggingResponseBody(
@@ -8,6 +9,6 @@ data class PloggingResponseBody(
     @SerializedName("msg")
     val msg: String?,
     @SerializedName("data")
-    val data: Any?
+    val data: List<Badge>?
 )
 

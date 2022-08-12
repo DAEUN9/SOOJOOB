@@ -22,6 +22,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import android.util.*
 import android.util.Base64
+import androidx.core.app.NotificationCompat
 import com.example.SOOJOOB.retrofit.PloggingRequestBody
 import com.example.SOOJOOB.retrofit.PloggingWork
 import java.io.*
@@ -43,6 +44,9 @@ open class EndActivity : AppCompatActivity() {
     private var ploggingImg:String = ""
 
     private lateinit var getButton: Button
+
+    // Noti 객체 생성
+    private lateinit var notificationHelper: NotificationHelper
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -97,8 +101,21 @@ open class EndActivity : AppCompatActivity() {
                 dateFormat,
                 ploggingImg
             )
+            var cnt = 0
             val ploggingWork = PloggingWork(ploggingData)
-            ploggingWork.work()
+            ploggingWork.work(completion = { badges ->
+                if (badges != null) {
+                    for (badge in badges) {
+                        notificationHelper = NotificationHelper(this)
+                        cnt += 1
+                        val title: String = "${badge.badgeName}"
+                        val message: String = "새로운 배지를 획득하셨어요"
+
+                        // 알림 호출ㅇ
+                        showNotification(title, message, cnt)
+                    }
+                }
+            })
 
         }
 
@@ -266,5 +283,12 @@ open class EndActivity : AppCompatActivity() {
         val b = baos.toByteArray()
         return Base64.encodeToString(b, Base64.DEFAULT)
     }
+
+    private fun showNotification(title: String, message: String, id: Int) {
+        val nb: NotificationCompat.Builder =
+            notificationHelper.getChannelNotification(title, message)
+        notificationHelper.getManager().notify(id, nb.build())
+    }
+
 
 }

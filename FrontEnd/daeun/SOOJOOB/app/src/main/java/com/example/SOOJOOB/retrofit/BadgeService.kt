@@ -6,9 +6,9 @@ import retrofit2.http.Path
 
 interface BadgeService {
 
-    @GET("badges/{userId}")
-    fun getUserBadge(@Path("userId") userId: String): Call<BadgesResponseBody>
+    @GET("badges")
+    fun getUserBadge(): Call<BadgesResponseBody>
 
-    @GET("badges/{userId}/no")
-    fun getNoBadges(@Path("userId") userId: String): Call<BadgesResponseBody>
+    @GET("badges/no")
+    fun getNoBadges(): Call<BadgesResponseBody>
 }

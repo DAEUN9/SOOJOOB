@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.example.SOOJOOB.LoginActivity
 import com.example.SOOJOOB.MapsActivity
 import com.example.SOOJOOB.databinding.FragmentHomeBinding
 
@@ -22,10 +23,10 @@ class HomeFragment : Fragment() {
         val binding = FragmentHomeBinding.inflate(inflater, container, false)
         fBinding = binding
 
-//        binding.logout.setOnClickListener {
-//            val intent = Intent(activity, LogoutActivity::class.java)
-//            startActivity(intent)
-//        }
+        binding.logout.setOnClickListener {
+            val intent = Intent(activity, LoginActivity::class.java)
+            startActivity(intent)
+        }
 
         binding.nextMaps.setOnClickListener {
             val intent = Intent(activity, MapsActivity::class.java)

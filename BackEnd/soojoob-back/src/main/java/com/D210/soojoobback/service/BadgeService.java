@@ -89,6 +89,12 @@ public class BadgeService {
                     userBadgeRepository.save(userBadge);
                     newBadges.add(b);
                 }
+                else if (badge.getId() == 5L&&totalTime>10) {
+                    BadgeListResDto b = new BadgeListResDto(badge);
+                    UserBadge userBadge = new UserBadge(user, badge);
+                    userBadgeRepository.save(userBadge);
+                    newBadges.add(b);
+                }
             }
         }
 
@@ -117,6 +123,11 @@ public class BadgeService {
 
                     newBadges.add(b);
                 } else if (badge.getId() == 4L&&distance>10) {
+                    BadgeListResDto b = new BadgeListResDto(badge);
+                    UserBadge userBadge = new UserBadge(user, badge);
+                    userBadgeRepository.save(userBadge);
+                    newBadges.add(b);
+                } else if (badge.getId() == 6L&&time>100) {
                     BadgeListResDto b = new BadgeListResDto(badge);
                     UserBadge userBadge = new UserBadge(user, badge);
                     userBadgeRepository.save(userBadge);
