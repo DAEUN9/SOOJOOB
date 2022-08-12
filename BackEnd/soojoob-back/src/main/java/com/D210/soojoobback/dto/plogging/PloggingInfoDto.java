@@ -21,7 +21,7 @@ public class PloggingInfoDto {
     private String dateTime;
     private Integer stepCount;
     private Integer trashCount;
-    private Blob ploggingImg;
+    private String ploggingImg;
 //    private Double calorie;
 //    private Double bpm;
 

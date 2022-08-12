@@ -2,24 +2,18 @@ package com.example.googlelogin
 
 import android.util.Log
 import com.google.gson.Gson
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import okhttp3.Callback
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody.Companion.toRequestBody
-import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Response
 
 class RetrofitWork() {
-    fun work(userInfo: SignUpRequestBody) {
+    fun work(userInfo: GoogleSinupReqBody) {
         val service = RetrofitAPI.emgMedService
 
         // gson.toJson 을 이용해서 Json 으로 변경
         val gson = Gson()
-        val signUpRequestBody = SignUpRequestBody(userInfo.email, userInfo.name, userInfo.googleId)
+        val signUpRequestBody = GoogleSinupReqBody(userInfo.email, userInfo.name, userInfo.googleId)
         val gsonObjectString = gson.toJson(signUpRequestBody)
 
 
