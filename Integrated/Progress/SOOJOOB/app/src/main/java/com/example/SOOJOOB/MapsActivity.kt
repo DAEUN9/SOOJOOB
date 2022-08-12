@@ -418,7 +418,7 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
 
                 startActivity(endIntent)  // 화면 전환하기
                 finish()
-                onDestroy()
+//                onDestroy()
             }
         }
         capture_imageView = findViewById(R.id.capture_imageView)
