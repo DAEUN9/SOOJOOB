@@ -67,11 +67,11 @@ open class EndActivity : AppCompatActivity() {
         now = findViewById(R.id.now)
 
         // 이미지 캡쳐 적용 (안됨 ㅠㅠ)
-        val captureImage = intent?.getParcelableExtra<Bitmap>("captureImage")
-        val captureImageTest = intent?.getParcelableExtra<Bitmap>("captureImageTest")
-        println("captureImage : " + captureImage)
-        println("captureImageTest : " + captureImageTest)
-        iv_pre.setImageBitmap(captureImageTest)
+//        val captureImage = intent?.getParcelableExtra<Bitmap>("captureImage")
+//        val captureImageTest = intent?.getParcelableExtra<Bitmap>("captureImageTest")
+//        println("captureImage : " + captureImage)
+//        println("captureImageTest : " + captureImageTest)
+//        iv_pre.setImageBitmap(captureImageTest)
 
 
         val currentDateTime = Calendar.getInstance().time
