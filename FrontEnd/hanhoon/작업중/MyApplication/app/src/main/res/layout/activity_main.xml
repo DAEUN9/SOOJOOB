@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnBottomSheetPersistent"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_60"
+        android:text="@string/btn_persistent" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnBottomSheetModal"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_60"
+        android:layout_marginTop="@dimen/dimen_60"
+        android:text="@string/btn_modal" />
+
+    <include layout="@layout/fragment_custom_bottom_sheet_dialog" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
