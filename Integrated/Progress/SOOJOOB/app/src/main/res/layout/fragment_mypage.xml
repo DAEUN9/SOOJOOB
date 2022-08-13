@@ -18,6 +18,18 @@
         android:textSize="15sp"
         android:textStyle="bold"
         />
+
+    <Button
+        android:id="@+id/no_badge_button"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="140dp"
+        android:layout_marginHorizontal="10dp"
+        android:layout_gravity="center"
+        android:text="미보유 뱃지"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        />
     <TextView
         android:id="@+id/mypage_Fragment_title"
         android:layout_width="wrap_content"
