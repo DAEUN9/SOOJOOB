@@ -24,6 +24,7 @@ import android.content.pm.ActivityInfo
 import android.graphics.Color
 import android.os.Handler
 import android.os.SystemClock
+import android.speech.tts.TextToSpeech
 import android.view.WindowManager
 import android.widget.Button
 import android.widget.ImageView
@@ -44,7 +45,7 @@ import kotlin.math.pow
 
 class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListener,
     GoogleMap.OnMyLocationClickListener,OnMapReadyCallback, GoogleMap.OnPolylineClickListener,
-    GoogleMap.OnPolygonClickListener {
+    GoogleMap.OnPolygonClickListener, TextToSpeech.OnInitListener {
     private var prelat:Double = 0.0
     private var prelon:Double = 0.0
     private var sumDistance:Double = 0.0
@@ -82,6 +83,7 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
     private lateinit var capture_imageView : ImageView
     // 지도 클러스터
     private lateinit var clusterManager: ClusterManager<MyItem>
+    private var tts: TextToSpeech? = null
 
     /** 지도 클러스터 시작*/
     inner class MyItem(
@@ -318,7 +320,7 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
         trashCountText = findViewById(R.id.trashCountText)
 //        lap_Layout = findViewById(R.id.lap_Layout)
 //        resetBtn = findViewById(R.id.resetBtn)
-
+        tts = TextToSpeech(this, this)
         //버튼 클릭 리스너
         var startflag = false
         longClickFlag = false
@@ -382,6 +384,7 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
 //            if(time!=0) lapTime()
 //        }
         trashBtn.setOnClickListener {
+            trashTTS()
             trashCount ++
             trashCountText.text = "$trashCount"
             println(trashCount)
@@ -402,6 +405,7 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
 
         end_button.setOnClickListener { // 버튼 클릭시 할 행동
             if(longClickFlag) {
+                endTTS()
                 pause()
                 endIntent.putExtra("timeRecord", time)
                 endIntent.putExtra("sumDistance", sumDistance)
@@ -598,6 +602,8 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
     }
 
     private fun start() {
+        startTTS()
+
         addLocationListener2()
         locationstart()
         startBtn.text ="중지"
@@ -706,5 +712,39 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
         Toast.makeText(this, "Current location:\n$location", Toast.LENGTH_LONG)
             .show()
     }
+    // TextToSpeech override 함수
+    override fun onInit(status: Int) {
+        if (status == TextToSpeech.SUCCESS) {
+            // set US English as language for tts
+            val result = tts!!.setLanguage(Locale.KOREA)
 
+            if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+                //doSomething
+            } else {
+                //doSomething
+            }
+        } else {
+            //doSomething
+        }
+
+    }
+    private fun startTTS() {
+        tts!!.speak("플로깅을 시작합니다", TextToSpeech.QUEUE_FLUSH, null, "")
+    }
+
+    private fun endTTS() {
+        tts!!.speak("종료", TextToSpeech.QUEUE_FLUSH, null, "")
+    }
+    private fun trashTTS() {
+        tts!!.speak("수줍!", TextToSpeech.QUEUE_FLUSH, null, "")
+    }
+    override fun onDestroy() {
+
+        if (tts != null) {
+            tts!!.stop()
+            tts!!.shutdown()
+        }
+
+        super.onDestroy()
+    }
 }
