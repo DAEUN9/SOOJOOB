@@ -15,26 +15,41 @@
 
         tools:context=".feature.record_badge.RecFragment">
 
-        <Button
-            android:id="@+id/trashSort"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+        <LinearLayout
+            android:id="@+id/btnLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingVertical="20dp">
 
-            app:layout_constraintBottom_toTopOf="@+id/recyler_view"
-            android:text="많은 순"
-            tools:ignore="MissingConstraints">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
 
-        </Button>
+                <Button
+                    android:id="@+id/trashSort"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="많은 순"
+                    android:layout_weight="1"
+                    android:layout_marginHorizontal="20dp">
 
-        <Button
-            android:id="@+id/dateSort"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="최신 순"
-            app:layout_constraintBottom_toTopOf="@+id/recyler_view"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/trashSort">
-        </Button>
+                </Button>
+
+                <Button
+                    android:id="@+id/dateSort"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="최신 순"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_weight="1">
+
+                </Button>
+
+            </LinearLayout>
+        </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyler_view"
@@ -48,12 +63,13 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.473"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/trashSort"
+            app:layout_constraintTop_toBottomOf="@id/btnLayout"
             tools:listitem="@layout/item_rec2">
 
         </androidx.recyclerview.widget.RecyclerView>
 
         <View
+            android:id="@+id/view"
             android:layout_width="match_parent"
             android:layout_height="24dp"
             android:background="#f5f5f5"
