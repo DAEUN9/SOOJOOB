@@ -32,6 +32,12 @@ class NoBadgeActivity : AppCompatActivity() {
         setContentView(view)
 
 
+        binding.backSignup.setOnClickListener {
+            super.onBackPressed()
+        }
+
+
+
         val bundle = intent.getBundleExtra("array_bundle")
 
 
@@ -77,7 +83,7 @@ class NoBadgeActivity : AppCompatActivity() {
             .into(imgView)
 
         val alertDialog = AlertDialog.Builder(this)
-            .setTitle("배지 정보")
+            .setTitle(" ")
             .create()
 
         val btnView = view.findViewById<Button>(R.id.dialog_ok)
