@@ -12,7 +12,7 @@ import java.io.IOException
 // RetrofitApi 객체는 비용이 높기 때문에 여러 객체가 만들어지면 자원낭비 및 통신에 혼선이 올 수 있기 때문에
 // object 로 싱글턴으로 만들어준다.
 object RetrofitAPI {
-    private const val BASE_URL = "https://i7d210.p.ssafy.io/"
+    private const val BASE_URL = "http://10.0.2.2:8080"
 
     fun okHttpClient(interceptor : AppInterceptor): OkHttpClient {
         return OkHttpClient.Builder()

@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.RelativeLayout
 import androidx.fragment.app.Fragment
 import com.example.SOOJOOB.BadgesActivity
+import com.example.SOOJOOB.NoBadgeActivity
 import com.example.SOOJOOB.databinding.FragmentMypageBinding
 import com.example.SOOJOOB.retrofit.BadgeWork
 
@@ -28,27 +29,34 @@ class MypageFragment : Fragment() {
         fBinding = binding
 
         binding.badgeButton.setOnClickListener {
-            val badgewWork = BadgeWork()
-            val bundle = Bundle()
-            val bundle1 = Bundle()
-            val intent = Intent(activity, BadgesActivity::class.java)
+            val badgeWork = BadgeWork()
 
-            badgewWork.getMyBadge(completion = { responseBadgeArrayList ->
 
-                badgewWork.getNoBadge(completion = { responseBadgeArrayList1 ->
-                    bundle.putSerializable("my_badge_list", responseBadgeArrayList)
-                    intent.putExtra("array_bundle", bundle)
+            badgeWork.getMyBadge(completion = { responseBadgeArrayList ->
+                val bundle = Bundle()
+                val intent = Intent(activity, BadgesActivity::class.java)
+                bundle.putSerializable("my_badge_list", responseBadgeArrayList)
+                intent.putExtra("array_bundle", bundle)
 
-                    bundle1.putSerializable("no_badge_list", responseBadgeArrayList1)
-                    intent.putExtra("array_bundle1", bundle1)
 
-                    startActivity(intent)
+                startActivity(intent)
                 })
             }
 
-            )
+        binding.noBadgeButton.setOnClickListener{
+            val badgeWork = BadgeWork()
+            badgeWork.getNoBadge(completion = { responseBadgeArrayList ->
+                val bundle = Bundle()
+                val intent = Intent(activity, NoBadgeActivity::class.java)
+                bundle.putSerializable("my_badge_list", responseBadgeArrayList)
+                intent.putExtra("array_bundle", bundle)
 
 
+                startActivity(intent)
+            })
+
+
+        }
 
 
 
@@ -60,7 +68,7 @@ class MypageFragment : Fragment() {
 
 
 // 3
-        }
+
 
 
 
