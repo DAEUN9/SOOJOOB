@@ -89,9 +89,9 @@ class HomeFragment : Fragment() {
                     response: Response<PloggingGetResponseBody>
                 ) {
                     if (response.isSuccessful) {
-                        val result = response.body()
+                        val result = response.body()?.result?.reversed()
                         result?.let {
-                            it.result?.let { it1 -> setAdapter(it1) }
+                            it?.let { it1 -> setAdapter(it1) }
                         }
 //                        Log.d("플로깅 get 성공", "${result}")
 //                        Log.d("타입 확인","${result?.result?.get(2)?.dateTime}")
