@@ -185,6 +185,7 @@
                 android:layout_marginVertical="20dp">
 
                 <LinearLayout
+                    android:id="@+id/btn_weather"
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
                     android:background="@drawable/round"

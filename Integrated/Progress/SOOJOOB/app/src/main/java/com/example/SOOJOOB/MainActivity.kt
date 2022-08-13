@@ -35,7 +35,6 @@ class MainActivity : AppCompatActivity() {
         fBinding = ActivityMainBinding.inflate(layoutInflater)
 
         setContentView(fBinding.root)
-
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.my_nav_host) as NavHostFragment
 
         val navController = navHostFragment.navController
