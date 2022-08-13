@@ -25,7 +25,7 @@ class RecyclerAdapter(val ploggingList: List<PloggingResult>) : RecyclerView.Ada
         viewHolder.date?.text = ploggingList[i].dateTime
         val time = ploggingList[i].timeRecord?.div(100).toString() + "\"" + ploggingList[i].timeRecord?.rem(100).toString()
         viewHolder.recTime?.text = time
-        viewHolder.trashCnt?.text = ploggingList[i].trashCount.toString() + "개"
+        viewHolder.trashCnt?.text = ploggingList[i].trashCount.toString() + "곳"
         viewHolder.imageString = ploggingList[i].ploggingImg.toString()
         viewHolder.image?.setImageBitmap(viewHolder.imageString.toBitmap())
 
@@ -49,7 +49,7 @@ class RecyclerAdapter(val ploggingList: List<PloggingResult>) : RecyclerView.Ada
         val date =  itemView?.findViewById<TextView>(R.id.date)
         lateinit var imageString:String
 
-        }
+    }
 
 
 
