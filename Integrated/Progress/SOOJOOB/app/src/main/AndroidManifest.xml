@@ -9,6 +9,8 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+
     <!--    카메라 권한-->
     <uses-permission android:name="android.permission.CAMERA"/> <!-- 카메라 사용권한 -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/> <!--저장소 읽기 권한-->
@@ -47,6 +49,13 @@
             android:name="com.example.SOOJOOB.EndActivity"
             android:exported="true">
         </activity>
+        <activity android:name=".WeatherActivity"/>
+        <activity
+            android:name=".ArticleActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ArticleInsertActivity"
+            android:exported="true" />
         <activity
             android:name="com.example.SOOJOOB.LoginActivity"
             android:exported="true">

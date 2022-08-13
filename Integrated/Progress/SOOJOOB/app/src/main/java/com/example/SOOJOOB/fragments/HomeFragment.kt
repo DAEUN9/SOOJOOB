@@ -9,10 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.SOOJOOB.LoginActivity
-import com.example.SOOJOOB.MapsActivity
-import com.example.SOOJOOB.R
-import com.example.SOOJOOB.RecyclerAdapter
+import com.example.SOOJOOB.*
 import com.example.SOOJOOB.databinding.FragmentHomeBinding
 import com.example.SOOJOOB.retrofit.*
 import retrofit2.Call
@@ -44,6 +41,11 @@ class HomeFragment : Fragment() {
 
         binding.nextMaps.setOnClickListener {
             val intent = Intent(activity, MapsActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.btnWeather.setOnClickListener{
+            val intent = Intent(activity, WeatherActivity::class.java)
             startActivity(intent)
         }
 

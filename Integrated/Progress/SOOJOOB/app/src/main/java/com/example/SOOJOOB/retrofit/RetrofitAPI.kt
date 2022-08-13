@@ -63,4 +63,8 @@ object RetrofitAPI {
         retrofit().create(PloggingService::class.java)
     }
 
+    val articleService: ArticleService by lazy {
+        retrofit().create(ArticleService::class.java)
+    }
+
 }
