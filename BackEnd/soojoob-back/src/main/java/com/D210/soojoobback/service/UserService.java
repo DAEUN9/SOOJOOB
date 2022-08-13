@@ -128,13 +128,11 @@ public class UserService {
         return true;
     }
 
-    public List<UserInfoDetailsDto> detailsUserInfo(UserDetailsImpl userDetails) {
+    public UserInfoDetailsDto detailsUserInfo(UserDetailsImpl userDetails) {
         User user = userDetails.getUser();
-        List<UserInfoDetailsDto> userInfoDetailsDtoList = new ArrayList<>();
         UserInfoDetailsDto userInfoDetailsDto = new UserInfoDetailsDto(user);
 
-        userInfoDetailsDtoList.add(userInfoDetailsDto);
-        return userInfoDetailsDtoList;
+        return userInfoDetailsDto;
     }
 
     public User userFromUserDetails(UserDetails userDetails) {

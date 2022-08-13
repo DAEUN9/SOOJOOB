@@ -1,6 +1,7 @@
 package com.D210.soojoobback.controller;
 
 
+import com.D210.soojoobback.dto.record.RecordInfoDto;
 import com.D210.soojoobback.dto.user.ResponseDto;
 import com.D210.soojoobback.entity.Record;
 import com.D210.soojoobback.exception.CustomErrorException;
@@ -29,7 +30,7 @@ public class RecordController {
             @AuthenticationPrincipal UserDetailsImpl userDetails) {
 
         checkLogin(userDetails);
-        Record record = recordService.detailsRecordrInfo(userDetails);
+        RecordInfoDto record = recordService.detailsRecordrInfo(userDetails);
 
         return new ResponseDto(200L, "회원 총 기록을 전송했습니다", record);
 
