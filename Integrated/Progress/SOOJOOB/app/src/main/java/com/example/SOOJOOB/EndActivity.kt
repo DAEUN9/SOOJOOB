@@ -95,6 +95,7 @@ open class EndActivity : AppCompatActivity() {
             println(ploggingImg.length)
         }
 
+        val endIntent = Intent(this, MainActivity::class.java)
         // Retrofit
         nextButton = findViewById(R.id.nextButton)
         nextButton.setOnClickListener {
@@ -120,7 +121,7 @@ open class EndActivity : AppCompatActivity() {
                     }
                 }
             })
-
+            startActivity(endIntent)
         }
 
 //        getButton = findViewById(R.id.getButton)

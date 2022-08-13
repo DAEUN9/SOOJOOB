@@ -64,9 +64,9 @@ class RecordFragment : Fragment() {
                     response: Response<PloggingGetResponseBody>
                 ) {
                     if (response.isSuccessful) {
-                        val result = response.body()
+                        val result = response.body()?.result?.reversed()
                         result?.let {
-                            it.result?.let { it1 -> setAdapter(it1) }
+                            it?.let { it1 -> setAdapter(it1) }
                         }
 
                         val dateSort = response.body()?.result

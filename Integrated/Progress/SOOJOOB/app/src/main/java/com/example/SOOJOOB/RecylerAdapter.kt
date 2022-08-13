@@ -23,8 +23,10 @@ class RecyclerAdapter(val ploggingList: List<PloggingResult>) : RecyclerView.Ada
     override fun onBindViewHolder(viewHolder: ViewHolder, i: Int) {
         viewHolder.distance?.text = ploggingList[i].distance.toString() + " M"
         viewHolder.date?.text = ploggingList[i].dateTime
-        val time = ploggingList[i].timeRecord?.div(100).toString() + "\"" + ploggingList[i].timeRecord?.rem(100).toString()
-        viewHolder.recTime?.text = time
+        val second = ploggingList[i].timeRecord?.div(100)
+        val minute = second?.div(60)
+        val second2 = second?.rem(60)
+        viewHolder.recTime?.text = minute.toString() + "분 "  + second2.toString() +"초"
         viewHolder.trashCnt?.text = ploggingList[i].trashCount.toString() + " 개"
         viewHolder.imageString = ploggingList[i].ploggingImg.toString()
         viewHolder.image?.setImageBitmap(viewHolder.imageString.toBitmap())
