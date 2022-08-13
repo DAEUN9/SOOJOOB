@@ -35,6 +35,9 @@
             android:name="com.example.SOOJOOB.BadgesActivity"
             android:exported="false" />
         <activity
+            android:name="com.example.SOOJOOB.NoBadgeActivity"
+            android:exported="false" />
+        <activity
             android:name="com.example.SOOJOOB.MapsActivity"
             android:exported="false" />
         <activity

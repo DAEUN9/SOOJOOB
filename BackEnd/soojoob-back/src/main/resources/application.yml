@@ -7,12 +7,14 @@
 #      enabled: true
 #      force: true
 
+# jdbc:mysql://localhost:3306/d210?serverTimezone=Asia/Seoul
+# 로컬주소
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/d210?serverTimezone=Asia/Seoul
-    username: cos
-    password: cos1234
+    url: jdbc:mysql://i7d210.p.ssafy.io:8080/d210?serverTimezone=Asia/Seoul
+    username: d210
+    password: tjrgus777!
 
   #  mvc:
   #    view:

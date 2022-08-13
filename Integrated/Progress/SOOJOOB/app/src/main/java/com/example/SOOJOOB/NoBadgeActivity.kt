@@ -6,14 +6,11 @@ import android.view.LayoutInflater
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import com.bumptech.glide.Glide
-import com.example.SOOJOOB.databinding.ActivityBadgesBinding
 import com.example.SOOJOOB.databinding.ActivityNoBadgeBinding
 import com.example.SOOJOOB.retrofit.Badge
 import com.example.SOOJOOB.views.ContentAdapter
 
-
-
-class BadgesActivity : AppCompatActivity() {
+class NoBadgeActivity : AppCompatActivity() {
     // 데이터
     private var badgeList = ArrayList<Badge>()
 
@@ -25,11 +22,11 @@ class BadgesActivity : AppCompatActivity() {
     private lateinit var contentAdapter: ContentAdapter
 
 
-    private lateinit var binding: ActivityBadgesBinding
+    private lateinit var binding: ActivityNoBadgeBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityBadgesBinding.inflate(layoutInflater)
+        binding = ActivityNoBadgeBinding.inflate(layoutInflater)
 
         val view = binding.root
         setContentView(view)
@@ -45,9 +42,9 @@ class BadgesActivity : AppCompatActivity() {
         this.contentAdapter = ContentAdapter(this, badgeList)
 
 
-        binding.myBadges.adapter = contentAdapter
+        binding.noBadges.adapter = contentAdapter
 
-        binding.myBadges.onItemClickListener =
+        binding.noBadges.onItemClickListener =
             AdapterView.OnItemClickListener { parent, view, position, id ->
 //특정 리스트 클릭 시 실행
 
