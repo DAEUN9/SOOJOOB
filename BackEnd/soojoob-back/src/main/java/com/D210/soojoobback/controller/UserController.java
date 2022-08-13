@@ -135,7 +135,7 @@ public class UserController {
 			@AuthenticationPrincipal UserDetailsImpl userDetails) {
 
 		checkLogin(userDetails);
-		List<UserInfoDetailsDto> userInfoDetailsDto = userService.detailsUserInfo(userDetails);
+		UserInfoDetailsDto userInfoDetailsDto = userService.detailsUserInfo(userDetails);
 
 		return new ResponseDto(200L, "회원 정보를 전송했습니다", userInfoDetailsDto);
 
