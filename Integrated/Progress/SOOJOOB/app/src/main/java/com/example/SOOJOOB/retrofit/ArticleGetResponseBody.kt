@@ -19,6 +19,10 @@ data class Article(
     @SerializedName("contents")
     val contents: String?,
     @SerializedName("createdDate")
-    val createdDate: String?
+    val createdDate: String?,
+    @SerializedName("articleImage")
+    val articleImage: String?,
+    @SerializedName("userName")
+    val userName:String?
 )
 
