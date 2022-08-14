@@ -2,8 +2,10 @@ package com.D210.soojoobback.dto.badge;
 
 
 import com.D210.soojoobback.entity.Badge;
-import com.D210.soojoobback.entity.User;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.Getter;
 
 @Data
 @Getter

@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @Slf4j
 @RequiredArgsConstructor
 @RestController
@@ -42,5 +44,13 @@ public class RecordController {
         if (userDetails == null) {
             throw new CustomErrorException("로그인이 필요합니다.2");
         }
+    }
+
+    @GetMapping("/rank")
+    private ResponseDto recordRank() {
+
+        List<RecordInfoDto> records = recordService.rankRecords();
+
+        return new ResponseDto(200L, "exp 순위를 전송했습니다", records);
     }
 }

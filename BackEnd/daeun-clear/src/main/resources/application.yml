@@ -7,12 +7,15 @@
 #      enabled: true
 #      force: true
 
+# jdbc:mysql://i7d210.p.ssafy.io:3306/d210?serverTimezone=Asia/Seoul
+# jdbc:mysql://localhost:3306/d210?serverTimezone=Asia/Seoul
+# 로컬주소
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/soojoop?serverTimezone=Asia/Seoul
-    username: ssafy
-    password: 1234
+    url: jdbc:mysql://localhost:3306/d210?serverTimezone=Asia/Seoul
+    username: cos
+    password: cos1234
 
   #  mvc:
   #    view:
@@ -21,7 +24,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: create #create update none
+      ddl-auto:  update #create update none
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
     show-sql: true
