@@ -10,90 +10,79 @@
     android:paddingHorizontal="20dp"
     android:background="@color/grayBG">
 
+    <TextView
+        android:id="@+id/nav_community"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:text="SOOJOOB"
+        android:textColor="@color/green"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        android:layout_alignParentTop="true"/>
 
-    <ScrollView
+    <LinearLayout
+        android:id="@+id/btnLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <LinearLayout
-            tools:context=".feature.record_badge.RecFragment"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp"
+        android:orientation="horizontal"
+        android:layout_below="@+id/nav_community">
+
+        <android.widget.Button
+            android:id="@+id/trashSort"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_marginHorizontal="10dp"
+            android:background="@drawable/round_wbutton"
+            android:text="최신순"
+            android:textColor="@color/greenTxt"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:layout_weight="1"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:text="SOOJOOB"
-                android:textColor="@color/green"
-                android:textSize="40sp"
-                android:textStyle="bold"/>
+        <android.widget.Button
+            android:id="@+id/dateSort"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="10dp"
+            android:background="@drawable/round_wbutton"
+            android:text="오래된순"
+            android:textColor="@color/greenTxt"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:layout_weight="1"/>
 
-            <LinearLayout
-                android:id="@+id/btnLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="10dp"
-                android:orientation="horizontal">
-
-                <android.widget.Button
-                    android:id="@+id/trashSort"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginHorizontal="10dp"
-                    android:background="@drawable/round_wbutton"
-                    android:text="가까운 순"
-                    android:textColor="@color/greenTxt"
-                    android:textStyle="bold"
-                    android:textSize="18sp"
-                    android:layout_weight="1"/>
-
-                <android.widget.Button
-                    android:id="@+id/dateSort"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginHorizontal="10dp"
-                    android:background="@drawable/round_wbutton"
-                    android:text="인기 순"
-                    android:textColor="@color/greenTxt"
-                    android:textStyle="bold"
-                    android:textSize="18sp"
-                    android:layout_weight="1"/>
-
-            </LinearLayout>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyler_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingVertical="20dp"
-                android:background="@color/grayBG"
-                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                tools:listitem="@layout/item_article">
-
-            </androidx.recyclerview.widget.RecyclerView>
-
-
-
-        </LinearLayout>
-    </ScrollView>
-    <LinearLayout
-        android:id="@+id/add_article_btn"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerInParent="true"
-        android:layout_marginBottom="10dp"
-        android:layout_alignParentRight="true"
-        android:gravity="center"
-
-        android:orientation="vertical">
-
-        <ImageView
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:layout_gravity="center"
-            android:src="@drawable/ic_community"/>
     </LinearLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/btnLayout">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="20dp"
+            android:paddingBottom="70dp"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            tools:listitem="@layout/item_article">
+        </androidx.recyclerview.widget.RecyclerView>
+    </androidx.core.widget.NestedScrollView>
+
+
+    <ImageView
+        android:id="@+id/add_article_btn"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:src="@drawable/ic_plus" />
+
 </RelativeLayout>

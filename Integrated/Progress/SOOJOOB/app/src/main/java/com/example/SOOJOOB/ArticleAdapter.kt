@@ -38,7 +38,7 @@ class ArticleAdapter(val articleList: List<Article>) :
 
         val title = itemView?.findViewById<TextView>(R.id.title)
         val contents  = itemView?.findViewById<TextView>(R.id.contents)
-        val createdDate =   itemView?.findViewById<TextView>(R.id.createdDate)
+        val createdDate = itemView?.findViewById<TextView>(R.id.createdDate)
         val userName = itemView?.findViewById<TextView>(R.id.userName)
         val articleImage = itemView?.findViewById<ImageView>(R.id.image)
 

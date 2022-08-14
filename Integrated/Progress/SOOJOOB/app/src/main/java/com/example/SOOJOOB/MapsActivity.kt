@@ -420,7 +420,7 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
                         println("googlemap screenshot: " + it)
                     }
                 }
-                endIntent.putExtra("captureImageTest", R.drawable.boy)
+                endIntent.putExtra("captureImageTest", R.drawable.ic_trash)
 
                 startActivity(endIntent)  // 화면 전환하기
                 finish()

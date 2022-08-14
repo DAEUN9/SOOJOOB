@@ -40,7 +40,7 @@
             android:layout_centerVertical="true"
             android:layout_marginHorizontal="10dp"
             android:src="@drawable/ic_settings"
-            app:tint="@color/grayBT" />
+            app:tint="@color/grayBT"/>
 
     </RelativeLayout>
 

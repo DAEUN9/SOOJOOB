@@ -62,7 +62,7 @@ class HomeFragment : Fragment() {
 //        }
 
         val userWork = UserWork()
-        userWork.work(completion = { status, username, trash, exp ->
+        userWork.work(completion = { status, username, trash, exp, badge ->
             if (status in 200..300) {
                 binding.homeUsername.text = username
                 binding.homeTrash.text = trash.toString()
@@ -77,7 +77,7 @@ class HomeFragment : Fragment() {
             println("temp :" + temp)
             println("sky :" + sky)
             binding.todayWhere.text = Constants.ADDRESS
-            binding.todayTemp.text = temp+"℃"
+            binding.todayTemp.text = temp+"˚"
             binding.todayWeather.text = sky
         })
 
@@ -310,7 +310,7 @@ fun getRainType(rainType : String) : String {
 fun getSky(sky : String, rain : String) : String {
     return when(sky) {
         "1" -> "맑음"
-        "3" -> "구름 많음"
+        "3" -> "구름많음"
         "4" -> "흐림"
         else -> getRainType(rain)
     }

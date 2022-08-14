@@ -8,6 +8,7 @@ import androidx.appcompat.app.AlertDialog
 import com.bumptech.glide.Glide
 import com.example.SOOJOOB.databinding.ActivityBadgesBinding
 import com.example.SOOJOOB.retrofit.Badge
+import com.example.SOOJOOB.retrofit.UserWork
 import com.example.SOOJOOB.views.ContentAdapter
 
 
@@ -65,6 +66,30 @@ class BadgesActivity : AppCompatActivity() {
                 showBadgeDialog(selection.badgeName, selection.badgeDetail, selection.imgUrl)
 
             }
+
+        val userWork = UserWork()
+        userWork.work(completion = { status, username, trash, exp, badge ->
+            if (status in 200..300) {
+                binding.badgeCount.text = badge.toString()
+                when (exp?.toInt()) {
+                    in 40..45 -> {
+                        binding.mybadgeName.text = "나는야 실버"
+                        binding.mybadgeImage.setImageResource(R.drawable.ic_silver)
+                    }
+                    in 45..50 -> {
+                        binding.mybadgeName.text = "24K 골드"
+                        binding.mybadgeImage.setImageResource(R.drawable.ic_gold)
+                    }
+                    in 50..100 -> {
+                        binding.mybadgeName.text = "나는 전설이다"
+                        binding.mybadgeImage.setImageResource(R.drawable.ic_trophy)
+                    }
+                    else -> {
+                        binding.mybadgeName.text = "뉴비가 나타났다"
+                    }
+                }
+            }
+        })
     }
     private fun showBadgeDialog(title: String?, content: String?, img: String?) {
 
@@ -81,11 +106,10 @@ class BadgesActivity : AppCompatActivity() {
         contentView.text = content
         Glide.with(view)
             .load(img)
-            .placeholder(R.drawable.ic_arrow_forward)
+            .placeholder(R.drawable.ic_lock)
             .into(imgView)
 
         val alertDialog = AlertDialog.Builder(this)
-            .setTitle(" ")
             .create()
 
         val btnView = view.findViewById<Button>(R.id.dialog_ok)

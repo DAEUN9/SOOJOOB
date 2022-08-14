@@ -13,6 +13,7 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.example.SOOJOOB.databinding.ActivityArticleInsertBinding
+import com.example.SOOJOOB.fragments.CommunityFragment
 import com.example.SOOJOOB.retrofit.ArticleWork
 import java.io.ByteArrayOutputStream
 import java.lang.Exception
@@ -21,7 +22,7 @@ import java.util.*
 
 class ArticleInsertActivity  : AppCompatActivity(){
     private lateinit var imageView: ImageView
-    private lateinit var uploadImageBtn: Button
+    private lateinit var uploadImageBtn: ImageView
     val Gallery = 0
     private lateinit var bitmap:Bitmap
 
@@ -58,7 +59,7 @@ class ArticleInsertActivity  : AppCompatActivity(){
 
                 )
             val insertWork = ArticleWork(articleData)
-            val intent = Intent(this, ArticleActivity::class.java)
+            val intent = Intent(this, CommunityFragment::class.java)
             insertWork.work(completion = { status, msg ->
                 if (status in 200..300){
                     Toast.makeText(this@ArticleInsertActivity, "$msg", Toast.LENGTH_SHORT).show()
@@ -69,6 +70,9 @@ class ArticleInsertActivity  : AppCompatActivity(){
 
                 }
             } )
+        }
+        binding.backCommunity.setOnClickListener {
+            super.onBackPressed()
         }
 
         binding.btnCancel.setOnClickListener{
@@ -94,7 +98,7 @@ class ArticleInsertActivity  : AppCompatActivity(){
             val dataUri = data?.data
             try{
                 bitmap= MediaStore.Images.Media.getBitmap(this.contentResolver,dataUri)
-                binding.image.setImageBitmap(bitmap)
+                binding.uploadImageBtn.setImageBitmap(bitmap)
                 println("성공")
             }catch (e: Exception){
                 Toast.makeText(this,"$e", Toast.LENGTH_SHORT).show()
