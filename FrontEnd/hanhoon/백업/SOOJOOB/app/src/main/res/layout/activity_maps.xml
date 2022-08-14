@@ -10,7 +10,7 @@
     <LinearLayout
         android:id="@+id/scroll1"
         android:layout_width="match_parent"
-        android:layout_height="350dp"
+        android:layout_height="400dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp">
 
@@ -19,55 +19,15 @@
             android:name="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
-
     </LinearLayout>
 
 
-    <LinearLayout
-        android:id="@+id/distanceLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@id/scroll1">
-
-
-        <TextView
-            android:id="@+id/distance"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:freezesText="false"
-            android:layout_weight="1"
-            android:text="0.0"
-            android:textAlignment="textEnd"
-            android:textAllCaps="false"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            android:textSize="50sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/scroll1"
-            app:layout_constraintVertical_bias="0.100000024" />
-
-
-        <TextView
-            android:id="@+id/distance_text"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_weight="1.5"
-            android:text="M"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            app:layout_constraintEnd_toEndOf="@id/secText"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/secText" />
-
-
-    </LinearLayout>
     <LinearLayout
         android:id="@+id/textLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@id/distanceLayout">
+        app:layout_constraintTop_toBottomOf="@id/scroll1">
 
 
         <TextView
@@ -109,7 +69,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:freezesText="false"
-        android:text="0"
+        android:text="5"
         android:textAlignment="center"
         android:textAllCaps="false"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
@@ -212,5 +172,7 @@
         android:text="쓰레기통"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
