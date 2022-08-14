@@ -57,6 +57,10 @@
             android:name=".ArticleInsertActivity"
             android:exported="true" />
         <activity
+            android:name="com.example.SOOJOOB.UserupdateActivity"
+            android:exported="false">
+        </activity>
+        <activity
             android:name="com.example.SOOJOOB.LoginActivity"
             android:exported="true">
             <intent-filter>

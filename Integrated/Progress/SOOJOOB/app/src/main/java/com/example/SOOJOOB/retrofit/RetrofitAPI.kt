@@ -67,4 +67,11 @@ object RetrofitAPI {
         retrofit().create(ArticleService::class.java)
     }
 
+    val userinfoService: UserInfoService by lazy {
+        retrofit().create(UserInfoService::class.java)
+    }
+
+    val userupdateService: UserupdateService by lazy {
+        retrofit().create(UserupdateService::class.java)
+    }
 }
