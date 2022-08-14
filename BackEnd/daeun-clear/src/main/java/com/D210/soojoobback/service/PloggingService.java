@@ -4,7 +4,6 @@ package com.D210.soojoobback.service;
 import com.D210.soojoobback.dto.badge.BadgeListResDto;
 import com.D210.soojoobback.dto.plogging.PloggingInfoDto;
 import com.D210.soojoobback.dto.plogging.PostPloggingReqDto;
-import com.D210.soojoobback.entity.Badge;
 import com.D210.soojoobback.entity.Plogging;
 import com.D210.soojoobback.entity.Record;
 import com.D210.soojoobback.entity.User;
@@ -12,7 +11,6 @@ import com.D210.soojoobback.exception.CustomErrorException;
 import com.D210.soojoobback.repository.PloggingRepository;
 import com.D210.soojoobback.repository.RecordRepository;
 import com.D210.soojoobback.repository.UserRepository;
-import com.nimbusds.oauth2.sdk.util.ListUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -77,29 +75,33 @@ public class PloggingService {
 
         Integer trashCount = requestDto.getTrashCount();
 
-        Double calorie = requestDto.getCalorie();
+//        Double calorie = requestDto.getCalorie();
 
+        Integer timeRecord = requestDto.getTimeRecord();
 
         Record record = recordRepository.findById(userId);
 
-        Double toCal = record.getTotalCalorie();
+//        Double toCal = record.getTotalCalorie();
         Double toDis = record.getTotalDistance();
         Integer toTrash = record.getTotalTrashCount();
+        Integer toTimeRec = record.getTotalTimeRecord();
+        Double exp = record.getExp();
 
-        record.setTotalCalorie(toCal + calorie);
+//        record.setTotalCalorie(toCal + calorie);
         record.setTotalDistance(toDis + distance);
         record.setTotalTrashCount(toTrash + trashCount);
-
+        record.setTotalTimeRecord(toTimeRec + timeRecord);
+        record.setExp(exp + trashCount * 0.1);
 
         ploggingRepository.save(plogging);
         recordRepository.save(record);
 
-        List<BadgeListResDto> badgeListResDtos = badgeService.checkAddAll(ploggingUser, (long) (toCal + calorie), (long) (toDis+distance), toTrash+trashCount);
-        List<BadgeListResDto> badgeListResDtos1 = badgeService.checkAddOne(ploggingUser, calorie, distance, trashCount);
+
+        List<BadgeListResDto> badgeListResDtos = badgeService.checkAddAll(ploggingUser, timeRecord + toTimeRec, (long) (toDis+distance), toTrash+trashCount);
+        List<BadgeListResDto> badgeListResDtos1 = badgeService.checkAddOne(ploggingUser, timeRecord, distance, trashCount);
         List<BadgeListResDto> joined = Stream.concat(badgeListResDtos1.stream(), badgeListResDtos.stream())
                 .collect(Collectors.toList());
         return joined;
-
     }
 
     @Transactional

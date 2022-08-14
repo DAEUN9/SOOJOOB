@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.sql.Blob;
 
 @Getter
 @Setter
@@ -26,42 +27,52 @@ public class Plogging {
     @Column(nullable = false)
     private Double distance;
 
-    private String startTime;
+//    private String startTime;
 
-    private String endTime;
+//    private String endTime;
+
+    private Integer timeRecord;
+
+    private String dateTime;
 
     private Integer stepCount;
 
     @Column(nullable = false)
     private Integer trashCount;
+
     private String ploggingImg;
 
-    @Column(nullable = false)
-    private Double calorie;
-    private Double bpm;
+//    @Column(nullable = false)
+//    private Double calorie;
+//    private Double bpm;
 
 
-    public Plogging(User ploggingUser, Double distance, String startTime, String endTime, Integer stepCount, Integer trashCount, String ploggingImg, Double calorie, Double bpm) {
+    public Plogging(User ploggingUser, Double distance, Integer timeRecord, String dateTime,Integer stepCount, Integer trashCount, String ploggingImg) {
         this.ploggingUser = ploggingUser;
         this.distance = distance;
-        this.startTime = startTime;
-        this.endTime = endTime;
+        this.timeRecord = timeRecord;
+        this.dateTime = dateTime;
+//        this.startTime = startTime;
+//        this.endTime = endTime;
         this.stepCount = stepCount;
         this.trashCount = trashCount;
         this.ploggingImg = ploggingImg;
-        this.calorie = calorie;
-        this.bpm = bpm;
+//        this.calorie = calorie;
+//        this.bpm = bpm;
     }
 
     public Plogging(PostPloggingReqDto requestDto, User user) {
         this.distance = requestDto.getDistance();
-        this.startTime = requestDto.getStartTime();
-        this.endTime = requestDto.getEndTime();
+//        this.startTime = requestDto.getStartTime();
+//        this.endTime = requestDto.getEndTime();
+        this.timeRecord = requestDto.getTimeRecord();
+        this.dateTime = requestDto.getDateTime();
+
         this.stepCount = requestDto.getStepCount();
         this.trashCount = requestDto.getTrashCount();
         this.ploggingImg = requestDto.getPloggingImg();
-        this.calorie = requestDto.getCalorie();
-        this.bpm = requestDto.getBpm();
+//        this.calorie = requestDto.getCalorie();
+//        this.bpm = requestDto.getBpm();
         this.ploggingUser = user;
     }
 

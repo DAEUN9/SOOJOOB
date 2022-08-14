@@ -24,14 +24,22 @@ public class Record {
 
     private Integer totalTrashCount;
 
-    private Double totalCalorie;
+//    private Double totalCalorie;
+    private Integer totalTimeRecord;
+
+    private Integer badgeCount;
+
+    private Double exp;
 
     @Builder
     public Record(User userRecord) {
         this.userRecord = userRecord;
         this.totalDistance = 0.0;
-        this.totalCalorie = 0.0;
+//        this.totalCalorie = 0.0;
         this.totalTrashCount = 0;
+        this.badgeCount = 0;
+        this.totalTimeRecord = 0;
+        this.exp = 36.5;
     }
 }
 

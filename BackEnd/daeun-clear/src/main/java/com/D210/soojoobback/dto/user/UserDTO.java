@@ -1,6 +1,7 @@
 package com.D210.soojoobback.dto.user;
 
 import com.D210.soojoobback.entity.User;
+import com.D210.soojoobback.security.UserDetailsImpl;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,6 +27,7 @@ public class UserDTO {
         this.username = user.getUsername();
         this.email = user.getEmail();
     }
+
 
     public User toEntity(){
         return User.builder()

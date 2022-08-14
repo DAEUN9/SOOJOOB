@@ -135,7 +135,7 @@ public class UserController {
 			@AuthenticationPrincipal UserDetailsImpl userDetails) {
 
 		checkLogin(userDetails);
-		List<UserInfoDetailsDto> userInfoDetailsDto = userService.detailsUserInfo(userDetails);
+		UserInfoDetailsDto userInfoDetailsDto = userService.detailsUserInfo(userDetails);
 
 		return new ResponseDto(200L, "회원 정보를 전송했습니다", userInfoDetailsDto);
 
@@ -204,7 +204,7 @@ public class UserController {
 
 	@GetMapping("/nickname-check")
 	public ResponseDto nickNameCheck(
-			@RequestParam String username
+			@RequestBody String username
 	) {
 		userService.nicknameCheck(username);
 		return new ResponseDto(200L, "사용 가능한 닉네임입니다 !", "");
@@ -214,7 +214,7 @@ public class UserController {
 
 	@GetMapping("/email-check")
 	public ResponseDto emailCheck(
-			@RequestParam String email
+			@RequestBody String email
 	) {
 		userService.emailCheck(email);
 		return new ResponseDto(200L, "사용 가능한 이메일입니다 !", "");

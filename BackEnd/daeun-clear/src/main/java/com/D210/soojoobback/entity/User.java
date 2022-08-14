@@ -12,7 +12,6 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import static javax.persistence.CascadeType.ALL;
 
@@ -60,7 +59,7 @@ public class User {
 
 	@OneToMany(mappedBy = "user", cascade = ALL, orphanRemoval = true)
 	@JsonIgnore
-	private List<Article> articleList;
+	private  List<Article> articleList;
 
 	@OneToOne(mappedBy = "userRecord")
 	@JsonIgnore
@@ -69,6 +68,7 @@ public class User {
 	@OneToMany(mappedBy = "user")
 	@JsonIgnore
 	private List<UserBadge> userBadges = new ArrayList<>();
+
 	public void addArticle(Article article){
 		articleList.add(article);
 	}
@@ -117,10 +117,10 @@ public class User {
 
 //	@OneToMany(orphanRemoval = true, targetEntity = Badge.class)
 //	@JsonIgnore
-
-
-
-//	public void addBadge(Optional<Badge> badge){
+//	private List<Badge> badges = new ArrayList<>();
+//
+//
+//	public void addBadge(Badge badge){
 //		this.getBadges().add(badge);
 //	}
 }
