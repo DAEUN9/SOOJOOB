@@ -3,6 +3,7 @@ package com.example.SOOJOOB
 import android.Manifest
 import android.annotation.SuppressLint
 import android.content.pm.PackageManager
+import android.location.Geocoder
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
@@ -16,6 +17,7 @@ import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationResult
 import com.google.android.gms.maps.model.LatLng
+import com.gun0912.tedpermission.provider.TedPermissionProvider
 
 class MainActivity : AppCompatActivity() {
 
@@ -33,7 +35,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         fBinding = ActivityMainBinding.inflate(layoutInflater)
-
         setContentView(fBinding.root)
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.my_nav_host) as NavHostFragment
 
@@ -100,8 +101,13 @@ class MainActivity : AppCompatActivity() {
                 println("latitude " + latitude)
                 println("longitude " + longitude)
                 println("latLng " + latLng)
+                val geocoder = Geocoder(TedPermissionProvider.context)
+                val address = geocoder.getFromLocation( latitude, longitude,1)
+                Constants.ADDRESS = address.first().getAddressLine(0)
+                println("address : " + address)
             }
         }
+
     }
 
     // 위치 관련 메서드
