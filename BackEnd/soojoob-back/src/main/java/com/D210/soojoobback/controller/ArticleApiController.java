@@ -1,6 +1,5 @@
 package com.D210.soojoobback.controller;
 
-import com.D210.soojoobback.dto.article.ArticleDto;
 import com.D210.soojoobback.dto.user.ResponseDto;
 import com.D210.soojoobback.entity.User;
 import com.D210.soojoobback.exception.CustomErrorException;
@@ -47,7 +46,7 @@ public class ArticleApiController {
     }
     @GetMapping("")
     public ResponseDto showAll() {
-        List<ArticleDto> articles = articleService.showAll();
+        List<ArticleSaveDto> articles = articleService.showAll();
         return new ResponseDto(200L,"전체 게시글 불러오기 성공", articles);
 
     }
