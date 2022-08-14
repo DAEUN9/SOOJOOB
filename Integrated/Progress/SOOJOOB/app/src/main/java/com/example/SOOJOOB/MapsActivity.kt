@@ -59,6 +59,7 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
     private lateinit var secText: TextView
     private lateinit var milliText: TextView
     private lateinit var trashCountText: TextView
+    private lateinit var distanceText: TextView
     private lateinit var startBtn: Button
     private lateinit var resetBtn: Button
     private lateinit var trashBtn: Button
@@ -318,6 +319,7 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
         startBtn = findViewById(R.id.startBtn)
         trashBtn = findViewById(R.id.trashBtn)
         trashCountText = findViewById(R.id.trashCountText)
+        distanceText = findViewById(R.id.distance)
 //        lap_Layout = findViewById(R.id.lap_Layout)
 //        resetBtn = findViewById(R.id.resetBtn)
         tts = TextToSpeech(this, this)
@@ -437,6 +439,8 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
                 }
             }
         }
+
+        distanceText.text = sumDistance.toString()
     }
 
 

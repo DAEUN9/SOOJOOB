@@ -2,44 +2,90 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
     android:orientation="vertical">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:text="SOOJOOB"
+        android:textColor="@color/green"
+        android:textSize="40sp"
+        android:textStyle="bold"/>
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/boy"
+        >
+
+    </ImageView>
     <EditText
         android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="제목을 입력하세요"
-        android:textSize="24sp" />
+        android:textSize="24sp"
+        android:layout_marginVertical="15dp"/>
 
     <EditText
         android:id="@+id/contents"
         android:layout_width="match_parent"
-        android:layout_height="377dp"
+        android:layout_height="200dp"
         android:hint="내용을 입력하세요"
-        android:textSize="24sp" />
+        android:textSize="24sp"
+        android:layout_marginVertical="15dp"/>
 
+    <android.widget.Button
+        android:id="@+id/uploadImageBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="사진 불러오기"
+        android:layout_marginHorizontal="10dp"
+        android:background="@drawable/round_wbutton"
+        android:layout_marginVertical="10dp"
+        android:textSize="24dp"
+        >
+
+    </android.widget.Button>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal">
 
-        <Button
+<!--        <Button-->
+<!--            android:id="@+id/btnWrite"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_weight="1"-->
+<!--            android:text="등록"-->
+<!--            android:textSize="24sp" />-->
+        <android.widget.Button
             android:id="@+id/btnWrite"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_marginHorizontal="10dp"
+            android:background="@drawable/round_wbutton"
             android:text="등록"
-            android:textSize="24sp" />
+            android:textColor="@color/greenTxt"
+            android:textStyle="bold"
+            android:textSize="24sp"
+            android:layout_weight="1"/>
 
-        <Button
+        <android.widget.Button
             android:id="@+id/btnCancel"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_marginHorizontal="10dp"
+            android:background="@drawable/round_wbutton"
             android:text="취소"
-            android:textSize="24sp" />
+            android:textColor="@color/greenTxt"
+            android:textStyle="bold"
+            android:textSize="24sp"
+            android:layout_weight="1"/>
+
+
     </LinearLayout>
 
 </LinearLayout>
