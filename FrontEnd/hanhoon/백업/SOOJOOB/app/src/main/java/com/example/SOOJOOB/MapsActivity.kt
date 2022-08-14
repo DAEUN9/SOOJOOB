@@ -67,7 +67,6 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
     private lateinit var secText: TextView
     private lateinit var milliText: TextView
     private lateinit var trashCountText: TextView
-    private lateinit var distanceText: TextView
     private lateinit var startBtn: Button
     private lateinit var resetBtn: Button
     private lateinit var trashBtn: Button
@@ -136,12 +135,13 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
 //        addItems()
     }
 
+    // 현재위치 클러스팅 Item 추가 (테스트용)
     private fun addItems() {
         val offsetItem = MyItem(latLng.latitude, latLng.longitude, "Trash", " ${trashCount}")
 //        mMap.addMarker(MarkerOptions().position(latLng).icon(BitmapDescriptorFactory.fromResource(R.drawable.boy_map)))
         clusterManager.addItem(offsetItem)
     }
-    /** 지도 클러스터 종료*/
+    /** 클러스터 끝 */
 
     // 위치 정보를 얻기 위한 각종 초기화
     private fun locationInit(){
@@ -327,7 +327,6 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
         startBtn = findViewById(R.id.startBtn)
         trashBtn = findViewById(R.id.trashBtn)
         trashCountText = findViewById(R.id.trashCountText)
-        distanceText = findViewById(R.id.distance)
 //        lap_Layout = findViewById(R.id.lap_Layout)
 //        resetBtn = findViewById(R.id.resetBtn)
         tts = TextToSpeech(this, this)
@@ -428,7 +427,7 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
                         println("googlemap screenshot: " + it)
                     }
                 }
-                endIntent.putExtra("captureImageTest", R.drawable.ic_trash)
+                endIntent.putExtra("captureImageTest", R.drawable.boy)
 
                 startActivity(endIntent)  // 화면 전환하기
                 finish()
@@ -447,7 +446,6 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
                 }
             }
         }
-
         // 화장실
         toilet_button = findViewById(R.id.toilet_button)
         var toiletflag = false
@@ -489,9 +487,9 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
                 toilet_button.isEnabled = true
             }
         }
-
-        distanceText.text = sumDistance.toString()
     }
+
+
 
     // 프로그램이 켜졌을 때만 위치 정보를 요청한다
     override fun onResume(){
@@ -597,6 +595,7 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
 //        // 사용자가 내 위치의 파란색 점을 클릭하면 앱이 GoogleMap.OnMyLocationClickListener에서 onMyLocationClick() 콜백을 수신
         googleMap.setOnMyLocationClickListener(this)
         // **********************************한훈 참고용 완료*************************************
+
         // 클러스터 설정
         setUpClusterer()
     }
@@ -974,7 +973,7 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
         }
     }
     // 함수를 통해 데이터를 불러온다.
-    fun JSON_Parse(obj: JSONObject, data : String): String {
+    fun JSON_Parse(obj:JSONObject, data : String): String {
 
         // 원하는 정보를 불러와 리턴받고 없는 정보는 캐치하여 "없습니다."로 리턴받는다.
         return try {
