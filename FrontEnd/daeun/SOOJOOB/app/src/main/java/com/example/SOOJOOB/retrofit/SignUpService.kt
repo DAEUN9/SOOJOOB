@@ -1,4 +1,4 @@
-package com.example.SOOJOOB
+package com.example.SOOJOOB.retrofit
 
 import okhttp3.RequestBody
 import retrofit2.Call

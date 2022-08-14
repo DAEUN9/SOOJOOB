@@ -12,9 +12,7 @@ import com.example.SOOJOOB.views.ContentAdapter
 
 
 
-class BadgesActivity: AppCompatActivity() {
-
-
+class BadgesActivity : AppCompatActivity() {
     // 데이터
     private var badgeList = ArrayList<Badge>()
 
@@ -35,7 +33,9 @@ class BadgesActivity: AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
-        binding.backSignup.setOnClickListener {
+
+
+        binding.backBadge.setOnClickListener {
             super.onBackPressed()
         }
 
@@ -52,21 +52,20 @@ class BadgesActivity: AppCompatActivity() {
 
         binding.myBadges.adapter = contentAdapter
 
-        binding.myBadges.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
+        binding.myBadges.onItemClickListener =
+            AdapterView.OnItemClickListener { parent, view, position, id ->
 //특정 리스트 클릭 시 실행
 
-            val selection = parent.getItemAtPosition(position) as Badge
-            //클릭한 포지션을 가진 변수가 만들어짐
+                val selection = parent.getItemAtPosition(position) as Badge
+                //클릭한 포지션을 가진 변수가 만들어짐
 
-            Toast.makeText(this, "${selection.badgeDetail}", Toast.LENGTH_SHORT).show()
-            //토스트 팝업으로 클릭한 리스트의 변수값이 뿅하고 나옴
+                Toast.makeText(this, "${selection.badgeDetail}", Toast.LENGTH_SHORT).show()
+                //토스트 팝업으로 클릭한 리스트의 변수값이 뿅하고 나옴
 
-            showBadgeDialog(selection.badgeName, selection.badgeDetail, selection.imgUrl)
+                showBadgeDialog(selection.badgeName, selection.badgeDetail, selection.imgUrl)
 
-        }
-
-    } //
-
+            }
+    }
     private fun showBadgeDialog(title: String?, content: String?, img: String?) {
 
         // 다이얼로그 화면 설정
@@ -82,7 +81,7 @@ class BadgesActivity: AppCompatActivity() {
         contentView.text = content
         Glide.with(view)
             .load(img)
-            .placeholder(R.drawable.boy)
+            .placeholder(R.drawable.ic_arrow_forward)
             .into(imgView)
 
         val alertDialog = AlertDialog.Builder(this)

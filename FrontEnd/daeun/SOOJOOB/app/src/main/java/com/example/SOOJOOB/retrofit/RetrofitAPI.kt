@@ -1,6 +1,6 @@
-package com.example.SOOJOOB
+package com.example.SOOJOOB.retrofit
 
-import com.example.SOOJOOB.retrofit.BadgeService
+import com.example.SOOJOOB.App
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Response
@@ -11,8 +11,9 @@ import java.io.IOException
 
 // RetrofitApi 객체는 비용이 높기 때문에 여러 객체가 만들어지면 자원낭비 및 통신에 혼선이 올 수 있기 때문에
 // object 로 싱글턴으로 만들어준다.
-//http://10.0.2.2:8080
 object RetrofitAPI {
+    // 로컬 주소 테스트
+    // http://10.0.2.2:8080"
     private const val BASE_URL = "http://i7d210.p.ssafy.io:8080/"
 
     fun okHttpClient(interceptor : AppInterceptor): OkHttpClient {
@@ -40,6 +41,10 @@ object RetrofitAPI {
         retrofit().create(LoginService::class.java)
     }
 
+    val userService: UserService by lazy {
+        retrofit().create(UserService::class.java)
+    }
+
     val badgeService: BadgeService by lazy {
         retrofit().create(BadgeService::class.java)
     }
@@ -56,6 +61,10 @@ object RetrofitAPI {
     }
     val ploggingService: PloggingService by lazy {
         retrofit().create(PloggingService::class.java)
+    }
+
+    val articleService: ArticleService by lazy {
+        retrofit().create(ArticleService::class.java)
     }
 
 }

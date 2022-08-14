@@ -21,13 +21,4 @@
     <style name="TextLabel" parent="TextAppearance.Design.Hint">
         <item name="android:textSize">12sp</item>
     </style>
-
-    <style name="Theme.SOOJOOB.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-    </style>
-
-    <style name="Theme.SOOJOOB.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
-    <style name="Theme.SOOJOOB.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

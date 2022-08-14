@@ -12,5 +12,6 @@
     <color name="grayBG">#FBFBFB</color>
     <color name="grayBT">#505050</color>
     <color name="light_yellow">#FBF6D9</color>
+    <color name="greenTxt">#001A00</color>
 
 </resources>

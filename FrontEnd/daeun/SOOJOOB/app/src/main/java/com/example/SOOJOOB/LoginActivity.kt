@@ -14,6 +14,8 @@ import android.widget.Toast
 import com.example.SOOJOOB.databinding.ActivityLoginBinding
 import com.example.SOOJOOB.retrofit.GoogleSignupWork
 import com.example.SOOJOOB.retrofit.GoogleSinupReqBody
+import com.example.SOOJOOB.retrofit.LoginRequestBody
+import com.example.SOOJOOB.retrofit.LoginWork
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -73,8 +75,8 @@ class LoginActivity : AppCompatActivity() {
         }
 
         // 구글 로그인
-
         auth = FirebaseAuth.getInstance()
+
 
 
         // Configure Google Signin
@@ -86,10 +88,6 @@ class LoginActivity : AppCompatActivity() {
         googleSignInClient = GoogleSignIn.getClient(this, gso)
 
         googleSignInClient.signOut()
-
-
-
-
 
 
 
@@ -175,7 +173,7 @@ class LoginActivity : AppCompatActivity() {
 
         //Result returned from lauching the Intent from GoogleSignInApi.getSignInIntent(...);
         if (requestCode == RC_SIGN_IN) {
-            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
+            val task = com.google.android.gms.auth.api.signin.GoogleSignIn.getSignedInAccountFromIntent(data)
             try {
                 // Google Sign In was sccessful, authenticate with Firebase
                 val account = task.getResult(ApiException::class.java)!!

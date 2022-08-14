@@ -10,6 +10,8 @@ import android.view.MotionEvent
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import com.example.SOOJOOB.databinding.ActivitySignupBinding
+import com.example.SOOJOOB.retrofit.SignUpRequestBody
+import com.example.SOOJOOB.retrofit.SignupWork
 
 class SignupActivity : AppCompatActivity() {
 

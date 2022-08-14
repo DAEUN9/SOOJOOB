@@ -22,14 +22,20 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.graphics.Color
+import android.os.Handler
 import android.os.SystemClock
+import android.speech.tts.TextToSpeech
 import android.view.WindowManager
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import com.google.android.gms.maps.model.*
+import com.google.maps.android.clustering.ClusterItem
+import com.google.maps.android.clustering.ClusterManager
 import java.lang.Math.*
 import java.util.*
+import kotlin.concurrent.timer
 import kotlin.math.pow
 
 //import kotlinx.android.synthetic.main.activity_maps.*
@@ -39,7 +45,7 @@ import kotlin.math.pow
 
 class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListener,
     GoogleMap.OnMyLocationClickListener,OnMapReadyCallback, GoogleMap.OnPolylineClickListener,
-    GoogleMap.OnPolygonClickListener {
+    GoogleMap.OnPolygonClickListener, TextToSpeech.OnInitListener {
     private var prelat:Double = 0.0
     private var prelon:Double = 0.0
     private var sumDistance:Double = 0.0
@@ -57,10 +63,15 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
     private lateinit var resetBtn: Button
     private lateinit var trashBtn: Button
     private lateinit var end_button: Button
+    // 캡쳐
+    private lateinit var capture_button: Button
 
     // 현재 위치
     private lateinit var latLng : LatLng
-
+    // 폴리라인 포지션 끝맞춤
+    private var longClickFlag = false
+    private lateinit var min_latLng : LatLng
+    private lateinit var max_latLng : LatLng
     // 이동경로를 그릴 선 설정 (10f, MAGENTA)
     private var polyLineOptions=PolylineOptions().width(10f).color(Color.MAGENTA)
     private lateinit var mMap: GoogleMap // 마커, 카메라 지정을 위한 구글 맵 객체
@@ -68,14 +79,65 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
     private lateinit var locationRequest:LocationRequest // 위치 요청할 때 넘겨주는 데이터에 관한 객체
     private lateinit var locationCallback: MyLocationCallBack // 위치 확인되고 호출되는 객체
     private var locationCallback2 = StartLocationCallBack()
+    // capture 이미지
+    private lateinit var capture_imageView : ImageView
+    // 지도 클러스터
+    private lateinit var clusterManager: ClusterManager<MyItem>
+    private var tts: TextToSpeech? = null
 
+    /** 지도 클러스터 시작*/
+    inner class MyItem(
+        lat: Double,
+        lng: Double,
+        title: String,
+        snippet: String
+    ) : ClusterItem {
+
+        private val position: LatLng
+        private val title: String
+        private val snippet: String
+
+        override fun getPosition(): LatLng {
+            return position
+        }
+        override fun getTitle(): String? {
+            return title
+        }
+        override fun getSnippet(): String? {
+            return snippet
+        }
+        init {
+            position = LatLng(lat, lng)
+            this.title = title
+            this.snippet = snippet
+        }
+    }
+
+    private fun setUpClusterer() {
+        clusterManager = ClusterManager(this, mMap)
+
+        mMap.setOnCameraIdleListener(clusterManager)
+        mMap.setOnMarkerClickListener(clusterManager)
+
+        // 마커 추가
+//        addItems()
+    }
+
+    private fun addItems() {
+        val offsetItem = MyItem(latLng.latitude, latLng.longitude, "Trash", " ${trashCount}")
+//        mMap.addMarker(MarkerOptions().position(latLng).icon(BitmapDescriptorFactory.fromResource(R.drawable.boy_map)))
+//        clusterManager.addItem(offsetItem)
+
+    }
+    /** 지도 클러스터 종료*/
 
     // 위치 정보를 얻기 위한 각종 초기화
     private fun locationInit(){
         // FusedLocationProviderClient 객체 생성
         // 이 객체의 메소드를 통해 위치 정보를 요청할 수 있음
         fusedLocationProviderClient=FusedLocationProviderClient(this)
-        // 위치 갱신되면 호출되는 콜백 생성
+        // 위치 갱신되면 호출되는 콜백
+        // 내부 클래스 조작용 객체 생성
         locationCallback=MyLocationCallBack()
         // (정보 요청할 때 넘겨줄 데이터)에 관한 객체 생성
         locationRequest=LocationRequest()
@@ -97,11 +159,17 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
                 // 첫 위치 초기화
                 prelat = latitude
                 prelon = longitude
+                // center 포지션 정의
+                min_latLng = LatLng(prelat, prelon)
+                max_latLng = LatLng(prelat, prelon)
+
 //                // 현재 경도와 위도를 LatLng메소드로 설정한다.
 //                val latLng=LatLng(latitude,longitude)
                 latLng=LatLng(latitude,longitude)
 //                // 카메라를 이동한다.(이동할 위치,줌 수치)
-                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,20f))
+                if(!longClickFlag) {
+                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 20f))
+                }
                 // **********************************한훈 참고용 시작*************************************
                 // 확대/축소 : 1-세계, 5-대륙, 10-도시, 15-거리, 20-건물
 //        // 영역 내에 카메라 중심 맞추기
@@ -126,12 +194,20 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
                 // 마커변경
 //        googleMap.addMarker(MarkerOptions().position(iwc).icon(BitmapDescriptorFactory.fromBitmap(R.drawable.boy)))
                 // **********************************한훈 참고용 완료*************************************
-
-                // polyLine에 좌표 추가
-//                polyLineOptions.add(latLng)
-//                // 선 그리기
-//                mMap.addPolyline(polyLineOptions)
                 mMap.isMyLocationEnabled = true
+
+//                if(isRunning) {
+//                    // polyLine에 좌표 추가
+//                    polyLineOptions.add(latLng).add(LatLng(36.1068791, 128.4147517))
+//                    // 선 그리기
+//                    mMap.addPolyline(polyLineOptions)
+//                    println("왜 안돼냐고~")
+//                    println(latLng)
+//                    println(polyLineOptions)
+//                }
+
+                // 클러스터 설정
+//                setUpClusterer()
             }
         }
     }
@@ -167,13 +243,34 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
                 // 현재 경도와 위도를 LatLng메소드로 설정한다.
                 latLng=LatLng(latitude,longitude)
 
+                // 폴리라인 끝지점 최신화
+                // 폴리라인 위/경도 최소 지점
+                var tmplat : Double = min_latLng.latitude
+                var tmplng : Double = min_latLng.longitude
+                if(tmplat > latitude){
+                    tmplat = latitude
+                }
+                if(tmplng > longitude){
+                    tmplng = longitude
+                }
+                min_latLng = LatLng(tmplat, tmplng)
+                // 폴리라인 위/경도 최대 지점
+                tmplat = max_latLng.latitude
+                tmplng = max_latLng.longitude
+                if(tmplat < latitude){
+                    tmplat = latitude
+                }
+                if(tmplng < longitude){
+                    tmplng = longitude
+                }
+                max_latLng = LatLng(tmplat, tmplng)
+
                 dis = DistanceManager.getDistance(prelat,prelon , latitude,longitude).toDouble()
                 println("좌표 사이 거리 : " + dis + "m")
                 sumDistance += dis
                 println("총 이동 거리 :" + sumDistance)
 
-                // 카메라를 이동한다.(이동할 위치,줌 수치)
-                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,20f))
+
                 // 마커를 추가한다.
 //                mMap.addMarker(MarkerOptions().position(latLng).title("Changed Location"))
                 // 달리는 중일때만  polyLine에 좌표 추가
@@ -181,11 +278,16 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
                     polyLineOptions.add(latLng)
                     // 선 그리기
                     mMap.addPolyline(polyLineOptions)
+                    println("왜 안돼냐고~2")
+                    println(latLng)
+                    println(polyLineOptions)
                 }
 
                 prelat = latitude
                 prelon = longitude
 
+                // 카메라를 이동한다.(이동할 위치,줌 수치)
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,20f))
             }
 
         }
@@ -218,18 +320,62 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
         trashCountText = findViewById(R.id.trashCountText)
 //        lap_Layout = findViewById(R.id.lap_Layout)
 //        resetBtn = findViewById(R.id.resetBtn)
-
+        tts = TextToSpeech(this, this)
         //버튼 클릭 리스너
         var startflag = false
+        longClickFlag = false
         startBtn.setOnClickListener {
             if(!startflag) {
-                mMap.addMarker(MarkerOptions().position(latLng).title("Changed Location"))
-                //                mMap.addMarker(MarkerOptions().position(latLng).icon(BitmapDescriptorFactory.fromBitmap(R.drawable.boy)))
-
+                //                mMap.addMarker(MarkerOptions().position(latLng).title("Changed Location"))
+                mMap.addMarker(MarkerOptions().position(latLng).icon(BitmapDescriptorFactory.fromResource(R.drawable.boy_map)))
                 startflag = true
+
+                /** 3번 터치 야매로 고침 (고치자...) */
+                start()
+                pause()
             }
             isRunning = !isRunning
-            if (isRunning) start() else pause()
+            if (isRunning)
+                start()
+            else {
+                // 사용자에게 종료하는 방법 알려주기
+                Toast.makeText(this,"버튼을 꾹~ 눌러 종료하세요!", Toast.LENGTH_SHORT).show()
+                longClickFlag = true
+                pause()
+            }
+        }
+        startBtn.setOnLongClickListener {
+            if(!isRunning && longClickFlag){
+                startBtn.text ="완료"
+                startBtn.isEnabled = false
+                trashBtn.isEnabled = false
+
+                // 폴리라인 끝에 맞춰 영역 내에 카메라 중심 맞추기
+//                val result_position = LatLngBounds(min_latLng, max_latLng)
+                val result_position = LatLngBounds(min_latLng, max_latLng)
+                println("min_latLng :" + min_latLng)
+                println("max_latLng :" + max_latLng)
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(result_position.center, 20f))
+//                mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(result_position, 30))
+
+                Handler().postDelayed({
+                    // 구글맵 스크린샷
+                    mMap.snapshot{
+                        it?.let{
+                            capture_imageView.setImageBitmap(it)
+                            println("googlemap screenshot: " + it)
+                        }
+                    }
+                    // 현위치 삭제
+                    mMap.isMyLocationEnabled = false
+                    Handler().postDelayed({
+                        // 모두 정지
+                        end_button.isEnabled = true
+                        onStop()
+                    }, 500)
+                }, 1000)
+            }
+            return@setOnLongClickListener(true)
         }
 //        resetBtn.setOnClickListener {
 //            reset()
@@ -238,24 +384,58 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
 //            if(time!=0) lapTime()
 //        }
         trashBtn.setOnClickListener {
+            trashTTS()
             trashCount ++
             trashCountText.text = "$trashCount"
             println(trashCount)
             // 줍깅 마칭
-            mMap.addMarker(MarkerOptions().position(latLng).title("Changed Location"))
+            //            mMap.addMarker(MarkerOptions().position(latLng).title("Changed Location"))
+            mMap.addMarker(MarkerOptions().position(latLng).icon(BitmapDescriptorFactory.fromResource(R.drawable.flower)))
+//            addItems()
+            trashBtn.isEnabled = false
+            Handler().postDelayed({
+                trashBtn.isEnabled = true
+            }, 2000)
         }
 
         end_button = findViewById(R.id.end_button)
+        end_button.isEnabled = false
 
         val endIntent = Intent(this, EndActivity::class.java) // 인텐트를 생성
 
         end_button.setOnClickListener { // 버튼 클릭시 할 행동
-            pause()
-            endIntent.putExtra("timeRecord",time)
-            endIntent.putExtra("sumDistance",sumDistance)
-            endIntent.putExtra("trashCount", trashCount)
-            startActivity(endIntent)  // 화면 전환하기
-            finish()
+            if(longClickFlag) {
+                endTTS()
+                pause()
+                endIntent.putExtra("timeRecord", time)
+                endIntent.putExtra("sumDistance", sumDistance)
+                endIntent.putExtra("trashCount", trashCount)
+
+                // 구글맵 스크린샷 (BitMap 형식)
+                mMap.snapshot {
+                    it?.let {
+                        endIntent.putExtra("captureImage", it)
+                        println("googlemap screenshot: " + it)
+                    }
+                }
+                endIntent.putExtra("captureImageTest", R.drawable.boy)
+
+                startActivity(endIntent)  // 화면 전환하기
+                finish()
+//                onDestroy()
+            }
+        }
+        capture_imageView = findViewById(R.id.capture_imageView)
+        capture_button = findViewById(R.id.capture_button)
+
+        capture_button.setOnClickListener { // 버튼 클릭시 할 행동
+            // 구글맵 스크린샷
+            mMap.snapshot{
+                it?.let{
+                    capture_imageView.setImageBitmap(it)
+                    println("googlemap screenshot: " + it)
+                }
+            }
         }
     }
 
@@ -265,7 +445,7 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
     override fun onResume(){
         super.onResume()
         // 사용자에게 gps키라고 알리기
-        Toast.makeText(this,"이 앱은 GPS(위치)를 켜야 이용 가능합니다!", Toast.LENGTH_SHORT).show()
+//        Toast.makeText(this,"이 앱은 GPS(위치)를 켜야 이용 가능합니다!", Toast.LENGTH_SHORT).show()
         // '앱이 gps사용'에 대한 권한이 있는지 체크
 //        // 거부됐으면 showPermissionInfoDialog(알림)메소드를 호출, 승인됐으면 addLocationListener(위치 요청)메소드를 호출
         permissionCheck(cancel={showPermissionInfoDialog()},
@@ -278,13 +458,14 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
         super.onPause()
         fusedLocationProviderClient.removeLocationUpdates(locationCallback)
         fusedLocationProviderClient.removeLocationUpdates(locationCallback2)
-
+        // 어플이 종료되면 지도 요청 해제
     }
     // 위치 요청 메소드
     @SuppressLint("MissingPermission")
     private fun addLocationListener(){
         // 위치 정보 요청
         // (정보 요청할 때 넘겨줄 데이터)에 관한 객체, 위치 갱신되면 호출되는 콜백, 특정 스레드 지정(별 일 없으니 null)
+        // 위치권한을 요청하고 액티비티가 잠깐 쉴 때, 자신의 위치를 확인하고 갱신된 정보를 요청함.
         fusedLocationProviderClient.requestLocationUpdates(locationRequest,locationCallback,null)
 
     }
@@ -421,20 +602,23 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
     }
 
     private fun start() {
+        startTTS()
+
         addLocationListener2()
         locationstart()
         startBtn.text ="중지"
-        timerTask = kotlin.concurrent.timer(period = 10) { //반복주기는 peroid 프로퍼티로 설정, 단위는 1000분의 1초 (period = 1000, 1초)
+        timerTask = timer(period = 10) { //반복주기는 peroid 프로퍼티로 설정, 단위는 1000분의 1초 (period = 1000, 1초)
             time++ // period=10으로 0.01초마다 time를 1씩 증가하게 됩니다
-            val sec = time / 100 // time/100, 나눗셈의 몫 (초 부분)
-            val milli = time % 100 // time%100, 나눗셈의 나머지 (밀리초 부분)
+            var milli = time % 100 // time%100, 나눗셈의 나머지 (밀리초 부분)
+            var sec = time / 100 // time/100, 나눗셈의 몫 (초 부분)
+            var min = sec / 60
+            sec %= 60
 
-            sumTime = "$sec" + "\"" + "$milli"
+            sumTime = "$min" + " : " + "$sec" + "\"" + "$milli"
             // UI조작을 위한 메서드
             runOnUiThread {
-                secText.text = "$sec" + "\""
+                secText.text = "$min" + ":" + "$sec" + "\""
                 milliText.text = "$milli"
-
             }
         }
     }
@@ -528,5 +712,39 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
         Toast.makeText(this, "Current location:\n$location", Toast.LENGTH_LONG)
             .show()
     }
+    // TextToSpeech override 함수
+    override fun onInit(status: Int) {
+        if (status == TextToSpeech.SUCCESS) {
+            // set US English as language for tts
+            val result = tts!!.setLanguage(Locale.KOREA)
 
+            if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+                //doSomething
+            } else {
+                //doSomething
+            }
+        } else {
+            //doSomething
+        }
+
+    }
+    private fun startTTS() {
+        tts!!.speak("플로깅을 시작합니다", TextToSpeech.QUEUE_FLUSH, null, "")
+    }
+
+    private fun endTTS() {
+        tts!!.speak("종료", TextToSpeech.QUEUE_FLUSH, null, "")
+    }
+    private fun trashTTS() {
+        tts!!.speak("수줍!", TextToSpeech.QUEUE_FLUSH, null, "")
+    }
+    override fun onDestroy() {
+
+        if (tts != null) {
+            tts!!.stop()
+            tts!!.shutdown()
+        }
+
+        super.onDestroy()
+    }
 }

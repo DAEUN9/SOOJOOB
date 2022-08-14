@@ -36,9 +36,6 @@ android {
     viewBinding {
         enabled = true
     }
-    buildFeatures {
-        viewBinding true
-    }
 }
 
 dependencies {
@@ -80,10 +77,22 @@ dependencies {
     implementation 'com.google.android.gms:play-services-maps:18.1.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'com.google.android.gms:play-services-location:15.0.1'
+    // googleMap SDK 유틸리티 라이브러리
     implementation 'com.google.maps.android:android-maps-utils:2.3.0'
+    // Android용 Maps SDK 유틸리티 KTX 라이브러리 (코틀린 확장 프로그램)
+    implementation 'com.google.maps.android:maps-utils-ktx:3.4.0'
+    // design 라이브러리 의존성 추가
+    implementation 'com.google.android.material:material:1.6.1'
 
     // Google Login
     implementation platform('com.google.firebase:firebase-bom:27.1.0')
     implementation 'com.google.firebase:firebase-auth:21.0.0'
     implementation 'com.google.android.gms:play-services-auth:19.0.0'
+
+    //Circle ImageView
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
+
+    implementation 'io.github.ParkSangGwon:tedpermission-normal:3.3.0'
+
+
 }

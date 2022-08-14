@@ -1,4 +1,4 @@
-package com.example.SOOJOOB
+package com.example.SOOJOOB.retrofit
 
 import com.google.gson.annotations.SerializedName
 
@@ -8,10 +8,10 @@ data class PloggingGetResponseBody(
     @SerializedName("msg")
     val msg: String?,
     @SerializedName("data")
-    val result: List<Result>?
+    val result: List<PloggingResult>?
 )
 
-data class Result(
+data class PloggingResult(
     @SerializedName("distance")
     val distance : Double?,
     @SerializedName("timeRecord")
