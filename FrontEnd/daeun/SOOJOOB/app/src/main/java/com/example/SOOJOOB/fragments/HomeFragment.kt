@@ -77,7 +77,7 @@ class HomeFragment : Fragment() {
             println("temp :" + temp)
             println("sky :" + sky)
             binding.todayWhere.text = Constants.ADDRESS
-            binding.todayTemp.text = temp
+            binding.todayTemp.text = temp+"℃"
             binding.todayWeather.text = sky
         })
 

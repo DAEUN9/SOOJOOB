@@ -18,6 +18,9 @@ import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationResult
 import com.google.android.gms.maps.model.LatLng
 import com.gun0912.tedpermission.provider.TedPermissionProvider
+import java.lang.NullPointerException
+import java.util.*
+import java.util.Locale.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -95,17 +98,25 @@ class MainActivity : AppCompatActivity() {
             // 그러나 gps가 꺼져 있거나 위치를 찾을 수 없을 때는 lastLocation은 null을 가진다.
             val location = locationResult?.lastLocation
 //            //  gps가 켜져 있고 위치 정보를 찾을 수 있을 때 다음 함수를 호출한다. <?. : 안전한 호출>
-            location?.run{
+            location?.run {
                 // 위치값 생성
-                latLng=LatLng(latitude,longitude)
+                latLng = LatLng(latitude, longitude)
                 println("latitude " + latitude)
                 println("longitude " + longitude)
                 println("latLng " + latLng)
-                val geocoder = Geocoder(TedPermissionProvider.context)
-                val address = geocoder.getFromLocation( latitude, longitude,1)
-                Constants.ADDRESS = address.first().getAddressLine(0)
+                val geocoder = Geocoder(TedPermissionProvider.context, KOREA)
+                val address = geocoder.getFromLocation(latitude, longitude, 1)
                 println("address : " + address)
+                try {
+                    Constants.ADDRESS = address.first().locality
+                } catch (e: NullPointerException) {
+                    Constants.ADDRESS = address.first().adminArea
+                }
+
+//                Constants.ADDRESS = address.first().locality
+
             }
+
         }
 
     }
