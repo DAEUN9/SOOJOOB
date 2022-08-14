@@ -22,10 +22,10 @@ class UserupdateActivity : AppCompatActivity() {
         val userInfoWork = UserInfoWork()
         userInfoWork.work(completion = { statusCode, username, email, age, gender, region ->
             if (statusCode in 200..300) {
-                binding.usernameTextInputEditText.hint = username
+                binding.usernameTextInputEditText.setText(username)
                 binding.emailTextInputEditText.setText(email)
-                binding.ageTextInputEditText.hint = age.toString()
-                binding.regionTextInputEditText.hint = region.toString()
+                binding.ageTextInputEditText.setText(age.toString())
+                binding.regionTextInputEditText.setText(region.toString())
             } else {
                 val msg = "회원정보 로딩에 실패했습니다."
                 Toast.makeText(this@UserupdateActivity, "$msg", Toast.LENGTH_SHORT).show()
