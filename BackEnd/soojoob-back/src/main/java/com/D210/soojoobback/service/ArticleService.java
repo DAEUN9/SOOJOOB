@@ -1,5 +1,6 @@
 package com.D210.soojoobback.service;
 
+import com.D210.soojoobback.dto.article.ArticleDto;
 import com.D210.soojoobback.dto.article.ArticleSaveDto;
 import com.D210.soojoobback.entity.Article;
 import com.D210.soojoobback.entity.User;
@@ -25,16 +26,17 @@ public class ArticleService {
 
 
     @Transactional(readOnly = true)
-    public List<ArticleSaveDto> showAll() {
+    public List<ArticleDto> showAll() {
         List<Article> articles = articleRepository.findAll();
 
         return articles.stream()
-                .map(article -> new ArticleSaveDto(article.getId(),
-                        article.getUser().getId(),
-                        article.getUser().getUsername(),
+                .map(article -> new ArticleDto(article.getId(),
                         article.getTitle(),
                         article.getContents(),
-                        article.getCreatedDate()))
+                        article.getCreatedDate(),
+                        article.getArticleImage(),
+                        article.getUserName()
+                ))
                 .collect(Collectors.toList());
 
     }

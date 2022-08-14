@@ -1,17 +1,25 @@
 package com.D210.soojoobback.controller;
 
+import com.D210.soojoobback.dto.article.ArticleDto;
 import com.D210.soojoobback.dto.user.ResponseDto;
 import com.D210.soojoobback.entity.User;
 import com.D210.soojoobback.exception.CustomErrorException;
+import com.D210.soojoobback.security.JwtTokenProvider;
 import com.D210.soojoobback.security.UserDetailsImpl;
 import com.D210.soojoobback.service.ArticleService;
 import com.D210.soojoobback.dto.article.ArticleSaveDto;
 import com.D210.soojoobback.service.UserService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.List;
 
 @Slf4j
@@ -39,7 +47,7 @@ public class ArticleApiController {
     }
     @GetMapping("")
     public ResponseDto showAll() {
-        List<ArticleSaveDto> articles = articleService.showAll();
+        List<ArticleDto> articles = articleService.showAll();
         return new ResponseDto(200L,"전체 게시글 불러오기 성공", articles);
 
     }

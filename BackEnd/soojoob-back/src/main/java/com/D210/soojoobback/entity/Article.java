@@ -39,6 +39,11 @@ public class Article extends BaseTimeEntity {
     @CreatedDate
     private LocalDateTime createdDate;
 
+    @Column
+    private String articleImage;
+
+    @Column String userName;
+
     protected Article() {
     }
 
@@ -82,6 +87,8 @@ public class Article extends BaseTimeEntity {
         this.contents = articledto.getContents();
         this.title = articledto.getTitle();
         this.createdDate = getCreatedDate();
+        this.articleImage = articledto.getArticleImage();
+        this.userName = user.getUsername();
     }
 
     public static Article of(ArticleSaveDto savedto, User user){
@@ -106,6 +113,8 @@ public class Article extends BaseTimeEntity {
     public String getContents() {
         return contents;
     }
+
+    public String getArticleImage(){return articleImage;}
 
 
 
