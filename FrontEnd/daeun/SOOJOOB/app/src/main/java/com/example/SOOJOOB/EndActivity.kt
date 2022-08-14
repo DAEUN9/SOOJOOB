@@ -6,24 +6,27 @@ import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
-import android.util.Log
+import android.util.*
+import android.util.Base64
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
+import com.example.SOOJOOB.retrofit.PloggingRequestBody
+import com.example.SOOJOOB.retrofit.PloggingWork
+import java.io.*
 import java.text.SimpleDateFormat
 import java.util.*
-import android.util.*
-import android.util.Base64
-import androidx.core.app.NotificationCompat
-import java.io.*
+
 
 open class EndActivity : AppCompatActivity() {
 
@@ -46,7 +49,6 @@ open class EndActivity : AppCompatActivity() {
     // Noti 객체 생성
     private lateinit var notificationHelper: NotificationHelper
 
-
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,25 +56,36 @@ open class EndActivity : AppCompatActivity() {
 
         val timeRecord = intent.getIntExtra("timeRecord",0)
         timeRecordText = findViewById(R.id.TimeRecord)
-        timeRecordText.text = "총 시간 :" + "${timeRecord / 100}" + "\"" + "${timeRecord % 100}"
+        timeRecordText.text = "총 시간 " + "   ${timeRecord / 100}" + "\"" + "${timeRecord % 100}"
 
         val sumDistance = intent.getDoubleExtra("sumDistance", 0.0)
         sumDistanceText = findViewById(R.id.sumDistance)
-        sumDistanceText.text = "이동 거리 " + "$sumDistance" + "m"
+        sumDistanceText.text = "이동 거리 " + "    $sumDistance" + "m"
 
 
         val trashCount = intent.getIntExtra("trashCount",0)
         trashCountText = findViewById(R.id.trashCount)
-        trashCountText.text = "총 쓰레기 수 : " + "$trashCount"
+        trashCountText.text = "$trashCount" + "곳이 깨끗해졌습니다."
 
         btn_camera = findViewById(R.id.btn_camera)
         iv_pre = findViewById(R.id.iv_pre)
         now = findViewById(R.id.now)
 
+        val icon = BitmapFactory.decodeResource(getResources(), R.drawable.boy)
+        iv_pre.setImageBitmap(icon)
+        // 이미지 캡쳐 적용 (안됨 ㅠㅠ)
+//        val captureImage = intent?.getParcelableExtra<Bitmap>("captureImage")
+//        val captureImageTest = intent?.getParcelableExtra<Bitmap>("captureImageTest")
+//        println("captureImage : " + captureImage)
+//        println("captureImageTest : " + captureImageTest)
+//        iv_pre.setImageBitmap(captureImageTest)
+
+
         val currentDateTime = Calendar.getInstance().time
         val dateFormat = SimpleDateFormat("yyyy.MM.dd HH:mm:ss", Locale.KOREA).format(currentDateTime)
 
         now.text = dateFormat
+        ploggingImg = encodeImage(icon)
 
         imageSaveBtn = findViewById(R.id.imageSaveBtn)
         imageSaveBtn.setOnClickListener{
@@ -82,6 +95,7 @@ open class EndActivity : AppCompatActivity() {
             println(ploggingImg.length)
         }
 
+        val endIntent = Intent(this, MainActivity::class.java)
         // Retrofit
         nextButton = findViewById(R.id.nextButton)
         nextButton.setOnClickListener {
@@ -91,7 +105,7 @@ open class EndActivity : AppCompatActivity() {
                 trashCount,
                 dateFormat,
                 ploggingImg
-                )
+            )
             var cnt = 0
             val ploggingWork = PloggingWork(ploggingData)
             ploggingWork.work(completion = { badges ->
@@ -107,7 +121,7 @@ open class EndActivity : AppCompatActivity() {
                     }
                 }
             })
-
+            startActivity(endIntent)
         }
 
 //        getButton = findViewById(R.id.getButton)
@@ -280,8 +294,6 @@ open class EndActivity : AppCompatActivity() {
             notificationHelper.getChannelNotification(title, message)
         notificationHelper.getManager().notify(id, nb.build())
     }
-
-
 
 
 }

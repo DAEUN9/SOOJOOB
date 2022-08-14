@@ -1,6 +1,5 @@
-package com.example.SOOJOOB
+package com.example.SOOJOOB.retrofit
 
-import com.example.SOOJOOB.retrofit.Badge
 import com.google.gson.annotations.SerializedName
 
 data class PloggingResponseBody(

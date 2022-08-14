@@ -8,18 +8,23 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.SOOJOOB.*
 import com.example.SOOJOOB.RecyclerAdapter
-import com.example.SOOJOOB.RetrofitAPI
+import com.example.SOOJOOB.retrofit.PloggingGetResponseBody
+import com.example.SOOJOOB.retrofit.PloggingResult
+import com.example.SOOJOOB.retrofit.RetrofitAPI
 import retrofit2.Call
 import retrofit2.Response
 
 class RecordFragment : Fragment() {
 
     private lateinit var fBinding : FragmentRecordBinding
+    private lateinit var trashSortBtn:Button
+    private lateinit var dateSortBtn:Button
 
 //    override fun onCreateView(
 //        inflater: LayoutInflater,
@@ -59,21 +64,25 @@ class RecordFragment : Fragment() {
                     response: Response<PloggingGetResponseBody>
                 ) {
                     if (response.isSuccessful) {
-                        val result = response.body()
+                        val result = response.body()?.result?.reversed()
                         result?.let {
-                            it.result?.let { it1 -> setAdapter(it1) }
+                            it?.let { it1 -> setAdapter(it1) }
                         }
-//                        Log.d("플로깅 get 성공", "${result}")
-//                        Log.d("타입 확인","${result?.result?.get(2)?.dateTime}")
-//                        getText.text = "플로깅 날짜 : " + result?.result?.get(2)?.dateTime + "\n플로깅 시간 :  " + result?.result?.get(2)?.timeRecord + "\n쓰레기 수 :" + result?.result?.get(2)?.trashCount + "\n 플로깅 거리 : "  + result?.result?.get(2)?.distance
-//                        date.text = result?.result?.get(2)?.dateTime
-//                        distance.text = result?.result?.get(2)?.distance.toString()
-//                        recTime.text = result?.result?.get(2)?.timeRecord.toString()
-//                        trashCnt.text = result?.result?.get(2)?.trashCount.toString()
-////                        println("이미지 타입" + result?.result?.get(2)?.ploggingImg?.javaClass)
-//                        imageString = result?.result?.get(2)?.ploggingImg as String
-//                        image.setImageBitmap(imageString.toBitmap())
-//                        res = result?.result
+
+                        val dateSort = response.body()?.result
+                        trashSortBtn.setOnClickListener {
+                            val trashSort = response.body()?.result?.sortedWith(compareBy<PloggingResult>{it.trashCount})?.reversed()
+                            trashSort?.let {
+                                it.let{it1 -> setAdapter(it1)}
+                            }
+                        }
+                        dateSortBtn.setOnClickListener {
+                            val dateSort = response.body()?.result?.reversed()
+                            dateSort?.let {
+                                it.let{it1 -> setAdapter(it1)}
+                            }
+                        }
+
 
 
                     }
@@ -112,12 +121,14 @@ class RecordFragment : Fragment() {
     override fun onViewCreated(itemView: View, savedInstanceState: Bundle?) {
         super.onViewCreated(itemView, savedInstanceState)
         recyler_view = itemView.findViewById(R.id.recyler_view)
+        trashSortBtn = itemView.findViewById(R.id.trashSort)
+        dateSortBtn = itemView.findViewById(R.id.dateSort)
 
         work()
     }
 
 
-    private fun setAdapter(PloggingList : List<Result>){
+    private fun setAdapter(PloggingList : List<PloggingResult>){
         val mAdapter = RecyclerAdapter(PloggingList)
         recyler_view.adapter = mAdapter
         recyler_view.layoutManager = LinearLayoutManager(activity)

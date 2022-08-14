@@ -11,16 +11,16 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.SOOJOOB.retrofit.PloggingResult
 
-class PloggingAdapter(val context: Context, val ploggingList: List<Result>) :
+
+class PloggingAdapter(val context: Context, val ploggingList: List<PloggingResult>) :
     RecyclerView.Adapter<PloggingAdapter.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return PloggingAdapter.ViewHolder(LayoutInflater.from(context)
             .inflate(R.layout.item_rec,parent ,false))
 
     }
-
-
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(ploggingList[position],context)
@@ -49,7 +49,7 @@ class PloggingAdapter(val context: Context, val ploggingList: List<Result>) :
             }
         }
         @SuppressLint("SetTextI18n")
-        fun bind(itemPlogging : Result?, context: Context){
+        fun bind(itemPlogging : PloggingResult?, context: Context){
 //            image?.visibility = View.GONE
             imageString = itemPlogging?.ploggingImg as String
             image?.setImageBitmap(imageString.toBitmap())

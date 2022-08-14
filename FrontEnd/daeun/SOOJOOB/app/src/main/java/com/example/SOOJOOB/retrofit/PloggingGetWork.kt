@@ -1,12 +1,6 @@
-package com.example.SOOJOOB
+package com.example.SOOJOOB.retrofit
 
-import android.content.Intent
 import android.util.Log
-import com.example.SOOJOOB.PloggingGetResponseBody
-import com.example.SOOJOOB.RetrofitAPI
-import com.google.gson.Gson
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.Call
 import retrofit2.Response
 

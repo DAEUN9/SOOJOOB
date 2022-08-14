@@ -1,9 +1,6 @@
-package com.example.SOOJOOB
+package com.example.SOOJOOB.retrofit
 
 import android.util.Log
-import com.example.SOOJOOB.retrofit.Badge
-import com.example.SOOJOOB.retrofit.Plogging
-
 import com.google.gson.Gson
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody.Companion.toRequestBody

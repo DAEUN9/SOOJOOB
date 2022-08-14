@@ -1,8 +1,6 @@
 package com.example.SOOJOOB.retrofit
 
 import android.util.Log
-import com.example.SOOJOOB.RetrofitAPI
-import com.google.gson.Gson
 import retrofit2.Call
 import retrofit2.Response
 
