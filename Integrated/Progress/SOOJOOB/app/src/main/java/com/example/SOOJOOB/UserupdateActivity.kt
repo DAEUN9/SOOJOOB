@@ -23,7 +23,7 @@ class UserupdateActivity : AppCompatActivity() {
         userInfoWork.work(completion = { statusCode, username, email, age, gender, region ->
             if (statusCode in 200..300) {
                 binding.usernameTextInputEditText.hint = username
-                binding.emailTextInputEditText.hint = email
+                binding.emailTextInputEditText.setText(email)
                 binding.ageTextInputEditText.hint = age.toString()
                 binding.regionTextInputEditText.hint = region.toString()
             } else {
