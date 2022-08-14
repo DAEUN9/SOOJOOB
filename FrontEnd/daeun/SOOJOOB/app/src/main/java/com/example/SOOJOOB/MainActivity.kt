@@ -18,6 +18,7 @@ import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationResult
 import com.google.android.gms.maps.model.LatLng
 import com.gun0912.tedpermission.provider.TedPermissionProvider
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -101,10 +102,11 @@ class MainActivity : AppCompatActivity() {
                 println("latitude " + latitude)
                 println("longitude " + longitude)
                 println("latLng " + latLng)
-                val geocoder = Geocoder(TedPermissionProvider.context)
-                val address = geocoder.getFromLocation( latitude, longitude,1)
-                Constants.ADDRESS = address.first().getAddressLine(0)
+                val geocoder = Geocoder(TedPermissionProvider.context, Locale.KOREA)
+                val address = geocoder.getFromLocation( 36.0, 128.0,1)
                 println("address : " + address)
+                Constants.ADDRESS = address.first().locality
+
             }
         }
 
