@@ -29,6 +29,13 @@ public class ArticleSaveDto extends BaseTimeEntity{
        this.articleImage = article.getArticleImage();
        this.userName = article.getUser().getUsername();
     }
-
+    public ArticleSaveDto(Long id, String title, String contents, LocalDateTime createdDate, String articleImage, String userName) {
+        this.id = id;
+        this.title = title;
+        this.contents = contents;
+        this.createdDate = createdDate;
+        this.articleImage = articleImage;
+        this.userName = userName;
+    }
 
 }
