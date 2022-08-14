@@ -6,15 +6,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.LinearLayout
+import android.widget.ImageView
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.SOOJOOB.*
 import com.example.SOOJOOB.databinding.FragmentCommunityBinding
-import com.example.SOOJOOB.retrofit.PloggingResult
 import com.example.SOOJOOB.retrofit.RetrofitAPI
 import retrofit2.Call
 import retrofit2.Response
@@ -22,7 +19,7 @@ import retrofit2.Response
 class CommunityFragment : Fragment() {
 
     private var fBinding : FragmentCommunityBinding? = null
-    private lateinit var createBtn:LinearLayout
+    private lateinit var createBtn: ImageView
 
     fun work(){
         val service = RetrofitAPI.articleService

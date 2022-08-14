@@ -72,7 +72,7 @@ class MypageFragment : Fragment() {
 //        super.onDestroyView()
 
         val userWork = UserWork()
-        userWork.mywork(completion = { status, username, trash, exp, badge ->
+        userWork.work(completion = { status, username, trash, exp, badge ->
             if (status in 200..300) {
                 binding.mypageUsername.text = username
                 binding.mypageMiddleUsername.text = username
