@@ -201,6 +201,7 @@
                         android:layout_margin="10dp"/>
 
                     <TextView
+                        android:id="@+id/today_temp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="33℃"
@@ -210,6 +211,7 @@
                         android:layout_marginHorizontal="10dp"/>
 
                     <TextView
+                        android:id="@+id/today_weather"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="맑음"
@@ -219,6 +221,7 @@
                         android:layout_marginHorizontal="10dp"/>
 
                     <TextView
+                        android:id="@+id/today_where"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="구미시"
