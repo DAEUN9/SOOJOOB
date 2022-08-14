@@ -27,7 +27,6 @@ class MypageFragment : Fragment() {
         val binding = FragmentMypageBinding.inflate(inflater, container, false)
 
         fBinding = binding
-
         binding.badgeButton.setOnClickListener {
             val badgeWork = BadgeWork()
 

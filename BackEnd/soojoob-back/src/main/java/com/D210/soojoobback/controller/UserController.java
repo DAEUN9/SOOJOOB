@@ -202,9 +202,9 @@ public class UserController {
 		}
 	}
 
-	@GetMapping("/nickname-check")
+	@GetMapping("/nickname-check/{username}")
 	public ResponseDto nickNameCheck(
-			@RequestBody String username
+			@PathVariable("username") String username
 	) {
 		userService.nicknameCheck(username);
 		return new ResponseDto(200L, "사용 가능한 닉네임입니다 !", "");
@@ -212,9 +212,9 @@ public class UserController {
 	}
 
 
-	@GetMapping("/email-check")
+	@GetMapping("/email-check/{email}")
 	public ResponseDto emailCheck(
-			@RequestBody String email
+			@PathVariable("email") String email
 	) {
 		userService.emailCheck(email);
 		return new ResponseDto(200L, "사용 가능한 이메일입니다 !", "");
