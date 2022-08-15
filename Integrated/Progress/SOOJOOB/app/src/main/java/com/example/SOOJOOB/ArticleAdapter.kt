@@ -2,6 +2,7 @@ package com.example.SOOJOOB
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.util.Base64
@@ -56,7 +57,11 @@ class ArticleAdapter(val articleList: List<Article>) :
             createdDate?.text = itemArticle?.createdDate
             userName?.text = itemArticle?.userName
             articleImage?.setImageBitmap(itemArticle?.articleImage?.toBitmap())
-
+            itemView.setOnClickListener {
+                val intent = Intent(itemView.context, ArticleDetailActivity::class.java)
+                intent.putExtra("data", itemArticle)
+                intent.run { itemView.context.startActivity(this) }
+            }
         }
 
     }

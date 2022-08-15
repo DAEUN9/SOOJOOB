@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/community_article"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -10,11 +10,7 @@
     android:elevation="1dp"
     android:gravity="center"
     android:orientation="vertical"
-    android:background="@drawable/round"
-    tools:context=".ArticleDetailActivity"
-    android:foreground="?attr/selectableItemBackground"
-    android:clickable="true"
-    android:focusable="true">
+    android:background="@drawable/round">
 
     <ImageView
         android:id="@+id/image"
@@ -60,6 +56,30 @@
             android:text="GUEST"
             android:textSize="20sp"
             android:textColor="@color/greenTxt"/>
+
+        <TextView
+            android:id="@+id/contents"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="오전 10시부터 1시간정도 할 사람 구합니다!!"
+            android:textSize="20sp"
+            android:textColor="@color/greenTxt"/>
     </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/round_wbutton"
+            android:textStyle="bold"
+            android:textSize="24sp"
+            android:id="@+id/backtolist"
+            android:layout_marginHorizontal="10dp"
+            android:text="목록으로"
+            />
+    </LinearLayout>
+
 
 </LinearLayout>
