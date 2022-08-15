@@ -92,6 +92,9 @@ public class PloggingService {
         record.setTotalTrashCount(toTrash + trashCount);
         record.setTotalTimeRecord(toTimeRec + timeRecord);
         record.setExp(exp + trashCount * 0.1);
+        if (record.getExp()>99.9) {
+            record.setExp(99.0);
+        }
 
         ploggingRepository.save(plogging);
         recordRepository.save(record);

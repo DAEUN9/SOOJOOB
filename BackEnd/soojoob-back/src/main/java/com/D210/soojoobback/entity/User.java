@@ -61,11 +61,11 @@ public class User {
 	@JsonIgnore
 	private  List<Article> articleList;
 
-	@OneToOne(mappedBy = "userRecord")
+	@OneToOne(mappedBy = "userRecord", cascade = ALL, orphanRemoval = true)
 	@JsonIgnore
 	private Record record;
 
-	@OneToMany(mappedBy = "user")
+	@OneToMany(mappedBy = "user", cascade = ALL, orphanRemoval = true)
 	@JsonIgnore
 	private List<UserBadge> userBadges = new ArrayList<>();
 

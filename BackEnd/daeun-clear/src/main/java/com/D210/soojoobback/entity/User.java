@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -61,11 +63,11 @@ public class User {
 	@JsonIgnore
 	private  List<Article> articleList;
 
-	@OneToOne(mappedBy = "userRecord")
+	@OneToOne(mappedBy = "userRecord", cascade = ALL, orphanRemoval = true)
 	@JsonIgnore
 	private Record record;
 
-	@OneToMany(mappedBy = "user")
+	@OneToMany(mappedBy = "user", cascade = ALL, orphanRemoval = true)
 	@JsonIgnore
 	private List<UserBadge> userBadges = new ArrayList<>();
 
