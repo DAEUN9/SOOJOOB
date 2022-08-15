@@ -451,7 +451,7 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
                 println("max_latLng :" + max_latLng)
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(result_position.center, 20f))
 //                mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(result_position, 30))
-                
+
                 // 플로깅 마무리 마킹
                 mMap.addMarker(MarkerOptions().position(latLng).icon(BitmapDescriptorFactory.fromResource(R.drawable.trophy)))
 
@@ -481,7 +481,7 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
                 endIntent.putExtra("captureImageTest", R.drawable.ic_trash)
 
                 startActivity(endIntent)  // 화면 전환하기
-                finish()
+//                finish()
             }
             return@setOnLongClickListener(true)
         }
