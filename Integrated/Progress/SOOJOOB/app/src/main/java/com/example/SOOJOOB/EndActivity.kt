@@ -45,7 +45,7 @@ open class EndActivity : AppCompatActivity() {
     private var ploggingImg:String = ""
 
     private lateinit var getButton: Button
-
+    private lateinit var captureBitmap:Bitmap
     // Noti 객체 생성
     private lateinit var notificationHelper: NotificationHelper
 
@@ -71,8 +71,8 @@ open class EndActivity : AppCompatActivity() {
         iv_pre = findViewById(R.id.iv_pre)
         now = findViewById(R.id.now)
 
-        val icon = BitmapFactory.decodeResource(getResources(), R.drawable.boy)
-        iv_pre.setImageBitmap(icon)
+//        val icon = BitmapFactory.decodeResource(getResources(), R.drawable.boy)
+//        iv_pre.setImageBitmap(icon)
         // 이미지 캡쳐 적용 (안됨 ㅠㅠ)
 //        val captureImage = intent?.getParcelableExtra<Bitmap>("captureImage")
 //        val captureImageTest = intent?.getParcelableExtra<Bitmap>("captureImageTest")
@@ -85,7 +85,7 @@ open class EndActivity : AppCompatActivity() {
         val dateFormat = SimpleDateFormat("yyyy.MM.dd HH:mm:ss", Locale.KOREA).format(currentDateTime)
 
         now.text = dateFormat
-        ploggingImg = encodeImage(icon)
+//        ploggingImg = encodeImage(icon)
 
         imageSaveBtn = findViewById(R.id.imageSaveBtn)
         imageSaveBtn.setOnClickListener{
@@ -94,6 +94,12 @@ open class EndActivity : AppCompatActivity() {
             ploggingImg = encodeImage(bitmap)
             println(ploggingImg.length)
         }
+
+        val captureImage = intent.getByteArrayExtra("capture")
+        val captureBitmap = captureImage?.toBitmap()
+        ploggingImg = captureBitmap?.let { encodeImage(it) }.toString()
+        iv_pre.setImageBitmap(captureImage?.toBitmap())
+
 
         val endIntent = Intent(this, MainActivity::class.java)
         // Retrofit
@@ -129,7 +135,6 @@ open class EndActivity : AppCompatActivity() {
 //            val nextIntent = Intent(this, PloggingDataActivity::class.java)
 //            startActivity(nextIntent)
 //        }
-
 
 
 
@@ -293,6 +298,13 @@ open class EndActivity : AppCompatActivity() {
         val nb: NotificationCompat.Builder =
             notificationHelper.getChannelNotification(title, message)
         notificationHelper.getManager().notify(id, nb.build())
+    }
+
+    fun ByteArray.toBitmap(): Bitmap?{
+        val by = Base64.encodeToString(this, Base64.DEFAULT)
+        Base64.decode(by, Base64.DEFAULT).apply {
+            return BitmapFactory.decodeByteArray(this,0,size)
+        }
     }
 
 
