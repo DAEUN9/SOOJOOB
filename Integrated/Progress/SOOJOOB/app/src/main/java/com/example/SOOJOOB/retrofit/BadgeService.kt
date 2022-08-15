@@ -11,4 +11,7 @@ interface BadgeService {
 
     @GET("badges/no")
     fun getNoBadges(): Call<BadgesResponseBody>
+
+    @GET("record/rank")
+    fun getUserRank(): Call<RankResponseBody>
 }

@@ -32,7 +32,9 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyAS9cn9ixRM5oW2ODVy9UY5aYJbQBe273g"/>
-
+        <activity
+            android:name=".RankActivity"
+            android:exported="false" />
         <activity
             android:name="com.example.SOOJOOB.BadgesActivity"
             android:exported="false" />
