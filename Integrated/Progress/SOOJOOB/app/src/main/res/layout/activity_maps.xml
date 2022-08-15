@@ -12,14 +12,14 @@
         android:layout_width="match_parent"
         android:layout_height="350dp"
         android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp">
+        android:layout_marginBottom="8dp"
+        tools:ignore="MissingConstraints">
 
         <fragment
             android:id="@+id/map"
             android:name="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
-
     </LinearLayout>
 
 
@@ -196,21 +196,22 @@
         tools:layout_editor_absoluteX="16dp"
         tools:layout_editor_absoluteY="166dp" />
 
-    <Button
-        android:id="@+id/toilet_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="화장실"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
+    <ImageView
         android:id="@+id/trashcan_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="100dp"
-        android:text="쓰레기통"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_width="20pt"
+        android:layout_height="20pt"
+        app:srcCompat="@drawable/trashcan"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp"/>
+
+    <ImageView
+        android:id="@+id/toilet_button"
+        android:layout_width="20pt"
+        android:layout_height="20pt"
+        app:layout_constraintStart_toEndOf="@+id/trashcan_button"
+        app:srcCompat="@drawable/toilet"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteY="0dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
