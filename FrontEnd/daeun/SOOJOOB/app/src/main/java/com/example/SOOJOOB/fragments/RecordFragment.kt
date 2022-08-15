@@ -1,6 +1,8 @@
 package com.example.SOOJOOB.fragments
 
 
+import android.app.Activity
+import android.content.Intent
 import com.example.SOOJOOB.databinding.FragmentRecordBinding
 
 import android.os.Bundle
@@ -9,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -25,6 +28,7 @@ class RecordFragment : Fragment() {
     private lateinit var fBinding : FragmentRecordBinding
     private lateinit var trashSortBtn:Button
     private lateinit var dateSortBtn:Button
+    private lateinit var nextMapsBtn:ImageView
 
 //    override fun onCreateView(
 //        inflater: LayoutInflater,
@@ -82,9 +86,6 @@ class RecordFragment : Fragment() {
                                 it.let{it1 -> setAdapter(it1)}
                             }
                         }
-
-
-
                     }
                 }
 
@@ -115,6 +116,7 @@ class RecordFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_record, container, false)
+
         return view
     }
 
@@ -123,6 +125,12 @@ class RecordFragment : Fragment() {
         recyler_view = itemView.findViewById(R.id.recyler_view)
         trashSortBtn = itemView.findViewById(R.id.trashSort)
         dateSortBtn = itemView.findViewById(R.id.dateSort)
+        nextMapsBtn = itemView.findViewById(R.id.next_maps)
+
+        nextMapsBtn.setOnClickListener {
+            val intent = Intent(activity, MapsActivity::class.java)
+            startActivity(intent)
+        }
 
         work()
     }

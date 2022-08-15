@@ -1,9 +1,14 @@
 package com.example.SOOJOOB
 
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
-import android.widget.TextView
+import android.widget.*
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -11,6 +16,7 @@ import com.example.SOOJOOB.databinding.ActivityArticleBinding
 import com.example.SOOJOOB.retrofit.RetrofitAPI
 import retrofit2.Call
 import retrofit2.Response
+import java.lang.Exception
 
 class ArticleActivity : AppCompatActivity() {
     private var res: List<Any>? = null
@@ -19,7 +25,11 @@ class ArticleActivity : AppCompatActivity() {
     private lateinit var contents:TextView
     private lateinit var dateTime:TextView
 
+
     private lateinit var binding: ActivityArticleBinding
+
+
+
     fun work(){
         val service = RetrofitAPI.articleService
 
@@ -47,6 +57,7 @@ class ArticleActivity : AppCompatActivity() {
         binding = ActivityArticleBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+
         recyler_view = findViewById(R.id.recyler_view)
 
         this.work()
@@ -56,6 +67,7 @@ class ArticleActivity : AppCompatActivity() {
             val intent = Intent(this, ArticleInsertActivity::class.java)
             startActivity(intent)
         }
+
 
 
     }
@@ -68,6 +80,9 @@ class ArticleActivity : AppCompatActivity() {
 
         recyler_view.setHasFixedSize(false)
     }
+
+
+
 
 
 }

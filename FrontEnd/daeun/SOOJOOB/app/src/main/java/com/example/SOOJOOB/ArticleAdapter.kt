@@ -32,13 +32,21 @@ class ArticleAdapter(val articleList: List<Article>) :
 
 
 
+
     class ViewHolder (itemView: View ) : RecyclerView.ViewHolder(itemView){
 
 
         val title = itemView?.findViewById<TextView>(R.id.title)
         val contents  = itemView?.findViewById<TextView>(R.id.contents)
-        val createdDate =   itemView?.findViewById<TextView>(R.id.createdDate)
+        val createdDate = itemView?.findViewById<TextView>(R.id.createdDate)
+//        val userName = itemView?.findViewById<TextView>(R.id.userName)
+        val articleImage = itemView?.findViewById<ImageView>(R.id.image)
 
+        fun String.toBitmap(): Bitmap?{
+            Base64.decode(this, Base64.DEFAULT).apply {
+                return BitmapFactory.decodeByteArray(this,0,size)
+            }
+        }
 
         @SuppressLint("SetTextI18n")
         fun bind(itemArticle : Article?){
@@ -46,6 +54,8 @@ class ArticleAdapter(val articleList: List<Article>) :
             title?.text = itemArticle?.title
             contents?.text = itemArticle?.contents
             createdDate?.text = itemArticle?.createdDate
+//            userName?.text = itemArticle?.userName
+            articleImage?.setImageBitmap(itemArticle?.articleImage?.toBitmap())
 
         }
 

@@ -27,7 +27,7 @@ class Common {
     }
 
     // 위경도를 기상청에서 사용하는 격자 좌표로 변환
-    fun dfs_xy_conv(v1: Double=128.346, v2: Double=36.116) : Point {
+    fun dfs_xy_conv(v1: Double, v2: Double) : Point {
         val RE = 6371.00877     // 지구 반경(km)
         val GRID = 5.0          // 격자 간격(km)
         val SLAT1 = 30.0        // 투영 위도1(degree)
@@ -61,10 +61,5 @@ class Common {
         val y = (ro - ra * Math.cos(theta) + YO + 0.5).toInt()
 
         return Point(x, y)
-    }
-
-    var address=""
-    fun getAddress(addr : String) {
-        address = addr
     }
 }

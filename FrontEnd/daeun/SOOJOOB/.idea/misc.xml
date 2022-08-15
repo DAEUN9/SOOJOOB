@@ -3,22 +3,50 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/DANI/ssafy7/semester2/S07P12D210/FrontEnd/daeun/SOOJOOB/app/src/main/res/layout/activity_main.xml" value="0.1" />
-        <entry key="..\:/Users/DANI/ssafy7/semester2/S07P12D210/FrontEnd/daeun/SOOJOOB/app/src/main/res/layout/activity_weather.xml" value="0.29528985507246375" />
-        <entry key="..\:/Users/DANI/ssafy7/semester2/S07P12D210/FrontEnd/daeun/SOOJOOB/app/src/main/res/layout/fragment_home.xml" value="0.264" />
+        <entry key="..\:/Users/DANI/ssafy7/semester2/S07P12D210/FrontEnd/daeun/SOOJOOB/app/src/main/res/layout/activity_article.xml" value="0.12604166666666666" />
+        <entry key="..\:/Users/DANI/ssafy7/semester2/S07P12D210/FrontEnd/daeun/SOOJOOB/app/src/main/res/layout/activity_article_insert.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/DANI/ssafy7/semester2/S07P12D210/FrontEnd/daeun/SOOJOOB/app/src/main/res/layout/activity_badges.xml" value="0.1" />
+        <entry key="..\:/Users/DANI/ssafy7/semester2/S07P12D210/FrontEnd/daeun/SOOJOOB/app/src/main/res/layout/activity_end.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/DANI/ssafy7/semester2/S07P12D210/FrontEnd/daeun/SOOJOOB/app/src/main/res/layout/activity_login.xml" value="0.17844202898550723" />
+        <entry key="..\:/Users/DANI/ssafy7/semester2/S07P12D210/FrontEnd/daeun/SOOJOOB/app/src/main/res/layout/activity_main.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/DANI/ssafy7/semester2/S07P12D210/FrontEnd/daeun/SOOJOOB/app/src/main/res/layout/activity_no_badge.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/DANI/ssafy7/semester2/S07P12D210/FrontEnd/daeun/SOOJOOB/app/src/main/res/layout/activity_rank.xml" value="0.264" />
+        <entry key="..\:/Users/DANI/ssafy7/semester2/S07P12D210/FrontEnd/daeun/SOOJOOB/app/src/main/res/layout/activity_signup.xml" value="0.1" />
+        <entry key="..\:/Users/DANI/ssafy7/semester2/S07P12D210/FrontEnd/daeun/SOOJOOB/app/src/main/res/layout/activity_userupdate.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/DANI/ssafy7/semester2/S07P12D210/FrontEnd/daeun/SOOJOOB/app/src/main/res/layout/activity_weather.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/DANI/ssafy7/semester2/S07P12D210/FrontEnd/daeun/SOOJOOB/app/src/main/res/layout/custom_dialog.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/DANI/ssafy7/semester2/S07P12D210/FrontEnd/daeun/SOOJOOB/app/src/main/res/layout/fragment_community.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/DANI/ssafy7/semester2/S07P12D210/FrontEnd/daeun/SOOJOOB/app/src/main/res/layout/fragment_home.xml" value="0.1" />
+        <entry key="..\:/Users/DANI/ssafy7/semester2/S07P12D210/FrontEnd/daeun/SOOJOOB/app/src/main/res/layout/fragment_mypage.xml" value="0.17844202898550723" />
+        <entry key="..\:/Users/DANI/ssafy7/semester2/S07P12D210/FrontEnd/daeun/SOOJOOB/app/src/main/res/layout/fragment_record.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/DANI/ssafy7/semester2/S07P12D210/FrontEnd/daeun/SOOJOOB/app/src/main/res/layout/item_article.xml" value="0.1" />
+        <entry key="..\:/Users/DANI/ssafy7/semester2/S07P12D210/FrontEnd/daeun/SOOJOOB/app/src/main/res/layout/item_rank.xml" value="0.19923371647509577" />
+        <entry key="..\:/Users/DANI/ssafy7/semester2/S07P12D210/FrontEnd/daeun/SOOJOOB/app/src/main/res/layout/item_rec.xml" value="0.18333333333333332" />
+        <entry key="..\:/Users/DANI/ssafy7/semester2/S07P12D210/FrontEnd/daeun/SOOJOOB/app/src/main/res/layout/item_rec2.xml" value="0.18333333333333332" />
+        <entry key="..\:/Users/DANI/ssafy7/semester2/S07P12D210/FrontEnd/daeun/SOOJOOB/app/src/main/res/layout/layout_badge_item.xml" value="0.18333333333333332" />
+        <entry key="..\:/Users/DANI/ssafy7/semester2/S07P12D210/Integrated/Progress/SOOJOOB/app/src/main/res/layout/activity_article_insert.xml" value="0.1157548125633232" />
         <entry key="..\:/Users/DANI/ssafy7/semester2/S07P12D210/Integrated/Progress/SOOJOOB/app/src/main/res/layout/activity_badges.xml" value="0.29347826086956524" />
         <entry key="..\:/Users/DANI/ssafy7/semester2/S07P12D210/Integrated/Progress/SOOJOOB/app/src/main/res/layout/activity_end.xml" value="0.29347826086956524" />
         <entry key="..\:/Users/DANI/ssafy7/semester2/S07P12D210/Integrated/Progress/SOOJOOB/app/src/main/res/layout/activity_login.xml" value="0.29347826086956524" />
-        <entry key="..\:/Users/DANI/ssafy7/semester2/S07P12D210/Integrated/Progress/SOOJOOB/app/src/main/res/layout/activity_maps.xml" value="0.29347826086956524" />
+        <entry key="..\:/Users/DANI/ssafy7/semester2/S07P12D210/Integrated/Progress/SOOJOOB/app/src/main/res/layout/activity_maps.xml" value="0.1" />
         <entry key="..\:/Users/DANI/ssafy7/semester2/S07P12D210/Integrated/Progress/SOOJOOB/app/src/main/res/layout/activity_no_badge.xml" value="0.29347826086956524" />
         <entry key="..\:/Users/DANI/ssafy7/semester2/S07P12D210/Integrated/Progress/SOOJOOB/app/src/main/res/layout/activity_signup.xml" value="0.17760416666666667" />
         <entry key="..\:/Users/DANI/ssafy7/semester2/S07P12D210/Integrated/Progress/SOOJOOB/app/src/main/res/layout/custom_dialog.xml" value="0.29347826086956524" />
+        <entry key="..\:/Users/DANI/ssafy7/semester2/S07P12D210/Integrated/Progress/SOOJOOB/app/src/main/res/layout/fragment_home.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/DANI/ssafy7/semester2/S07P12D210/Integrated/Progress/SOOJOOB/app/src/main/res/layout/fragment_mypage.xml" value="0.29347826086956524" />
         <entry key="..\:/Users/DANI/ssafy7/semester2/S07P12D210/Integrated/Progress/SOOJOOB/app/src/main/res/layout/layout_badge_item.xml" value="0.1175925925925926" />
+        <entry key="..\:/Users/NanJaengE/ssafy7/commonpjt/S07P12D210/Integrated/Progress/SOOJOOB/app/src/main/res/layout/activity_badges.xml" value="0.36614583333333334" />
+        <entry key="..\:/Users/NanJaengE/ssafy7/commonpjt/S07P12D210/Integrated/Progress/SOOJOOB/app/src/main/res/layout/activity_userupdate.xml" value="0.36614583333333334" />
+        <entry key="..\:/Users/NanJaengE/ssafy7/commonpjt/S07P12D210/Integrated/Progress/SOOJOOB/app/src/main/res/layout/fragment_mypage.xml" value="0.36614583333333334" />
+        <entry key="..\:/Users/multicampus/Desktop/S07P12D210/Integrated/Progress/SOOJOOB/app/src/main/res/layout/activity_article.xml" value="0.19021739130434784" />
+        <entry key="..\:/Users/multicampus/Desktop/S07P12D210/Integrated/Progress/SOOJOOB/app/src/main/res/layout/activity_article_insert.xml" value="0.2" />
         <entry key="..\:/Users/multicampus/Desktop/S07P12D210/Integrated/Progress/SOOJOOB/app/src/main/res/layout/activity_end.xml" value="0.1331521739130435" />
-        <entry key="..\:/Users/multicampus/Desktop/S07P12D210/Integrated/Progress/SOOJOOB/app/src/main/res/layout/activity_maps.xml" value="0.2" />
+        <entry key="..\:/Users/multicampus/Desktop/S07P12D210/Integrated/Progress/SOOJOOB/app/src/main/res/layout/activity_maps.xml" value="0.1" />
+        <entry key="..\:/Users/multicampus/Desktop/S07P12D210/Integrated/Progress/SOOJOOB/app/src/main/res/layout/fragment_community.xml" value="0.19021739130434784" />
         <entry key="..\:/Users/multicampus/Desktop/S07P12D210/Integrated/Progress/SOOJOOB/app/src/main/res/layout/fragment_record.xml" value="0.1331521739130435" />
+        <entry key="..\:/Users/multicampus/Desktop/S07P12D210/Integrated/Progress/SOOJOOB/app/src/main/res/layout/item_article.xml" value="0.1" />
         <entry key="..\:/Users/multicampus/Desktop/S07P12D210/Integrated/Progress/SOOJOOB/app/src/main/res/layout/item_rec2.xml" value="0.15572916666666667" />
+        <entry key="..\:/Users/multicampus/Desktop/S07P12D210/Integrated/Progress/SOOJOOB/app/src/main/res/layout/list_item_weather.xml" value="0.19021739130434784" />
         <entry key="..\:/Users/multicampus/Desktop/SOOJOOB/app/src/main/res/layout/fragment_home.xml" value="0.264" />
         <entry key="..\:/Users/multicampus/Desktop/SOOJOOB/app/src/main/res/layout/fragment_record.xml" value="0.17916666666666667" />
         <entry key="..\:/Users/multicampus/Desktop/SOOJOOB/app/src/main/res/layout/item_rec2.xml" value="0.264" />

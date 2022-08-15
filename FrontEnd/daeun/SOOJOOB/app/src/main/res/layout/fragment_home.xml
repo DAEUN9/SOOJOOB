@@ -188,47 +188,67 @@
                 <LinearLayout
                     android:id="@+id/btnWeather"
                     android:layout_width="match_parent"
-                    android:layout_height="100dp"
+                    android:layout_height="110dp"
                     android:background="@drawable/round"
                     android:backgroundTint="#03A9F4"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
                     <ImageView
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
+                        android:layout_width="85dp"
+                        android:layout_height="85dp"
                         android:src="@drawable/sun"
-                        android:layout_margin="10dp"/>
+                        android:layout_marginLeft="15dp"/>
 
-                    <TextView
-                        android:id="@+id/today_temp"
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="33℃"
-                        android:textSize="28sp"
-                        android:textColor="#FFFFFF"
-                        android:textStyle="bold"
-                        android:layout_marginHorizontal="10dp"/>
+                        android:layout_marginHorizontal="15dp"
+                        android:orientation="horizontal"
+                        android:layout_weight="1"
+                        android:gravity="center">
 
-                    <TextView
-                        android:id="@+id/today_weather"
+                        <TextView
+                            android:id="@+id/today_weather"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="구름많음"
+                            android:textSize="26sp"
+                            android:textColor="#FFFFFF"
+                            android:textStyle="bold"
+                            android:layout_marginHorizontal="5dp"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="맑음"
-                        android:textSize="24sp"
-                        android:textColor="#FFFFFF"
-                        android:textStyle="bold"
-                        android:layout_marginHorizontal="10dp"/>
+                        android:orientation="vertical"
+                        android:layout_marginRight="15dp"
+                        android:gravity="left">
 
-                    <TextView
-                        android:id="@+id/today_where"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="구미시"
-                        android:textSize="24sp"
-                        android:textColor="#FFFFFF"
-                        android:textStyle="bold"
-                        android:layout_marginHorizontal="10dp"/>
+                        <TextView
+                            android:id="@+id/today_temp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="33˚"
+                            android:textSize="46sp"
+                            android:textColor="#FFFFFF"
+                            android:textStyle="bold"
+                            android:layout_marginHorizontal="5dp"/>
+
+                        <TextView
+                            android:id="@+id/today_where"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="구미시"
+                            android:textSize="18sp"
+                            android:paddingLeft="3dp"
+                            android:textColor="#FFFFFF"
+                            android:textStyle="bold"
+                            android:layout_marginHorizontal="5dp"/>
+
+                    </LinearLayout>
 
 
                 </LinearLayout>

@@ -15,7 +15,7 @@ class ArticleWork(private val ArticleInfo: ArticleRequestBody) {
         val service = RetrofitAPI.articleService
 
         val gson = Gson()
-        val articleRequestBody = ArticleRequestBody(ArticleInfo.title, ArticleInfo.contents)
+        val articleRequestBody = ArticleRequestBody(ArticleInfo.title, ArticleInfo.contents, ArticleInfo.articleImage)
         val gsonObjectString = gson.toJson(articleRequestBody)
 
 

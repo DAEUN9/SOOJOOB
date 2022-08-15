@@ -13,5 +13,11 @@
     <string name="login">로그인</string>
     <string name="next_signup"><u>이메일로 가입</u></string>
     <string name="sns_signup"><b>─ </b> SNS 계정으로 로그인하기 <b> ─</b></string>
+    <string name="user_update">회원정보 수정</string>
+    <string name="age">나이</string>
+    <string name="gender">성별</string>
+    <string name="region">주 활동 지역</string>
+    <string name="weight">몸무게</string>
+    <string name="height">키</string>
 
 </resources>

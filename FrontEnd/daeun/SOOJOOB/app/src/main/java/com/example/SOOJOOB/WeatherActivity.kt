@@ -40,11 +40,11 @@ class WeatherActivity : AppCompatActivity() {
         setContentView(R.layout.activity_weather)
 
         tvDate = findViewById(R.id.tvDate)                                // 오늘 날짜 텍스트뷰
-//        weatherRecyclerView = findViewById(R.id.weatherRecyclerView)  // 날씨 리사이클러 뷰
+        weatherRecyclerView = findViewById(R.id.weatherRecyclerView)  // 날씨 리사이클러 뷰
         val btnRefresh = findViewById<Button>(R.id.btnRefresh)                          // 새로고침 버튼
 
         // 리사이클러 뷰 매니저 설정
-//        weatherRecyclerView.layoutManager = LinearLayoutManager(this@WeatherActivity)
+        weatherRecyclerView.layoutManager = LinearLayoutManager(this@WeatherActivity)
         // 내 위치 위경도 가져와서 날씨 정보 설정하기
         requestLocation()
 
@@ -60,8 +60,6 @@ class WeatherActivity : AppCompatActivity() {
     private fun setWeather(nx : Int, ny : Int) {
         // 준비 단계 : base_date(발표 일자), base_time(발표 시각)
         // 현재 날짜, 시간 정보 가져오기
-        val nx = 1
-        val ny = 1
         val cal = Calendar.getInstance()
         base_date = SimpleDateFormat("yyyyMMdd", Locale.getDefault()).format(cal.time) // 현재 날짜
         val timeH = SimpleDateFormat("HH", Locale.getDefault()).format(cal.time) // 현재 시각
@@ -106,21 +104,11 @@ class WeatherActivity : AppCompatActivity() {
 
                     // 각 날짜 배열 시간 설정
                     for (i in 0..5) weatherArr[i].fcstTime = it[i].fcstTime
-                    val weatherarr = weatherArr[0]
-                    val sky = weatherarr.sky
-                    val temp = weatherarr.temp
-                    val rain = weatherarr.rainType
-
-                    val t = findViewById<TextView>(R.id.today_temp)
-                    val s = findViewById<TextView>(R.id.today_weather)
-
-                    t.text = temp
-                    s.text = getSky(sky, rain)
 
                     // 리사이클러 뷰에 데이터 연결
-//                    weatherRecyclerView.adapter = WeatherAdapter(weatherArr)
+                    weatherRecyclerView.adapter = WeatherAdapter(weatherArr)
                     // 토스트 띄우기
-//                    Toast.makeText(applicationContext, it[0].fcstDate + ", " + it[0].fcstTime + "의 날씨 정보입니다.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(applicationContext, it[0].fcstDate + ", " + it[0].fcstTime + "의 날씨 정보입니다.", Toast.LENGTH_SHORT).show()
                 }
             }
 
@@ -154,7 +142,7 @@ class WeatherActivity : AppCompatActivity() {
                             curPoint = Common().dfs_xy_conv(location.latitude, location.longitude)
 
                             // 오늘 날짜 텍스트뷰 설정
-//                            tvDate.text = SimpleDateFormat("MM월 dd일", Locale.getDefault()).format(Calendar.getInstance().time) + " 날씨"
+                            tvDate.text = SimpleDateFormat("MM월 dd일", Locale.getDefault()).format(Calendar.getInstance().time) + " 날씨"
                             // nx, ny지점의 날씨 가져와서 설정하기
                             setWeather(curPoint!!.x, curPoint!!.y)
                         }
@@ -173,28 +161,4 @@ class WeatherActivity : AppCompatActivity() {
         }
     }
 
-    // 강수 형태
-    fun getRainType(rainType : String) : String {
-        return when(rainType) {
-            "0" -> "없음"
-            "1" -> "비"
-            "2" -> "비/눈"
-            "3" -> "눈"
-            "4" -> "소나기"
-            "5" -> "빗방울"
-            "6" -> "빗방울/눈날림"
-            "7" -> "눈날림"
-            else -> "오류 rainType : " + rainType
-        }
-    }
-
-    // 하늘 상태
-    fun getSky(sky : String, rain : String) : String {
-        return when(sky) {
-            "1" -> "맑음"
-            "3" -> "구름 많음"
-            "4" -> "흐림"
-            else -> getRainType(rain)
-        }
-    }
 }
