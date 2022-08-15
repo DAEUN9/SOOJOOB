@@ -23,12 +23,14 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.location.Geocoder
 import android.os.Environment
 import android.os.Handler
 import android.os.SystemClock
 import android.speech.tts.TextToSpeech
+import android.util.Base64
 import android.util.Log
 import android.view.WindowManager
 import android.widget.Button
@@ -461,11 +463,9 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
                     mMap.snapshot{
                         it?.let{
                             // 캡쳐 이미지 반영
+                            encodeImage(it)
+                            endIntent.putExtra("capture",encodeImage(it))
                             capture_imageView.setImageBitmap(it)
-                            saveImage(it,"capture_${it.generationId}")
-                            println("capture_${it.generationId}" + "이 저장됐습니다")
-                            // 캡쳐 이미지 Intent로 넘김
-                            endIntent.putExtra("captureImage", it)
                             println("googlemap screenshot: " + it)
                         }
                     }
@@ -495,6 +495,8 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
             // 구글맵 스크린샷
             mMap.snapshot{
                 it?.let{
+                    encodeImage(it)
+                    endIntent.putExtra("capture",encodeImage(it))
                     capture_imageView.setImageBitmap(it)
                     println("googlemap screenshot: " + it)
                 }
@@ -1080,5 +1082,20 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
             }
         }
         return true
+    }
+
+    private fun encodeImage(bm: Bitmap): ByteArray {
+        val baos = ByteArrayOutputStream()
+        bm.compress(Bitmap.CompressFormat.PNG, 10, baos)
+        val b = baos.toByteArray()
+        return b
+    }
+
+
+    fun ByteArray.toBitmap(): Bitmap?{
+        val by = Base64.encodeToString(this, Base64.DEFAULT)
+        Base64.decode(by, Base64.DEFAULT).apply {
+            return BitmapFactory.decodeByteArray(this,0,size)
+        }
     }
 }
