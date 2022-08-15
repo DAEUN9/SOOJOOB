@@ -3,6 +3,7 @@ package com.example.SOOJOOB
 import android.Manifest
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Base64
@@ -27,6 +28,7 @@ class ArticleInsertActivity  : AppCompatActivity(){
     private lateinit var bitmap:Bitmap
 
 
+
     private val binding by lazy {
         ActivityArticleInsertBinding.inflate(layoutInflater)
     }
@@ -49,6 +51,8 @@ class ArticleInsertActivity  : AppCompatActivity(){
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
+        bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ic_trash)
+        binding.uploadImageBtn.setImageBitmap(bitmap)
 
         binding.btnWrite.setOnClickListener{
 
