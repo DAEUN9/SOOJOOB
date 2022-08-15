@@ -421,7 +421,7 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
                 endIntent.putExtra("captureImageTest", R.drawable.boy)
 
                 startActivity(endIntent)  // 화면 전환하기
-                finish()
+//                finish()
 //                onDestroy()
             }
         }
