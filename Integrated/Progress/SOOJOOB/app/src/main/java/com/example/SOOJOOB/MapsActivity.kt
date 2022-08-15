@@ -22,8 +22,10 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.pm.ActivityInfo
+import android.graphics.Bitmap
 import android.graphics.Color
 import android.location.Geocoder
+import android.os.Environment
 import android.os.Handler
 import android.os.SystemClock
 import android.speech.tts.TextToSpeech
@@ -40,8 +42,7 @@ import com.google.maps.android.clustering.view.DefaultClusterRenderer
 import com.gun0912.tedpermission.provider.TedPermissionProvider
 import org.json.JSONArray
 import org.json.JSONObject
-import java.io.BufferedReader
-import java.io.InputStreamReader
+import java.io.*
 import java.lang.Math.*
 import java.net.URL
 import java.util.*
@@ -461,6 +462,8 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
                         it?.let{
                             // 캡쳐 이미지 반영
                             capture_imageView.setImageBitmap(it)
+                            saveImage(it,"capture_${it.generationId}")
+                            println("capture_${it.generationId}" + "이 저장됐습니다")
                             // 캡쳐 이미지 Intent로 넘김
                             endIntent.putExtra("captureImage", it)
                             println("googlemap screenshot: " + it)
@@ -1038,4 +1041,44 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
         }
     }
 
+    open fun saveImage(bitmap: Bitmap?, saveImageName: String): Boolean {
+        val saveDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM)
+            .toString() + "/directoryName"
+        val file = File(saveDir)
+        if (!file.exists()) {
+            file.mkdir()
+        }
+        val fileName = "$saveImageName.png"
+        val tempFile = File(saveDir, fileName)
+        var output: FileOutputStream? = null
+        try {
+            if (tempFile.createNewFile()) {
+                output = FileOutputStream(tempFile)
+                // 이미지 줄이기
+
+                val newBitmap = Bitmap.createScaledBitmap(bitmap!!, 200, 200, true)
+                newBitmap.compress(Bitmap.CompressFormat.PNG, 100, output)
+            } else {
+                // 같은 이름의 파일 존재
+                Log.d("TEST_LOG", "같은 이름의 파일 존재:$saveImageName")
+                return false
+            }
+        } catch (e: FileNotFoundException) {
+            Log.d("TEST_LOG", "파일을 찾을 수 없음")
+            return false
+        } catch (e: IOException) {
+            Log.d("TEST_LOG", "IO 에러")
+            e.printStackTrace()
+            return false
+        } finally {
+            if (output != null) {
+                try {
+                    output.close()
+                } catch (e: IOException) {
+                    e.printStackTrace()
+                }
+            }
+        }
+        return true
+    }
 }
