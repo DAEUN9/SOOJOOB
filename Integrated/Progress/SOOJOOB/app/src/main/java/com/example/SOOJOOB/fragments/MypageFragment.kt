@@ -74,7 +74,7 @@ class MypageFragment : Fragment() {
 //        super.onDestroyView()
 
         val userWork = UserWork()
-        userWork.work(completion = { status, username, trash, exp, badge,id ->
+        userWork.work(completion = { status, userid, username, trash, exp, badge ->
             if (status in 200..300) {
                 binding.mypageUsername.text = username
                 binding.mypageMiddleUsername.text = username
@@ -82,8 +82,8 @@ class MypageFragment : Fragment() {
                 binding.mypageExp.text = exp.toString().substring(0, 4)
                 binding.mypageProgress.progress = exp!!.toInt()
                 binding.mypageBadge.text = badge.toString()
-                if (id != null) {
-                    userId = id
+                if (userid != null) {
+                    userId = userid
                 }
             }
         })

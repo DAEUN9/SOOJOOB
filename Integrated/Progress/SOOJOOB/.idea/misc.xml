@@ -73,6 +73,10 @@
         <entry key="..\:/Users/multicampus/ssafy7/team-pjt/1st-pjt/Test/Proto04/app/src/main/res/menu/bottom_nav_menu.xml" value="0.22083333333333333" />
         <entry key="..\:/Users/multicampus/ssafy7/team-pjt/1st-pjt/Test/Proto04/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.2315" />
         <entry key="..\:/Users/multicampus/ssafy7/team-pjt/1st-pjt/Test/Proto04/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.136" />
+        <entry key="..\:/Users/multicampus/ssafy7/team-pjt/1st-pjt/ongoing/SOOJOOB/app/src/main/res/drawable/round_green.xml" value="0.1" />
+        <entry key="..\:/Users/multicampus/ssafy7/team-pjt/1st-pjt/ongoing/SOOJOOB/app/src/main/res/layout/activity_article.xml" value="0.1787037037037037" />
+        <entry key="..\:/Users/multicampus/ssafy7/team-pjt/1st-pjt/ongoing/SOOJOOB/app/src/main/res/layout/activity_article_detail.xml" value="0.22083333333333333" />
+        <entry key="..\:/Users/multicampus/ssafy7/team-pjt/1st-pjt/ongoing/SOOJOOB/app/src/main/res/layout/activity_article_insert.xml" value="0.1787037037037037" />
         <entry key="..\:/Users/multicampus/ssafy7/team-pjt/1st-pjt/ongoing/SOOJOOB/app/src/main/res/layout/activity_badges.xml" value="0.14324324324324325" />
         <entry key="..\:/Users/multicampus/ssafy7/team-pjt/1st-pjt/ongoing/SOOJOOB/app/src/main/res/layout/activity_end.xml" value="0.14324324324324325" />
         <entry key="..\:/Users/multicampus/ssafy7/team-pjt/1st-pjt/ongoing/SOOJOOB/app/src/main/res/layout/activity_login.xml" value="0.22972972972972974" />
@@ -83,9 +87,13 @@
         <entry key="..\:/Users/multicampus/ssafy7/team-pjt/1st-pjt/ongoing/SOOJOOB/app/src/main/res/layout/fragment_home.xml" value="0.1" />
         <entry key="..\:/Users/multicampus/ssafy7/team-pjt/1st-pjt/ongoing/SOOJOOB/app/src/main/res/layout/fragment_mypage.xml" value="0.264" />
         <entry key="..\:/Users/multicampus/ssafy7/team-pjt/1st-pjt/ongoing/SOOJOOB/app/src/main/res/layout/fragment_record.xml" value="0.22972972972972974" />
+        <entry key="..\:/Users/multicampus/ssafy7/team-pjt/1st-pjt/ongoing/SOOJOOB/app/src/main/res/layout/item_article.xml" value="0.1" />
+        <entry key="..\:/Users/multicampus/ssafy7/team-pjt/1st-pjt/ongoing/SOOJOOB/app/src/main/res/layout/item_rank.xml" value="0.1" />
         <entry key="..\:/Users/multicampus/ssafy7/team-pjt/1st-pjt/ongoing/SOOJOOB/app/src/main/res/layout/item_rec.xml" value="0.14324324324324325" />
         <entry key="..\:/Users/multicampus/ssafy7/team-pjt/1st-pjt/ongoing/SOOJOOB/app/src/main/res/layout/item_rec2.xml" value="0.264" />
         <entry key="..\:/Users/multicampus/ssafy7/team-pjt/1st-pjt/ongoing/SOOJOOB/app/src/main/res/layout/layout_badge_item.xml" value="0.14324324324324325" />
+        <entry key="..\:/Users/multicampus/ssafy7/team-pjt/1st-pjt/ongoing/SOOJOOB/app/src/main/res/layout/layout_nobadge_item.xml" value="0.1" />
+        <entry key="..\:/Users/multicampus/ssafy7/team-pjt/1st-pjt/ongoing/SOOJOOB/app/src/main/res/layout/list_item_weather.xml" value="0.1" />
         <entry key="..\:/Users/multicampus/ssafy7/team-pjt/1st-pjt/ongoing/SOOJOOB/app/src/main/res/menu/bottom_nav_menu.xml" value="0.14324324324324325" />
         <entry key="..\:/Users/multicampus/ssafy7/team-pjt/1st-pjt/ongoing/test/SOOJOOB/app/src/main/res/drawable/round.xml" value="0.228" />
         <entry key="..\:/Users/multicampus/ssafy7/team-pjt/1st-pjt/ongoing/test/SOOJOOB/app/src/main/res/layout/activity_article.xml" value="0.2171875" />

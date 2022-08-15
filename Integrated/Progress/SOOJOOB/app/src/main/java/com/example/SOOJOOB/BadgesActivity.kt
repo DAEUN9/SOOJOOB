@@ -68,7 +68,7 @@ class BadgesActivity : AppCompatActivity() {
             }
 
         val userWork = UserWork()
-        userWork.work(completion = { status, username, trash, exp, badge ,id->
+        userWork.work(completion = { status, userid, username, trash, exp, badge ->
             if (status in 200..300) {
                 binding.badgeCount.text = badge.toString()
                 when (exp?.toInt()) {

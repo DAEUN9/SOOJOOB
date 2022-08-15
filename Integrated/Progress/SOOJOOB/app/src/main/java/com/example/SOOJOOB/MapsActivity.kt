@@ -73,14 +73,17 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
     private lateinit var milliText: TextView
     private lateinit var trashCountText: TextView
     private lateinit var distanceText: TextView
-    private lateinit var startBtn: Button
+    private lateinit var startBtn: ImageView
     private lateinit var resetBtn: Button
-    private lateinit var trashBtn: Button
-    private lateinit var end_button: Button
+    private lateinit var trashBtn: ImageView
+    private lateinit var end_button: ImageView
     // 캡쳐
     private lateinit var capture_button: Button
     // 마커
     private lateinit var marker: Marker
+    // 음소거
+    private lateinit var muteBtn: ImageView
+    private var muteflag = false
     // 클러스팅
     private lateinit var toilet_button: ImageView
     private lateinit var trashcan_button: ImageView
@@ -387,7 +390,7 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
                 Handler().postDelayed({
                     //                mMap.addMarker(MarkerOptions().position(latLng).title("Changed Location"))
                     start_latLng = LatLng(latLng.latitude-0.000023, latLng.longitude)
-                    mMap.addMarker(MarkerOptions().position(start_latLng).icon(BitmapDescriptorFactory.fromResource(R.drawable.boy_map)))
+                    mMap.addMarker(MarkerOptions().position(start_latLng).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_heart)))
                     startflag = true
                     trashBtn.isEnabled = true
                 }, 500)
@@ -400,10 +403,16 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
             if (isRunning) {
                 endClickFlag = false
                 end_button.isEnabled = false
+                end_button.setAlpha(100)
+                trashBtn.isEnabled = true
+                trashBtn.setAlpha(255)
                 start()
             } else {
                 endClickFlag = true
                 end_button.isEnabled = true
+                end_button.setAlpha(255)
+                trashBtn.isEnabled = false
+                trashBtn.setAlpha(100)
                 pause()
             }
         }
@@ -414,7 +423,9 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
 //            if(time!=0) lapTime()
 //        }
         trashBtn.setOnClickListener {
-            trashTTS()
+            if(!muteflag) {
+                trashTTS()
+            }
             trashCount ++
             trashCountText.text = "$trashCount"
             println(trashCount)
@@ -422,9 +433,9 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
             //            mMap.addMarker(MarkerOptions().position(latLng).title("Changed Location"))
             // 동기화 시간에 의해 다른 위치에 마커가 찍히는 현상 보정
             Handler().postDelayed({
-                mMap.addMarker(MarkerOptions().position(LatLng(latLng.latitude-0.000023, latLng.longitude)).icon(BitmapDescriptorFactory.fromResource(R.drawable.flower)))
+                mMap.addMarker(MarkerOptions().position(LatLng(latLng.latitude-0.000023, latLng.longitude)).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_flower)))
                 // 플로깅하다보면 Boy 이미지가 사라지는 현상 보정
-                mMap.addMarker(MarkerOptions().position(start_latLng).icon(BitmapDescriptorFactory.fromResource(R.drawable.boy_map)))
+                mMap.addMarker(MarkerOptions().position(start_latLng).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_heart)))
             }, 500)
 //            addItems()
             trashBtn.isEnabled = false
@@ -437,12 +448,13 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
 
         end_button.setOnClickListener { // 버튼 클릭시 할 행동
             // 사용자에게 종료하는 방법 알려주기
-            Toast.makeText(this,"버튼을 꾹~ 눌러 종료하세요!", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this,"버튼을 길게 눌러 종료하세요.", Toast.LENGTH_SHORT).show()
         }
         end_button.setOnLongClickListener { // 버튼 클릭시 할 행동
             if(endClickFlag) {
-                endTTS()
-                pause()
+                if(!muteflag) {
+                    endTTS()
+                }
                 endIntent.putExtra("timeRecord", time)
                 endIntent.putExtra("sumDistance", sumDistance)
                 endIntent.putExtra("trashCount", trashCount)
@@ -481,7 +493,7 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
                     }, 500)
                 }, 1000)
                 // 테스트용임 없애도 됨
-                endIntent.putExtra("captureImageTest", R.drawable.ic_trash)
+                endIntent.putExtra("captureImageTest", R.drawable.ic_map)
 
                 startActivity(endIntent)  // 화면 전환하기
 //                finish()
@@ -711,11 +723,12 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
     }
 
     private fun start() {
-        startTTS()
-
+        if(!muteflag) {
+            startTTS()
+        }
         addLocationListener2()
         locationstart()
-        startBtn.text ="중지"
+        startBtn.setImageResource(R.drawable.icon_pause)
         timerTask = timer(period = 10) { //반복주기는 peroid 프로퍼티로 설정, 단위는 1000분의 1초 (period = 1000, 1초)
             time++ // period=10으로 0.01초마다 time를 1씩 증가하게 됩니다
             var milli = time % 100 // time%100, 나눗셈의 나머지 (밀리초 부분)
@@ -733,7 +746,10 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
     }
 
     private fun pause() {
-        startBtn.text ="재실행"
+        if(!muteflag) {
+            pauseTTS()
+        }
+        startBtn.setImageResource(R.drawable.icon_play)
         timerTask?.cancel();
     }
 //
@@ -840,9 +856,12 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
     private fun startTTS() {
         tts!!.speak("플로깅을 시작합니다", TextToSpeech.QUEUE_FLUSH, null, "")
     }
+    private fun pauseTTS() {
+        tts!!.speak("플로깅을 일시정지합니다", TextToSpeech.QUEUE_FLUSH, null, "")
+    }
 
     private fun endTTS() {
-        tts!!.speak("종료", TextToSpeech.QUEUE_FLUSH, null, "")
+        tts!!.speak("플로깅을 종료합니다.", TextToSpeech.QUEUE_FLUSH, null, "")
     }
     private fun trashTTS() {
         tts!!.speak("수줍!", TextToSpeech.QUEUE_FLUSH, null, "")

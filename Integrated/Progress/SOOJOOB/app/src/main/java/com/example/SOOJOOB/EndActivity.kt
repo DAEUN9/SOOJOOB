@@ -56,22 +56,22 @@ open class EndActivity : AppCompatActivity() {
 
         val timeRecord = intent.getIntExtra("timeRecord",0)
         timeRecordText = findViewById(R.id.TimeRecord)
-        timeRecordText.text = "총 시간 " + "   ${timeRecord / 100}" + "\"" + "${timeRecord % 100}"
+        timeRecordText.text = "${timeRecord / 100}" + "\"" + "${timeRecord % 100}"
 
         val sumDistance = intent.getDoubleExtra("sumDistance", 0.0)
         sumDistanceText = findViewById(R.id.sumDistance)
-        sumDistanceText.text = "이동 거리 " + "    $sumDistance" + "m"
+        sumDistanceText.text = "$sumDistance"
 
 
         val trashCount = intent.getIntExtra("trashCount",0)
         trashCountText = findViewById(R.id.trashCount)
-        trashCountText.text = "$trashCount" + "곳이 깨끗해졌습니다."
+        trashCountText.text = "$trashCount"
 
         btn_camera = findViewById(R.id.btn_camera)
         iv_pre = findViewById(R.id.iv_pre)
         now = findViewById(R.id.now)
 
-//        val icon = BitmapFactory.decodeResource(getResources(), R.drawable.boy)
+//        val icon = BitmapFactory.decodeResource(getResources(), R.drawable.ic_map)
 //        iv_pre.setImageBitmap(icon)
         // 이미지 캡쳐 적용 (안됨 ㅠㅠ)
 //        val captureImage = intent?.getParcelableExtra<Bitmap>("captureImage")
@@ -82,7 +82,7 @@ open class EndActivity : AppCompatActivity() {
 
 
         val currentDateTime = Calendar.getInstance().time
-        val dateFormat = SimpleDateFormat("yyyy.MM.dd HH:mm:ss", Locale.KOREA).format(currentDateTime)
+        val dateFormat = SimpleDateFormat("yyyy.MM.dd HH:mm", Locale.KOREA).format(currentDateTime)
 
         now.text = dateFormat
 //        ploggingImg = encodeImage(icon)
