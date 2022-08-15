@@ -50,6 +50,7 @@
             android:exported="true">
         </activity>
         <activity android:name=".WeatherActivity"/>
+        <activity android:name=".ArticleDetailActivity"/>
         <activity
             android:name=".ArticleActivity"
             android:exported="true" />
