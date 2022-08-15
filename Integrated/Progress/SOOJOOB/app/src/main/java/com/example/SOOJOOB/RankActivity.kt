@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.SOOJOOB.databinding.ActivityRankBinding
 import com.example.SOOJOOB.retrofit.BadgeWork
 import com.example.SOOJOOB.retrofit.RankData
-import com.example.SOOJOOB.retrofit.UserData
 
 class RankActivity : AppCompatActivity() {
     private lateinit var recyler_view: RecyclerView
