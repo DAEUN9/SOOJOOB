@@ -151,7 +151,7 @@
             <Button
                 android:id="@+id/btn_pw"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="40dp"
                 android:layout_gravity="center"
                 android:layout_marginHorizontal="10dp"
                 android:layout_marginVertical="10dp"
@@ -245,7 +245,7 @@
                 android:layout_height="60dp"
                 android:layout_gravity="center"
                 android:layout_marginHorizontal="10dp"
-                android:layout_marginVertical="40dp"
+                android:layout_marginVertical="20dp"
                 android:background="@drawable/round_green"
                 android:text="@string/user_update"
                 android:textSize="18dp"
@@ -253,6 +253,14 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_user_delete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="회원 탈퇴"
+                android:textAllCaps="false" />
 
         </LinearLayout>
 
