@@ -440,7 +440,8 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
 //            addItems()
             trashBtn.isEnabled = false
             Handler().postDelayed({
-                trashBtn.isEnabled = true
+                if(isRunning)
+                    trashBtn.isEnabled = true
             }, 2000)
         }
 
@@ -535,8 +536,10 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
                 /** OPEN API GET */
                 toiletflag = true
                 toilet_button.isEnabled = false
+                toilet_button.setAlpha(100)
                 trashcanflag = false
                 trashcan_button.isEnabled = true
+                trashcan_button.setAlpha(255)
             }
         }
         // 쓰레기통
@@ -552,8 +555,10 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
                 /** OPEN API GET */
                 trashcanflag = true
                 trashcan_button.isEnabled = false
+                trashcan_button.setAlpha(100)
                 toiletflag = false
                 toilet_button.isEnabled = true
+                toilet_button.setAlpha(255)
             }
         }
 
