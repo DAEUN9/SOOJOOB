@@ -78,4 +78,8 @@ object RetrofitAPI {
     val passwordService: PasswordService by lazy {
         retrofit().create(PasswordService::class.java)
     }
+
+    val userDeleteService: UserDeleteService by lazy {
+        retrofit().create(UserDeleteService::class.java)
+    }
 }
