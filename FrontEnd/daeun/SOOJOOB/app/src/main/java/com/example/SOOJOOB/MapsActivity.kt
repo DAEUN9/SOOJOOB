@@ -19,12 +19,15 @@ import com.google.android.gms.maps.SupportMapFragment
 //import org.jetbrains.anko.yesButton
 import android.Manifest
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.graphics.Color
+import android.location.Geocoder
 import android.os.Handler
 import android.os.SystemClock
 import android.speech.tts.TextToSpeech
+import android.util.Log
 import android.view.WindowManager
 import android.widget.Button
 import android.widget.ImageView
@@ -33,7 +36,14 @@ import android.widget.Toast
 import com.google.android.gms.maps.model.*
 import com.google.maps.android.clustering.ClusterItem
 import com.google.maps.android.clustering.ClusterManager
+import com.google.maps.android.clustering.view.DefaultClusterRenderer
+import com.gun0912.tedpermission.provider.TedPermissionProvider
+import org.json.JSONArray
+import org.json.JSONObject
+import java.io.BufferedReader
+import java.io.InputStreamReader
 import java.lang.Math.*
+import java.net.URL
 import java.util.*
 import kotlin.concurrent.timer
 import kotlin.math.pow
@@ -59,21 +69,28 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
     private lateinit var secText: TextView
     private lateinit var milliText: TextView
     private lateinit var trashCountText: TextView
+    private lateinit var distanceText: TextView
     private lateinit var startBtn: Button
     private lateinit var resetBtn: Button
     private lateinit var trashBtn: Button
     private lateinit var end_button: Button
     // 캡쳐
     private lateinit var capture_button: Button
-
+    // 마커
+    private lateinit var marker: Marker
+    // 클러스팅
+    private lateinit var toilet_button: ImageView
+    private lateinit var trashcan_button: ImageView
+    // 시작 위치
+    private lateinit var start_latLng : LatLng
     // 현재 위치
     private lateinit var latLng : LatLng
     // 폴리라인 포지션 끝맞춤
-    private var longClickFlag = false
+    private var endClickFlag = false
     private lateinit var min_latLng : LatLng
     private lateinit var max_latLng : LatLng
     // 이동경로를 그릴 선 설정 (10f, MAGENTA)
-    private var polyLineOptions=PolylineOptions().width(10f).color(Color.MAGENTA)
+    private var polyLineOptions=PolylineOptions().width(10f).color(Color.LTGRAY)
     private lateinit var mMap: GoogleMap // 마커, 카메라 지정을 위한 구글 맵 객체
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient // 위치 요청 메소드 담고 있는 객체
     private lateinit var locationRequest:LocationRequest // 위치 요청할 때 넘겨주는 데이터에 관한 객체
@@ -83,39 +100,71 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
     private lateinit var capture_imageView : ImageView
     // 지도 클러스터
     private lateinit var clusterManager: ClusterManager<MyItem>
+    private lateinit var clusterRenderer: ClusterRenderer
+    // tts
     private var tts: TextToSpeech? = null
 
     /** 지도 클러스터 시작*/
-    inner class MyItem(
-        lat: Double,
-        lng: Double,
-        title: String,
-        snippet: String
-    ) : ClusterItem {
+//    inner class MyItem(
+//        lat: Double,
+//        lng: Double,
+//        title: String,
+//        snippet: String
+//    ) : ClusterItem {
+//
+//        private val position: LatLng
+//        private val title: String
+//        private val snippet: String
+//
+//        override fun getPosition(): LatLng {
+//            return position
+//        }
+//        override fun getTitle(): String? {
+//            return title
+//        }
+//        override fun getSnippet(): String? {
+//            return snippet
+//        }
+//        init {
+//            position = LatLng(lat, lng)
+//            this.title = title
+//            this.snippet = snippet
+//        }
+//
+//    }
+    // 클러스터링 기능은 알고리즘, 렌더러 이렇게 두 가지로 나눠져있습니다.
+    // ClusterManager의 setAlgorithm과 setRenderer 메서드로 커스텀 클래스를 등록할 수 있습니다.
+    // DefaultClusterRenderer과 NonHierarchicalDistanceBasedAlgorithm을 사용할 수도 있습니다.
+    class MyItem(private val position: LatLng, private val title: String, private val snippet: String, private val icon: BitmapDescriptor) : ClusterItem {
 
-        private val position: LatLng
-        private val title: String
-        private val snippet: String
+        override fun getSnippet(): String = snippet
 
-        override fun getPosition(): LatLng {
-            return position
-        }
-        override fun getTitle(): String? {
-            return title
-        }
-        override fun getSnippet(): String? {
-            return snippet
-        }
+        override fun getTitle(): String = title
+
+        override fun getPosition(): LatLng = position
+
+        fun getIcon(): BitmapDescriptor = icon
+    }
+
+    // ClusterManager 클래스의 렌더러를 자신으로 초기화해주고, 클러스터 아이템이 랜더링 되기 전에 호출되는 함수인 onBeforeClusterItemRendered 함수에서 마커의 아이콘을 지정해줍니다.
+    class ClusterRenderer(context: Context?, map: GoogleMap?, clusterManager: ClusterManager<MyItem>?): DefaultClusterRenderer<MyItem>(context, map, clusterManager) {
+
         init {
-            position = LatLng(lat, lng)
-            this.title = title
-            this.snippet = snippet
+            clusterManager?.renderer = this
+        }
+
+        override fun onBeforeClusterItemRendered(item: MyItem, markerOptions: MarkerOptions) {
+
+            markerOptions?.icon(item?.getIcon())
+            markerOptions?.visible(true)
         }
     }
 
-    private fun setUpClusterer() {
+    private fun setUpClusterer(){
         clusterManager = ClusterManager(this, mMap)
+        clusterRenderer = ClusterRenderer(this, mMap, clusterManager)
 
+        // OnCameraChangeListener로 ClusterManager를 지정해줘야 클러스터링이 실행
         mMap.setOnCameraIdleListener(clusterManager)
         mMap.setOnMarkerClickListener(clusterManager)
 
@@ -124,10 +173,9 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
     }
 
     private fun addItems() {
-        val offsetItem = MyItem(latLng.latitude, latLng.longitude, "Trash", " ${trashCount}")
+//        val offsetItem = MyItem(latLng.latitude, latLng.longitude, "Trash", " ${trashCount}")
 //        mMap.addMarker(MarkerOptions().position(latLng).icon(BitmapDescriptorFactory.fromResource(R.drawable.boy_map)))
 //        clusterManager.addItem(offsetItem)
-
     }
     /** 지도 클러스터 종료*/
 
@@ -167,7 +215,7 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
 //                val latLng=LatLng(latitude,longitude)
                 latLng=LatLng(latitude,longitude)
 //                // 카메라를 이동한다.(이동할 위치,줌 수치)
-                if(!longClickFlag) {
+                if(!endClickFlag) {
                     mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 20f))
                 }
                 // **********************************한훈 참고용 시작*************************************
@@ -205,9 +253,6 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
 //                    println(latLng)
 //                    println(polyLineOptions)
 //                }
-
-                // 클러스터 설정
-//                setUpClusterer()
             }
         }
     }
@@ -269,6 +314,10 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
                 println("좌표 사이 거리 : " + dis + "m")
                 sumDistance += dis
                 println("총 이동 거리 :" + sumDistance)
+                // UI조작을 위한 메서드
+                runOnUiThread {
+                    distanceText.text = "${sumDistance}"
+                }
 
 
                 // 마커를 추가한다.
@@ -317,65 +366,43 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
         milliText = findViewById(R.id.milliText)
         startBtn = findViewById(R.id.startBtn)
         trashBtn = findViewById(R.id.trashBtn)
+        trashBtn.isEnabled = false
+        end_button = findViewById(R.id.end_button)
+        end_button.isEnabled = false
         trashCountText = findViewById(R.id.trashCountText)
+        distanceText = findViewById(R.id.distance)
 //        lap_Layout = findViewById(R.id.lap_Layout)
 //        resetBtn = findViewById(R.id.resetBtn)
         tts = TextToSpeech(this, this)
         //버튼 클릭 리스너
         var startflag = false
-        longClickFlag = false
+        endClickFlag = false
         startBtn.setOnClickListener {
+            // 시작시에만 실행
             if(!startflag) {
-                //                mMap.addMarker(MarkerOptions().position(latLng).title("Changed Location"))
-                mMap.addMarker(MarkerOptions().position(latLng).icon(BitmapDescriptorFactory.fromResource(R.drawable.boy_map)))
-                startflag = true
+                // 틀자마자 바로 누르면 현재위치 오류가 뜨므로 보정
+                Handler().postDelayed({
+                    //                mMap.addMarker(MarkerOptions().position(latLng).title("Changed Location"))
+                    start_latLng = LatLng(latLng.latitude-0.000023, latLng.longitude)
+                    mMap.addMarker(MarkerOptions().position(start_latLng).icon(BitmapDescriptorFactory.fromResource(R.drawable.boy_map)))
+                    startflag = true
+                    trashBtn.isEnabled = true
+                }, 500)
 
                 /** 3번 터치 야매로 고침 (고치자...) */
                 start()
                 pause()
             }
             isRunning = !isRunning
-            if (isRunning)
+            if (isRunning) {
+                endClickFlag = false
+                end_button.isEnabled = false
                 start()
-            else {
-                // 사용자에게 종료하는 방법 알려주기
-                Toast.makeText(this,"버튼을 꾹~ 눌러 종료하세요!", Toast.LENGTH_SHORT).show()
-                longClickFlag = true
+            } else {
+                endClickFlag = true
+                end_button.isEnabled = true
                 pause()
             }
-        }
-        startBtn.setOnLongClickListener {
-            if(!isRunning && longClickFlag){
-                startBtn.text ="완료"
-                startBtn.isEnabled = false
-                trashBtn.isEnabled = false
-
-                // 폴리라인 끝에 맞춰 영역 내에 카메라 중심 맞추기
-//                val result_position = LatLngBounds(min_latLng, max_latLng)
-                val result_position = LatLngBounds(min_latLng, max_latLng)
-                println("min_latLng :" + min_latLng)
-                println("max_latLng :" + max_latLng)
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(result_position.center, 20f))
-//                mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(result_position, 30))
-
-                Handler().postDelayed({
-                    // 구글맵 스크린샷
-                    mMap.snapshot{
-                        it?.let{
-                            capture_imageView.setImageBitmap(it)
-                            println("googlemap screenshot: " + it)
-                        }
-                    }
-                    // 현위치 삭제
-                    mMap.isMyLocationEnabled = false
-                    Handler().postDelayed({
-                        // 모두 정지
-                        end_button.isEnabled = true
-                        onStop()
-                    }, 500)
-                }, 1000)
-            }
-            return@setOnLongClickListener(true)
         }
 //        resetBtn.setOnClickListener {
 //            reset()
@@ -390,7 +417,12 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
             println(trashCount)
             // 줍깅 마칭
             //            mMap.addMarker(MarkerOptions().position(latLng).title("Changed Location"))
-            mMap.addMarker(MarkerOptions().position(latLng).icon(BitmapDescriptorFactory.fromResource(R.drawable.flower)))
+            // 동기화 시간에 의해 다른 위치에 마커가 찍히는 현상 보정
+            Handler().postDelayed({
+                mMap.addMarker(MarkerOptions().position(LatLng(latLng.latitude-0.000023, latLng.longitude)).icon(BitmapDescriptorFactory.fromResource(R.drawable.flower)))
+                // 플로깅하다보면 Boy 이미지가 사라지는 현상 보정
+                mMap.addMarker(MarkerOptions().position(start_latLng).icon(BitmapDescriptorFactory.fromResource(R.drawable.boy_map)))
+            }, 500)
 //            addItems()
             trashBtn.isEnabled = false
             Handler().postDelayed({
@@ -398,32 +430,60 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
             }, 2000)
         }
 
-        end_button = findViewById(R.id.end_button)
-        end_button.isEnabled = false
-
         val endIntent = Intent(this, EndActivity::class.java) // 인텐트를 생성
 
         end_button.setOnClickListener { // 버튼 클릭시 할 행동
-            if(longClickFlag) {
+            // 사용자에게 종료하는 방법 알려주기
+            Toast.makeText(this,"버튼을 꾹~ 눌러 종료하세요!", Toast.LENGTH_SHORT).show()
+        }
+        end_button.setOnLongClickListener { // 버튼 클릭시 할 행동
+            if(endClickFlag) {
                 endTTS()
                 pause()
                 endIntent.putExtra("timeRecord", time)
                 endIntent.putExtra("sumDistance", sumDistance)
                 endIntent.putExtra("trashCount", trashCount)
 
-                // 구글맵 스크린샷 (BitMap 형식)
-                mMap.snapshot {
-                    it?.let {
-                        endIntent.putExtra("captureImage", it)
-                        println("googlemap screenshot: " + it)
+                // 폴리라인 끝에 맞춰 영역 내에 카메라 중심 맞추기
+//                val result_position = LatLngBounds(min_latLng, max_latLng)
+                val result_position = LatLngBounds(min_latLng, max_latLng)
+                println("min_latLng :" + min_latLng)
+                println("max_latLng :" + max_latLng)
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(result_position.center, 20f))
+//                mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(result_position, 30))
+                
+                // 플로깅 마무리 마킹
+                mMap.addMarker(MarkerOptions().position(latLng).icon(BitmapDescriptorFactory.fromResource(R.drawable.trophy)))
+
+                Handler().postDelayed({
+                    // 구글맵 스크린샷 (BitMap 형식)
+                    mMap.snapshot{
+                        it?.let{
+                            // 캡쳐 이미지 반영
+                            capture_imageView.setImageBitmap(it)
+                            // 캡쳐 이미지 Intent로 넘김
+                            endIntent.putExtra("captureImage", it)
+                            println("googlemap screenshot: " + it)
+                        }
                     }
-                }
-                endIntent.putExtra("captureImageTest", R.drawable.boy)
+                    // 현위치 삭제
+                    mMap.isMyLocationEnabled = false
+                    Handler().postDelayed({
+                        // 모두 정지
+                        end_button.isEnabled = true
+                        onStop()
+                        /** 결과확인 떄 임시 사용 */
+                        startBtn.isEnabled = false
+                        trashBtn.isEnabled = false
+                    }, 500)
+                }, 1000)
+                // 테스트용임 없애도 됨
+                endIntent.putExtra("captureImageTest", R.drawable.ic_trash)
 
                 startActivity(endIntent)  // 화면 전환하기
                 finish()
-//                onDestroy()
             }
+            return@setOnLongClickListener(true)
         }
         capture_imageView = findViewById(R.id.capture_imageView)
         capture_button = findViewById(R.id.capture_button)
@@ -437,9 +497,51 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
                 }
             }
         }
+
+        // 화장실
+        toilet_button = findViewById(R.id.toilet_button)
+        var toiletflag = false
+        // 쓰레기통
+        trashcan_button = findViewById(R.id.trashcan_button)
+        var trashcanflag = false
+
+        // 화장실
+        toilet_button.setOnClickListener { // 버튼 클릭시 할 행동
+            if (!toiletflag){
+                // 클러스터 초기화
+                clusterManager.clearItems()
+                /** OPEN API GET */
+                // 쓰레드 생성
+                val thread = toiletNetworkThread()
+                thread.start()
+                thread.join()
+                /** OPEN API GET */
+                toiletflag = true
+                toilet_button.isEnabled = false
+                trashcanflag = false
+                trashcan_button.isEnabled = true
+            }
+        }
+        // 쓰레기통
+        trashcan_button.setOnClickListener { // 버튼 클릭시 할 행동
+            if(!trashcanflag) {
+                // 클러스터 초기화
+                clusterManager.clearItems()
+                /** OPEN API GET */
+                // 쓰레드 생성
+                val thread = trashcanNetworkThread()
+                thread.start()
+                thread.join()
+                /** OPEN API GET */
+                trashcanflag = true
+                trashcan_button.isEnabled = false
+                toiletflag = false
+                toilet_button.isEnabled = true
+            }
+        }
+
+        distanceText.text = sumDistance.toString()
     }
-
-
 
     // 프로그램이 켜졌을 때만 위치 정보를 요청한다
     override fun onResume(){
@@ -545,6 +647,8 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
 //        // 사용자가 내 위치의 파란색 점을 클릭하면 앱이 GoogleMap.OnMyLocationClickListener에서 onMyLocationClick() 콜백을 수신
         googleMap.setOnMyLocationClickListener(this)
         // **********************************한훈 참고용 완료*************************************
+        // 클러스터 설정
+        setUpClusterer()
     }
 
 
@@ -617,7 +721,7 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
             sumTime = "$min" + " : " + "$sec" + "\"" + "$milli"
             // UI조작을 위한 메서드
             runOnUiThread {
-                secText.text = "$min" + ":" + "$sec" + "\""
+                secText.text = "$min" + ":" + "$sec"
                 milliText.text = "$milli"
             }
         }
@@ -747,4 +851,191 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
 
         super.onDestroy()
     }
+
+    /** 주소변환!!! */
+    //위도 경도로 주소 구하는 Reverse-GeoCoding
+    private fun getAddress(position: LatLng): String {
+        val geoCoder = Geocoder(TedPermissionProvider.context, Locale.KOREA)
+        var addr = "주소 오류"
+
+        //GRPC 오류? try catch 문으로 오류 대처
+        try {
+            addr = geoCoder.getFromLocation(position.latitude, position.longitude, 1).first().getAddressLine(0)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        return addr
+    }
+    //주소로 위도,경도 구하는 GeoCoding
+    private fun getLatLng(address:String) : LatLng{
+        val geoCoder = Geocoder(TedPermissionProvider.context, Locale.KOREA)   // Geocoder 로 자기 나라에 맞게 설정
+        val list = geoCoder.getFromLocationName(address, 3)
+
+        var location = LatLng(37.554891, 126.970814)     //임시 서울역
+
+        if(list != null){
+            if (list.size ==0){
+                Log.d("GeoCoding", "해당 주소로 찾는 위도 경도가 없습니다. 올바른 주소를 입력해주세요.")
+            }else{
+                val addressLatLng = list[0]
+                location = LatLng(addressLatLng.latitude, addressLatLng.longitude)
+                return location
+            }
+        }
+
+        return location
+    }
+
+    /** 대구광역시 서구 쓰레기통 설치 현황 API */
+    // 네트워크를 이용할 때는 쓰레드를 사용해서 접근해야 함
+    inner class trashcanNetworkThread: Thread(){
+        override fun run() {
+            // API 정보를 가지고 있는 주소
+//            val site = "https://api.odcloud.kr/api/15041577/v1/uddi:cb541318-d90b-4bb3-be27-db9c32fa47ec?" + page + perPage + returnType + key
+//            val site = "https://api.odcloud.kr/api/15041577/v1/uddi:cb541318-d90b-4bb3-be27-db9c32fa47ec?page=1&perPage=20&returnType=JSON&serviceKey=Jz%2BuUFF4gp1POyXj63UYJAnHQF%2FeY0OjL9TVaZAeMgm3Bt1giHbDYGkgkatFrJc60gnz171syeDeMVhDCEBFSA%3D%3D"
+            val site = "http://i7d210.p.ssafy.io:8080/trashcan"
+            val url = URL(site)
+            val conn = url.openConnection()
+            val input = conn.getInputStream()
+            val isr = InputStreamReader(input)
+            // br: 라인 단위로 데이터를 읽어오기 위해서 만듦
+            val br = BufferedReader(isr)
+
+            // Json 문서는 일단 문자열로 데이터를 모두 읽어온 후, Json에 관련된 객체를 만들어서 데이터를 가져옴
+            var str: String? = null
+            val buf = StringBuffer()
+
+            do{
+                str = br.readLine()
+
+                if(str!=null){
+                    buf.append(str)
+                }
+            }while (str!=null)
+
+            // 전체가 객체로 묶여있기 때문에 객체형태로 가져옴
+            println("buf.toString(): " + buf.toString())
+//            val root = JSONObject(buf.toString())
+//            val response = root.getJSONObject("response").getJSONObject("body").getJSONObject("items")
+//            val item = response.getJSONArray("item") // 객체 안에 있는 item이라는 이름의 리스트를 가져옴
+            // 객체 안에 있는 data이라는 이름의 리스트를 가져옴
+            val item = JSONArray(buf.toString())
+
+            // 화면에 출력
+            runOnUiThread {
+                // 페이지 수만큼 반복하여 데이터를 불러온다.
+//                for(i in 0 until item.length()){
+                for(i in 0 until item.length()){
+                    // 쪽수 별로 데이터를 읽는다.
+                    val jObject = item.getJSONObject(i)
+                    println("jObject: " + jObject)
+
+                    // 주소를 통해 위도 경도 반환
+                    val tclatitude = JSON_Parse(jObject,"tclatitude")
+                    println("tclatitude: " + tclatitude)
+                    val tclongitude = JSON_Parse(jObject,"tclongitude")
+                    println("tclongitude: " + tclongitude)
+                    if(tclatitude != "" && tclongitude != "") {
+                        println("LatLng: " + LatLng(tclatitude.toDouble(), tclongitude.toDouble()))
+                        val tclocation = "위치 : ${JSON_Parse(jObject, "tclocation")}"
+                        println("tclocation: " + tclocation)
+                        // 쓰레기통 마커
+//                    mMap.addMarker(MarkerOptions().position(LatLng(tclatitude.toDouble(), tclongitude.toDouble())).title(tclocation))
+                        // 쓰레기통 클러스터
+                        val offsetItem = MyItem(
+                            LatLng(tclatitude.toDouble(),
+                                tclongitude.toDouble()),
+                            "대구광역시 쓰레기통",
+                            "${tclocation}",
+                            BitmapDescriptorFactory.fromResource(R.drawable.trashcan_marker)
+                        )
+                        clusterManager?.addItem(offsetItem)
+                    }
+                }
+            }
+        }
+    }
+    // 네트워크를 이용할 때는 쓰레드를 사용해서 접근해야 함
+    inner class toiletNetworkThread: Thread(){
+        override fun run() {
+            // API 정보를 가지고 있는 주소
+//            val site = "https://api.odcloud.kr/api/15041577/v1/uddi:cb541318-d90b-4bb3-be27-db9c32fa47ec?" + page + perPage + returnType + key
+//            val site = "https://api.odcloud.kr/api/15041577/v1/uddi:cb541318-d90b-4bb3-be27-db9c32fa47ec?page=1&perPage=20&returnType=JSON&serviceKey=Jz%2BuUFF4gp1POyXj63UYJAnHQF%2FeY0OjL9TVaZAeMgm3Bt1giHbDYGkgkatFrJc60gnz171syeDeMVhDCEBFSA%3D%3D"
+            val site = "http://i7d210.p.ssafy.io:8080/toilet"
+            val url = URL(site)
+            val conn = url.openConnection()
+            val input = conn.getInputStream()
+            val isr = InputStreamReader(input)
+            // br: 라인 단위로 데이터를 읽어오기 위해서 만듦
+            val br = BufferedReader(isr)
+
+            // Json 문서는 일단 문자열로 데이터를 모두 읽어온 후, Json에 관련된 객체를 만들어서 데이터를 가져옴
+            var str: String? = null
+            val buf = StringBuffer()
+
+            do{
+                str = br.readLine()
+
+                if(str!=null){
+                    buf.append(str)
+                }
+            }while (str!=null)
+
+            // 전체가 객체로 묶여있기 때문에 객체형태로 가져옴
+            println("buf.toString(): " + buf.toString())
+//            val root = JSONObject(buf.toString())
+//            val response = root.getJSONObject("response").getJSONObject("body").getJSONObject("items")
+//            val item = response.getJSONArray("item") // 객체 안에 있는 item이라는 이름의 리스트를 가져옴
+            // 객체 안에 있는 data이라는 이름의 리스트를 가져옴
+            val item = JSONArray(buf.toString())
+
+            // 화면에 출력
+            runOnUiThread {
+                // 페이지 수만큼 반복하여 데이터를 불러온다.
+//                for(i in 0 until item.length()){
+                for(i in 0 until item.length()){
+                    // 쪽수 별로 데이터를 읽는다.
+                    val jObject = item.getJSONObject(i)
+                    println("jObject: " + jObject)
+
+                    // 주소를 통해 위도 경도 반환
+                    val ptlatitude = JSON_Parse(jObject,"ptlatitude")
+                    println("ptlatitude: " + ptlatitude)
+                    val ptlongitude = JSON_Parse(jObject,"ptlongitude")
+                    println("ptlongitude: " + ptlongitude)
+                    if(ptlatitude != "" && ptlongitude != "") {
+                        println("LatLng: " + LatLng(ptlatitude.toDouble(), ptlongitude.toDouble()))
+                        val ptlocation = "위치 : ${JSON_Parse(jObject, "ptlocation")}"
+                        println("ptlocation: " + ptlocation)
+                        val ptoperatingtime = "운영시간: ${JSON_Parse(jObject,"ptoperatingtime")}"
+                        // 쓰레기통 마커
+//                    mMap.addMarker(MarkerOptions().position(LatLng(tclatitude.toDouble(), tclongitude.toDouble())).title(tclocation))
+                        // 쓰레기통 클러스터
+                        val offsetItem = MyItem(
+                            LatLng(ptlatitude.toDouble(),
+                                ptlongitude.toDouble()),
+                            "대구광역시 화장실",
+                            "${ptlocation}\n" +
+                                    "${ptoperatingtime}",
+                            BitmapDescriptorFactory.fromResource(R.drawable.toilet_marker)
+                        )
+                        clusterManager?.addItem(offsetItem)
+                    }
+                }
+            }
+        }
+    }
+    // 함수를 통해 데이터를 불러온다.
+    fun JSON_Parse(obj: JSONObject, data : String): String {
+
+        // 원하는 정보를 불러와 리턴받고 없는 정보는 캐치하여 "없습니다."로 리턴받는다.
+        return try {
+
+            obj.getString(data)
+
+        } catch (e: Exception) {
+            "없습니다."
+        }
+    }
+
 }

@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import com.example.SOOJOOB.BadgesActivity
 import com.example.SOOJOOB.MapsActivity
 import com.example.SOOJOOB.NoBadgeActivity
+import com.example.SOOJOOB.UserupdateActivity
 import com.example.SOOJOOB.databinding.FragmentMypageBinding
 import com.example.SOOJOOB.retrofit.BadgeWork
 import com.example.SOOJOOB.retrofit.UserWork
@@ -27,6 +28,7 @@ class MypageFragment : Fragment() {
         val binding = FragmentMypageBinding.inflate(inflater, container, false)
 
         fBinding = binding
+
         binding.badgeButton.setOnClickListener {
             val badgeWork = BadgeWork()
 
@@ -55,6 +57,11 @@ class MypageFragment : Fragment() {
             })
         }
 
+        binding.settingsButton.setOnClickListener {
+            val intent = Intent(activity, UserupdateActivity::class.java)
+            startActivity(intent)
+        }
+
         binding.nextMaps.setOnClickListener {
             val intent = Intent(activity, MapsActivity::class.java)
             startActivity(intent)
@@ -65,7 +72,7 @@ class MypageFragment : Fragment() {
 //        super.onDestroyView()
 
         val userWork = UserWork()
-        userWork.mywork(completion = { status, username, trash, exp, badge ->
+        userWork.work(completion = { status, username, trash, exp, badge ->
             if (status in 200..300) {
                 binding.mypageUsername.text = username
                 binding.mypageMiddleUsername.text = username

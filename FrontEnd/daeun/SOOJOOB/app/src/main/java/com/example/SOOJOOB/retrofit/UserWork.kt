@@ -6,7 +6,7 @@ import retrofit2.Call
 import retrofit2.Response
 
 class UserWork() {
-    fun work(completion : (statusCode:Int, username:String?, trash:Int?, exp:Double?) -> Unit) {
+    fun work(completion : (statusCode:Int, username:String?, trash:Int?, exp:Double?, badge:Int?) -> Unit) {
         val service = RetrofitAPI.userService
 
 
@@ -24,36 +24,7 @@ class UserWork() {
                         val username = response.body()?.data?.userRecord?.username
                         val trash = response.body()?.data?.totalTrashCount
                         val exp = response.body()?.data?.exp
-
-                        completion(response.code(), "$username", trash, exp)
-                    }
-                    else {
-                        Log.d("통신 실패", "$response")
-                    }
-                }
-
-                override fun onFailure(call: Call<UserResponseBody>, t: Throwable) {
-                    Log.d("응답 실패", t.message.toString())
-                }
-            })
-    }
-
-    fun mywork(completion : (statusCode:Int, username:String?, trash:Int?, exp:Double?, badge:Int?) -> Unit) {
-        val service = RetrofitAPI.userService
-
-        service.addUserByEnqueue()
-            .enqueue(object : retrofit2.Callback<UserResponseBody> {
-                override fun onResponse(
-                    call: Call<UserResponseBody>,
-                    response: Response<UserResponseBody>
-                ) {
-                    if (response.isSuccessful) {
-                        Log.d("통신 성공", "$response.body()")
-                        val username = response.body()?.data?.userRecord?.username
-                        val trash = response.body()?.data?.totalTrashCount
-                        val exp = response.body()?.data?.exp
                         val badge = response.body()?.data?.badgeCount
-
 
                         completion(response.code(), "$username", trash, exp, badge)
                     }

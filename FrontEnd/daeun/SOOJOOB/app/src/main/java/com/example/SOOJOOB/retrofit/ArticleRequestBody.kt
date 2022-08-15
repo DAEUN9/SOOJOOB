@@ -7,5 +7,8 @@ data class ArticleRequestBody(
     @SerializedName("title")
     val title: String?,
     @SerializedName("contents")
-    val contents: String?
-)
+    val contents: String?,
+    @SerializedName("articleImage")
+    val articleImage:String?,
+
+    )

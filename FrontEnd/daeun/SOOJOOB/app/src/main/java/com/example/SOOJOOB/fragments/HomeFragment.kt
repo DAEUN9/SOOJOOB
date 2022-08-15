@@ -45,6 +45,11 @@ class HomeFragment : Fragment() {
         fBinding = binding
 
 
+        binding.homeNotification.setOnClickListener {
+            val intent = Intent(activity, RankActivity::class.java)
+            startActivity(intent)
+        }
+
         binding.logout.setOnClickListener {
             LogoutWork().logout()
             val intent = Intent(activity, LoginActivity::class.java)
@@ -62,7 +67,7 @@ class HomeFragment : Fragment() {
 //        }
 
         val userWork = UserWork()
-        userWork.work(completion = { status, username, trash, exp ->
+        userWork.work(completion = { status, username, trash, exp, badge ->
             if (status in 200..300) {
                 binding.homeUsername.text = username
                 binding.homeTrash.text = trash.toString()
@@ -73,11 +78,11 @@ class HomeFragment : Fragment() {
 
         // 위치
         requestLocation(completion = {
-            temp, sky ->
+                temp, sky ->
             println("temp :" + temp)
             println("sky :" + sky)
             binding.todayWhere.text = Constants.ADDRESS
-            binding.todayTemp.text = temp+"℃"
+            binding.todayTemp.text = temp+"˚"
             binding.todayWeather.text = sky
         })
 
@@ -291,28 +296,28 @@ private fun requestLocation(completion: (Temp: String, Sky: String) -> Unit):Uni
 
 
 
-    // 강수 형태
-    fun getRainType(rainType : String) : String {
-        return when(rainType) {
-            "0" -> "없음"
-            "1" -> "비"
-            "2" -> "비/눈"
-            "3" -> "눈"
-            "4" -> "소나기"
-            "5" -> "빗방울"
-            "6" -> "빗방울/눈날림"
-            "7" -> "눈날림"
-            else -> "오류 rainType : " + rainType
-        }
+// 강수 형태
+fun getRainType(rainType : String) : String {
+    return when(rainType) {
+        "0" -> "없음"
+        "1" -> "비"
+        "2" -> "비/눈"
+        "3" -> "눈"
+        "4" -> "소나기"
+        "5" -> "빗방울"
+        "6" -> "빗방울/눈날림"
+        "7" -> "눈날림"
+        else -> "오류 rainType : " + rainType
     }
+}
 
-    // 하늘 상태
-    fun getSky(sky : String, rain : String) : String {
-        return when(sky) {
-            "1" -> "맑음"
-            "3" -> "구름 많음"
-            "4" -> "흐림"
-            else -> getRainType(rain)
-        }
+// 하늘 상태
+fun getSky(sky : String, rain : String) : String {
+    return when(sky) {
+        "1" -> "맑음"
+        "3" -> "구름많음"
+        "4" -> "흐림"
+        else -> getRainType(rain)
     }
+}
 

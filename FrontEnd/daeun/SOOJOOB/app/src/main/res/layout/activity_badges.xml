@@ -72,15 +72,15 @@
                             android:id="@+id/badge_count"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="5dp"
                             android:text="00"
                             android:textSize="13sp"
+                            android:textStyle="bold"
                             android:textColor="@color/greenTxt"/>
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text=" 개 있어요."
+                            android:text="개 있어요."
                             android:textSize="13sp"
                             android:textColor="@color/greenTxt"/>
 
@@ -107,7 +107,8 @@
                             android:layout_width="80dp"
                             android:layout_height="80dp"
                             android:scaleType="centerCrop"
-                            android:src="@drawable/boy" />
+
+                            android:src="@drawable/ic_bronze" />
 
                 </LinearLayout>
 
@@ -117,7 +118,7 @@
                     android:layout_height="match_parent"
                     android:paddingVertical="5dp"
                     android:gravity="center"
-                    android:text="배지 이름"
+                    android:text="뉴비가 나타났다"
                     android:textSize="18sp"
                     android:textColor="@color/greenTxt"
                     android:textStyle="bold"/>

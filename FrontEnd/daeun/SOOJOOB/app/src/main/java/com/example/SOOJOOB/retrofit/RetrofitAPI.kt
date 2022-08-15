@@ -14,7 +14,7 @@ import java.io.IOException
 object RetrofitAPI {
     // 로컬 주소 테스트
     // http://10.0.2.2:8080"
-    private const val BASE_URL = "http://i7d210.p.ssafy.io:8080/"
+    private const val BASE_URL = "http://10.0.2.2:8080"
 
     fun okHttpClient(interceptor : AppInterceptor): OkHttpClient {
         return OkHttpClient.Builder()
@@ -67,4 +67,11 @@ object RetrofitAPI {
         retrofit().create(ArticleService::class.java)
     }
 
+    val userinfoService: UserInfoService by lazy {
+        retrofit().create(UserInfoService::class.java)
+    }
+
+    val userupdateService: UserupdateService by lazy {
+        retrofit().create(UserupdateService::class.java)
+    }
 }

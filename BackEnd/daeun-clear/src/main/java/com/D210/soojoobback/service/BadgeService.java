@@ -105,6 +105,13 @@ public class BadgeService {
                     UserBadge userBadge = new UserBadge(user, badge);
                     userBadgeRepository.save(userBadge);
                     newBadges.add(b);
+                } else if (badge.getId() == 7L&&totalDistance>42195) {
+                    Integer badgeCount = record.getBadgeCount();
+                    record.setBadgeCount(badgeCount+1);
+                    BadgeListResDto b = new BadgeListResDto(badge);
+                    UserBadge userBadge = new UserBadge(user, badge);
+                    userBadgeRepository.save(userBadge);
+                    newBadges.add(b);
                 }
             }
         }
@@ -150,7 +157,35 @@ public class BadgeService {
                     newBadges.add(b);
                     Integer badgeCount = record.getBadgeCount();
                     record.setBadgeCount(badgeCount+1);
-                }
+                }else if (badge.getId() == 8L&&distance>=3000&&time<=750000) {
+                    Integer badgeCount = record.getBadgeCount();
+                    record.setBadgeCount(badgeCount+1);
+                    BadgeListResDto b = new BadgeListResDto(badge);
+                    UserBadge userBadge = new UserBadge(user, badge);
+                    userBadgeRepository.save(userBadge);
+                    newBadges.add(b);
+                } else if (badge.getId() == 9L&&180000<=time&&time<=240000) {
+                    Integer badgeCount = record.getBadgeCount();
+                    record.setBadgeCount(badgeCount+1);
+                    BadgeListResDto b = new BadgeListResDto(badge);
+                    UserBadge userBadge = new UserBadge(user, badge);
+                    userBadgeRepository.save(userBadge);
+                    newBadges.add(b);
+                } else if (badge.getId() == 10L&&trashCount==31) {
+                Integer badgeCount = record.getBadgeCount();
+                record.setBadgeCount(badgeCount+1);
+                BadgeListResDto b = new BadgeListResDto(badge);
+                UserBadge userBadge = new UserBadge(user, badge);
+                userBadgeRepository.save(userBadge);
+                newBadges.add(b);
+            } else if (badge.getId() == 11L&&distance==777&&trashCount==7) {
+                Integer badgeCount = record.getBadgeCount();
+                record.setBadgeCount(badgeCount+1);
+                BadgeListResDto b = new BadgeListResDto(badge);
+                UserBadge userBadge = new UserBadge(user, badge);
+                userBadgeRepository.save(userBadge);
+                newBadges.add(b);
+            }
             }
         }
         return newBadges;
