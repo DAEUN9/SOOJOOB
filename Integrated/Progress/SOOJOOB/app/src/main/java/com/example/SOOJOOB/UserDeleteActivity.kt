@@ -33,6 +33,7 @@ class UserDeleteActivity : AppCompatActivity() {
             deleteWork.work(completion = { status, msg ->
                 if (status in 200..300) {
                     Toast.makeText(this@UserDeleteActivity, "$msg", Toast.LENGTH_SHORT).show()
+                    App.prefs.setString("X-AUTH-TOKEN", "")
                     startActivity(intent)
                 } else {
                     val message = msg?.substring(25 until 37)
