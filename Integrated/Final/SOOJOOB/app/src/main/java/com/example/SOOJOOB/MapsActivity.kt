@@ -476,7 +476,7 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
                 // 동기화 시간에 의해 다른 위치에 마커가 찍히는 현상 보정
 //                Handler().postDelayed({
                 // 플로깅 마무리 마킹
-                mMap.addMarker(MarkerOptions().position(latLng).icon(BitmapDescriptorFactory.fromResource(R.drawable.trophy)))
+                mMap.addMarker(MarkerOptions().position(latLng).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_winner)))
 //                }, 200)
 
                 // 현위치 삭제

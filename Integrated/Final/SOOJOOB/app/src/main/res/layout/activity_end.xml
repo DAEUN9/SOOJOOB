@@ -54,7 +54,7 @@
                     android:layout_height="wrap_content"
                     android:text="0.0"
                     android:textColor="@color/greenTxt"
-                    android:textSize="50sp"
+                    android:textSize="48sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -80,7 +80,7 @@
                     android:layout_height="wrap_content"
                     android:text='0:0'
                     android:textColor="@color/greenTxt"
-                    android:textSize="50sp"
+                    android:textSize="48sp"
                     android:textStyle="bold" />
 
                 <TextView
