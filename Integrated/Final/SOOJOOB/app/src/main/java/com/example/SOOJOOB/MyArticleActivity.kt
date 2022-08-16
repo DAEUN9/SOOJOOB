@@ -4,6 +4,7 @@ package com.example.SOOJOOB
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
@@ -17,6 +18,10 @@ import retrofit2.Response
 
 class MyArticleActivity : AppCompatActivity() {
     private lateinit var recyler_view: RecyclerView
+    ////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////
+    private lateinit var lastestBtn: Button
+    private lateinit var pastBtn: Button
     private  var userId = 1
 
 //    private lateinit var binding: ActivityArticleBinding
@@ -32,9 +37,25 @@ class MyArticleActivity : AppCompatActivity() {
                     response: Response<ArticleGetResponseBody>
                 ) {
                     if (response.isSuccessful) {
-                        val result = response.body()
+                        val result = response.body()?.result?.reversed()
                         result?.let {
-                            it.result?.reversed()?.let { it1 -> setAdapter(it1) }
+                            it.let { it1 -> setAdapter(it1) }
+                        }
+
+                        ////////////////////////////////////////////////////
+                        /////////////////////////////////////////////////////
+                        lastestBtn.setOnClickListener {
+                            val lastest = response.body()?.result?.reversed()
+                            lastest?.let {
+                                it.let{it1 -> setAdapter(it1)}
+                            }
+                        }
+
+                        pastBtn.setOnClickListener {
+                            val past = response.body()?.result
+                            past?.let {
+                                it.let{it1 -> setAdapter(it1)}
+                            }
                         }
                     }
                 }
@@ -53,8 +74,13 @@ class MyArticleActivity : AppCompatActivity() {
 
         recyler_view = findViewById(R.id.recyler_view)
 
+        lastestBtn = findViewById(R.id.lastestSort)
+        pastBtn = findViewById(R.id.pastSort)
+
+
         this.work()
         println("게시판 데이터 get 호출!!")
+
 
 
         binding.backMypage.setOnClickListener{
@@ -63,6 +89,7 @@ class MyArticleActivity : AppCompatActivity() {
 
 
     }
+
 
     private fun setAdapter(ArticleList: List<Article>) {
         val mAdapter = ArticleAdapter(ArticleList)
