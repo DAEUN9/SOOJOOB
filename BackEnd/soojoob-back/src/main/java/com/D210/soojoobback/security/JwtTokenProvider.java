@@ -27,8 +27,7 @@ public class JwtTokenProvider {
     @Value("${jwt.token.key}")
     private String secretKey;
 
-    // 토큰 유효시간 30분
-    //////// FrontEnd와 약속해서 일치시켜야 하는 부분 /////////
+    // 토큰 유효시간
     private long tokenValidTime = 240 * 60 * 1000L;
 
     private final UserDetailsService userDetailsService;
