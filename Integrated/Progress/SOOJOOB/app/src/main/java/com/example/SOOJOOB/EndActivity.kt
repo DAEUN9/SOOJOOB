@@ -3,10 +3,12 @@ package com.example.SOOJOOB
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
@@ -49,6 +51,9 @@ open class EndActivity : AppCompatActivity() {
     // Noti 객체 생성
     private lateinit var notificationHelper: NotificationHelper
 
+    // 공유하기 버튼
+    private lateinit var shareBtn:Button
+
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,7 +61,10 @@ open class EndActivity : AppCompatActivity() {
 
         val timeRecord = intent.getIntExtra("timeRecord",0)
         timeRecordText = findViewById(R.id.TimeRecord)
-        timeRecordText.text = "${timeRecord / 100}" + "\"" + "${timeRecord % 100}"
+        val second = timeRecord.div(100)
+        val minute = second.div(60)
+        val second2 = second.rem(60)
+        timeRecordText.text = "${minute}분 ${second2}초"
 
         val sumDistance = intent.getDoubleExtra("sumDistance", 0.0)
         sumDistanceText = findViewById(R.id.sumDistance)
@@ -93,6 +101,13 @@ open class EndActivity : AppCompatActivity() {
             imgCount ++
             ploggingImg = encodeImage(bitmap)
             println(ploggingImg.length)
+
+            val intent = Intent(android.content.Intent.ACTION_SEND)
+            val uri: Uri? = getImageUri(this, bitmap)
+            intent.setType("image/*")
+            intent.putExtra(Intent.EXTRA_STREAM, uri)
+            val chooser = Intent.createChooser(intent, "친구에게 공유하기")
+            startActivity(chooser)
         }
 
         val captureImage = intent.getByteArrayExtra("capture")
@@ -308,4 +323,15 @@ open class EndActivity : AppCompatActivity() {
     }
 
 
+    private fun getImageUri(context: Context, inImage: Bitmap): Uri? {
+        val bytes = ByteArrayOutputStream()
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
+        val path: String = MediaStore.Images.Media.insertImage(
+            context.getContentResolver(),
+            inImage,
+            "Title",
+            null
+        )
+        return Uri.parse(path)
+    }
 }
