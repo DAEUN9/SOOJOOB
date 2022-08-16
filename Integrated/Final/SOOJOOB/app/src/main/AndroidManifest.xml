@@ -31,7 +31,7 @@
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyAS9cn9ixRM5oW2ODVy9UY5aYJbQBe273g"/>
+            android:value="${google_map_key}"/>
         <activity
             android:name=".RankActivity"
             android:exported="false" />
