@@ -112,6 +112,7 @@ open class EndActivity : AppCompatActivity() {
 
         val captureImage = intent.getByteArrayExtra("capture")
         val captureBitmap = captureImage?.toBitmap()
+        bitmap = captureBitmap!!
         ploggingImg = captureBitmap?.let { encodeImage(it) }.toString()
         iv_pre.setImageBitmap(captureImage?.toBitmap())
 
