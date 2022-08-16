@@ -13,7 +13,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.SOOJOOB.fragments.CommunityFragment
-import java.io.ByteArrayOutputStream
 
 class ArticleAdapter(val articleList: List<Article>) :
     RecyclerView.Adapter<ArticleAdapter.ViewHolder>() {
@@ -50,13 +49,6 @@ class ArticleAdapter(val articleList: List<Article>) :
             }
         }
 
-        fun encodeImage(bm: Bitmap?):ByteArray {
-            val baos = ByteArrayOutputStream()
-            bm?.compress(Bitmap.CompressFormat.PNG, 10, baos)
-            val b = baos.toByteArray()
-            return b
-        }
-
         @SuppressLint("SetTextI18n")
         fun bind(itemArticle : Article?){
 
@@ -65,18 +57,9 @@ class ArticleAdapter(val articleList: List<Article>) :
             createdDate?.text = itemArticle?.createdDate
             userName?.text = itemArticle?.userName
             articleImage?.setImageBitmap(itemArticle?.articleImage?.toBitmap())
-            val ba = encodeImage(itemArticle?.articleImage?.toBitmap())
             itemView.setOnClickListener {
                 val intent = Intent(itemView.context, ArticleDetailActivity::class.java)
-
-                //intent.putExtra("data", itemArticle)
-                intent.putExtra("title", itemArticle?.title.toString())
-
-                intent.putExtra("contents", itemArticle?.contents.toString())
-                intent.putExtra("createdDate", itemArticle?.createdDate)
-                intent.putExtra("userName", itemArticle?.userName)
-                intent.putExtra("articleImage", ba)
-
+                intent.putExtra("data", itemArticle)
                 intent.run { itemView.context.startActivity(this) }
             }
         }

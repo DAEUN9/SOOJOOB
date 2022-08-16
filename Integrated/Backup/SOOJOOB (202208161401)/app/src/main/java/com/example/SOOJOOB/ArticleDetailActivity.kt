@@ -28,17 +28,12 @@ class ArticleDetailActivity : AppCompatActivity() {
 
         println("게시글 상세 보기")
 
-        val ti = intent.getStringExtra("title")
-        val co = intent.getStringExtra("contents")
-        val cd = intent.getStringExtra("createdDate")
-        val uN = intent.getStringExtra("userName")
-        val im = intent.getByteArrayExtra("articleImage")
-
-        binding.title.text = ti.toString()
-        binding.contents.text = co.toString()
-        binding.createdDate.text = cd.toString()
-        binding.userName.text = uN.toString()
-        binding.image.setImageBitmap(im?.toBitmap())
+        val data = intent.getParcelableExtra<Article>("data")
+        binding.title.text = data!!.title
+        binding.contents.text = data.contents
+        binding.createdDate.text = data.createdDate
+        binding.userName.text = data.userName
+        binding.image.setImageBitmap(data.articleImage?.toBitmap())
 
         binding.backtolist.setOnClickListener{
             super.onBackPressed()
@@ -51,11 +46,5 @@ class ArticleDetailActivity : AppCompatActivity() {
             return BitmapFactory.decodeByteArray(this,0,size)
         }
     }
-
-    fun ByteArray.toBitmap():Bitmap{
-        return BitmapFactory.decodeByteArray(this,0,size)
-    }
 }
-
-
 
