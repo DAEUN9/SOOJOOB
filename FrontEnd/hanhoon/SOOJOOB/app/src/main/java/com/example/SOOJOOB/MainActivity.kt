@@ -54,7 +54,7 @@ class MainActivity : AppCompatActivity() {
     override fun onResume(){
         super.onResume()
         // 사용자에게 gps키라고 알리기
-        Toast.makeText(this,"이 앱은 GPS(위치)를 켜야 이용 가능합니다!", Toast.LENGTH_SHORT).show()
+//        Toast.makeText(this,"이용을 위해 위치 권한을 허용해 주세요.", Toast.LENGTH_SHORT).show()
         // '앱이 gps사용'에 대한 권한이 있는지 체크
 //        // 거부됐으면 showPermissionInfoDialog(알림)메소드를 호출, 승인됐으면 addLocationListener(위치 요청)메소드를 호출
         permissionCheck(cancel={showPermissionInfoDialog()},

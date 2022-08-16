@@ -78,7 +78,7 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
     private lateinit var trashBtn: ImageView
     private lateinit var end_button: ImageView
     // 캡쳐
-    private lateinit var capture_button: Button
+//    private lateinit var capture_button: Button
     // 마커
     private lateinit var marker: Marker
     // 음소거
@@ -222,7 +222,14 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
                 latLng=LatLng(latitude,longitude)
 //                // 카메라를 이동한다.(이동할 위치,줌 수치)
                 if(!endClickFlag) {
-                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 20f))
+                    // 현재 위치에 맞춰 카메라 중심 맞추기
+//                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 20f))
+                    // 폴리라인 끝에 맞춰 영역 내에 카메라 중심 맞추기
+                    val result_position = LatLngBounds(min_latLng, max_latLng)
+                    println("min_latLng :" + min_latLng)
+                    println("max_latLng :" + max_latLng)
+//                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(result_position.center, 20f))
+                    mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(result_position, 30))
                 }
                 // **********************************한훈 참고용 시작*************************************
                 // 확대/축소 : 1-세계, 5-대륙, 10-도시, 15-거리, 20-건물
@@ -373,8 +380,10 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
         startBtn = findViewById(R.id.startBtn)
         trashBtn = findViewById(R.id.trashBtn)
         trashBtn.isEnabled = false
+        trashBtn.setAlpha(100)
         end_button = findViewById(R.id.end_button)
         end_button.isEnabled = false
+        end_button.setAlpha(100)
         trashCountText = findViewById(R.id.trashCountText)
         distanceText = findViewById(R.id.distance)
 //        lap_Layout = findViewById(R.id.lap_Layout)
@@ -393,6 +402,7 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
                     mMap.addMarker(MarkerOptions().position(start_latLng).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_heart)))
                     startflag = true
                     trashBtn.isEnabled = true
+                    trashBtn.setAlpha(255)
                 }, 500)
 
                 /** 3번 터치 야매로 고침 (고치자...) */
@@ -436,12 +446,15 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
                 mMap.addMarker(MarkerOptions().position(LatLng(latLng.latitude-0.000023, latLng.longitude)).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_flower)))
                 // 플로깅하다보면 Boy 이미지가 사라지는 현상 보정
                 mMap.addMarker(MarkerOptions().position(start_latLng).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_heart)))
-            }, 500)
+            }, 300)
 //            addItems()
             trashBtn.isEnabled = false
+            trashBtn.setAlpha(100)
             Handler().postDelayed({
-                if(isRunning)
+                if(isRunning) {
                     trashBtn.isEnabled = true
+                    trashBtn.setAlpha(255)
+                }
             }, 2000)
         }
 
@@ -460,61 +473,54 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
                 endIntent.putExtra("sumDistance", sumDistance)
                 endIntent.putExtra("trashCount", trashCount)
 
-                // 폴리라인 끝에 맞춰 영역 내에 카메라 중심 맞추기
-//                val result_position = LatLngBounds(min_latLng, max_latLng)
-                val result_position = LatLngBounds(min_latLng, max_latLng)
-                println("min_latLng :" + min_latLng)
-                println("max_latLng :" + max_latLng)
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(result_position.center, 20f))
-//                mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(result_position, 30))
-
+                // 동기화 시간에 의해 다른 위치에 마커가 찍히는 현상 보정
+//                Handler().postDelayed({
                 // 플로깅 마무리 마킹
                 mMap.addMarker(MarkerOptions().position(latLng).icon(BitmapDescriptorFactory.fromResource(R.drawable.trophy)))
+//                }, 200)
 
-                Handler().postDelayed({
-                    // 구글맵 스크린샷 (BitMap 형식)
-                    mMap.snapshot{
-                        it?.let{
-                            // 캡쳐 이미지 반영
-                            encodeImage(it)
-                            endIntent.putExtra("capture",encodeImage(it))
-                            capture_imageView.setImageBitmap(it)
-                            println("googlemap screenshot: " + it)
-                        }
+                // 현위치 삭제
+                mMap.isMyLocationEnabled = false
+
+                Toast.makeText(this,"플러깅을 종료합니다. 잠시만 기다려 주세요.", Toast.LENGTH_SHORT).show()
+
+                // 구글맵 스크린샷 (BitMap 형식)
+                mMap.snapshot{
+                    it?.let{
+                        // 캡쳐 이미지 반영
+                        encodeImage(it)
+                        endIntent.putExtra("capture",encodeImage(it))
+//                            capture_imageView.setImageBitmap(it)
+                        println("googlemap screenshot: " + it)
                     }
-                    // 현위치 삭제
-                    mMap.isMyLocationEnabled = false
-                    Handler().postDelayed({
-                        // 모두 정지
-                        end_button.isEnabled = true
-                        onStop()
-                        /** 결과확인 떄 임시 사용 */
-                        startBtn.isEnabled = false
-                        trashBtn.isEnabled = false
-                    }, 500)
-                }, 1000)
-                // 테스트용임 없애도 됨
-                endIntent.putExtra("captureImageTest", R.drawable.ic_map)
+                }
+                // 모두 정지
+//                onStop()
+                end_button.isEnabled = true
+                startBtn.isEnabled = false
+                trashBtn.isEnabled = false
 
-                startActivity(endIntent)  // 화면 전환하기
-//                finish()
+                // 인코딩하는동안의 시간을 벌어준다.
+                Handler().postDelayed({
+                    startActivity(endIntent)  // 화면 전환하기
+                }, 1000)
             }
             return@setOnLongClickListener(true)
         }
-        capture_imageView = findViewById(R.id.capture_imageView)
-        capture_button = findViewById(R.id.capture_button)
-
-        capture_button.setOnClickListener { // 버튼 클릭시 할 행동
-            // 구글맵 스크린샷
-            mMap.snapshot{
-                it?.let{
-                    encodeImage(it)
-                    endIntent.putExtra("capture",encodeImage(it))
-                    capture_imageView.setImageBitmap(it)
-                    println("googlemap screenshot: " + it)
-                }
-            }
-        }
+//        capture_imageView = findViewById(R.id.capture_imageView)
+//        capture_button = findViewById(R.id.capture_button)
+//
+//        capture_button.setOnClickListener { // 버튼 클릭시 할 행동
+//            // 구글맵 스크린샷
+//            mMap.snapshot{
+//                it?.let{
+//                    encodeImage(it)
+//                    endIntent.putExtra("capture",encodeImage(it))
+//                    capture_imageView.setImageBitmap(it)
+//                    println("googlemap screenshot: " + it)
+//                }
+//            }
+//        }
 
         // 화장실
         toilet_button = findViewById(R.id.toilet_button)
@@ -559,6 +565,19 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
                 toiletflag = false
                 toilet_button.isEnabled = true
                 toilet_button.setAlpha(255)
+            }
+        }
+
+        // 음소거
+        muteBtn = findViewById(R.id.mute_btn)
+        muteBtn.setOnClickListener{
+            muteflag = !muteflag
+            if(!muteflag) {
+                muteBtn.setImageResource(R.drawable.ic_mute1)
+                muteBtn.setAlpha(255)
+            }else{
+                muteBtn.setImageResource(R.drawable.ic_mute2)
+                muteBtn.setAlpha(100)
             }
         }
 

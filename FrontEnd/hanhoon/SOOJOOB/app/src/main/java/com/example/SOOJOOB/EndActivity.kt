@@ -45,7 +45,7 @@ open class EndActivity : AppCompatActivity() {
     private var ploggingImg:String = ""
 
     private lateinit var getButton: Button
-
+    private lateinit var captureBitmap:Bitmap
     // Noti 객체 생성
     private lateinit var notificationHelper: NotificationHelper
 
@@ -56,23 +56,23 @@ open class EndActivity : AppCompatActivity() {
 
         val timeRecord = intent.getIntExtra("timeRecord",0)
         timeRecordText = findViewById(R.id.TimeRecord)
-        timeRecordText.text = "총 시간 " + "   ${timeRecord / 100}" + "\"" + "${timeRecord % 100}"
+        timeRecordText.text = "${timeRecord / 100}" + "\"" + "${timeRecord % 100}"
 
         val sumDistance = intent.getDoubleExtra("sumDistance", 0.0)
         sumDistanceText = findViewById(R.id.sumDistance)
-        sumDistanceText.text = "이동 거리 " + "    $sumDistance" + "m"
+        sumDistanceText.text = "$sumDistance"
 
 
         val trashCount = intent.getIntExtra("trashCount",0)
         trashCountText = findViewById(R.id.trashCount)
-        trashCountText.text = "$trashCount" + "곳이 깨끗해졌습니다."
+        trashCountText.text = "$trashCount"
 
         btn_camera = findViewById(R.id.btn_camera)
         iv_pre = findViewById(R.id.iv_pre)
         now = findViewById(R.id.now)
 
-        val icon = BitmapFactory.decodeResource(getResources(), R.drawable.boy)
-        iv_pre.setImageBitmap(icon)
+//        val icon = BitmapFactory.decodeResource(getResources(), R.drawable.ic_map)
+//        iv_pre.setImageBitmap(icon)
         // 이미지 캡쳐 적용 (안됨 ㅠㅠ)
 //        val captureImage = intent?.getParcelableExtra<Bitmap>("captureImage")
 //        val captureImageTest = intent?.getParcelableExtra<Bitmap>("captureImageTest")
@@ -82,10 +82,10 @@ open class EndActivity : AppCompatActivity() {
 
 
         val currentDateTime = Calendar.getInstance().time
-        val dateFormat = SimpleDateFormat("yyyy.MM.dd HH:mm:ss", Locale.KOREA).format(currentDateTime)
+        val dateFormat = SimpleDateFormat("yyyy.MM.dd HH:mm", Locale.KOREA).format(currentDateTime)
 
         now.text = dateFormat
-        ploggingImg = encodeImage(icon)
+//        ploggingImg = encodeImage(icon)
 
         imageSaveBtn = findViewById(R.id.imageSaveBtn)
         imageSaveBtn.setOnClickListener{
@@ -94,6 +94,12 @@ open class EndActivity : AppCompatActivity() {
             ploggingImg = encodeImage(bitmap)
             println(ploggingImg.length)
         }
+
+        val captureImage = intent.getByteArrayExtra("capture")
+        val captureBitmap = captureImage?.toBitmap()
+        ploggingImg = captureBitmap?.let { encodeImage(it) }.toString()
+        iv_pre.setImageBitmap(captureImage?.toBitmap())
+
 
         val endIntent = Intent(this, MainActivity::class.java)
         // Retrofit
@@ -129,7 +135,6 @@ open class EndActivity : AppCompatActivity() {
 //            val nextIntent = Intent(this, PloggingDataActivity::class.java)
 //            startActivity(nextIntent)
 //        }
-
 
 
 
@@ -293,6 +298,13 @@ open class EndActivity : AppCompatActivity() {
         val nb: NotificationCompat.Builder =
             notificationHelper.getChannelNotification(title, message)
         notificationHelper.getManager().notify(id, nb.build())
+    }
+
+    fun ByteArray.toBitmap(): Bitmap?{
+        val by = Base64.encodeToString(this, Base64.DEFAULT)
+        Base64.decode(by, Base64.DEFAULT).apply {
+            return BitmapFactory.decodeByteArray(this,0,size)
+        }
     }
 
 

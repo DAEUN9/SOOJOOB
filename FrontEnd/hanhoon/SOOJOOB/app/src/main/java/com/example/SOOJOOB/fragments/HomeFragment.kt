@@ -44,6 +44,11 @@ class HomeFragment : Fragment() {
         val binding = FragmentHomeBinding.inflate(inflater, container, false)
         fBinding = binding
 
+        binding.homeNotification.setOnClickListener {
+            val intent = Intent(activity, RankActivity::class.java)
+            startActivity(intent)
+        }
+
 
         binding.logout.setOnClickListener {
             LogoutWork().logout()
@@ -62,7 +67,7 @@ class HomeFragment : Fragment() {
 //        }
 
         val userWork = UserWork()
-        userWork.work(completion = { status, username, trash, exp, badge ->
+        userWork.work(completion = { status, userid, username, trash, exp, badge ->
             if (status in 200..300) {
                 binding.homeUsername.text = username
                 binding.homeTrash.text = trash.toString()
@@ -78,10 +83,30 @@ class HomeFragment : Fragment() {
             println("sky :" + sky)
             binding.todayWhere.text = Constants.ADDRESS
             binding.todayTemp.text = temp+"˚"
-            binding.todayWeather.text = sky
+
+            when (sky) {
+                "구름많음", "흐림" -> {
+                    binding.todayWeather.text = sky
+                    binding.btnWeather.setBackgroundResource(R.drawable.round_cloud)
+                    binding.iconWeather.setImageResource(R.drawable.cloud)
+                }
+                "비", "소나기", "빗방울" -> {
+                    binding.todayWeather.text = sky
+                    binding.btnWeather.setBackgroundResource(R.drawable.round_rainy)
+                    binding.iconWeather.setImageResource(R.drawable.rainy)
+                }
+                "비/눈", "눈", "빗방울/눈날림", "눈날림" -> {
+                    binding.todayWeather.text = sky
+                    binding.btnWeather.setBackgroundResource(R.drawable.round_snow)
+                    binding.iconWeather.setImageResource(R.drawable.snow)
+                }
+                else -> {
+                    binding.todayWeather.text = sky
+                    binding.btnWeather.setBackgroundResource(R.drawable.round_sun)
+                    binding.iconWeather.setImageResource(R.drawable.sun)
+                }
+            }
         })
-
-
 
 
 

@@ -6,7 +6,7 @@ import retrofit2.Call
 import retrofit2.Response
 
 class UserWork() {
-    fun work(completion : (statusCode:Int, username:String?, trash:Int?, exp:Double?, badge:Int?) -> Unit) {
+    fun work(completion : (statusCode:Int, userid: Int?, username:String?, trash:Int?, exp:Double?, badge:Int?) -> Unit) {
         val service = RetrofitAPI.userService
 
 
@@ -21,12 +21,13 @@ class UserWork() {
                 ) {
                     if (response.isSuccessful) {
                         Log.d("통신 성공", "$response.body()")
+                        val userid = response.body()?.data?.userRecord?.id
                         val username = response.body()?.data?.userRecord?.username
                         val trash = response.body()?.data?.totalTrashCount
                         val exp = response.body()?.data?.exp
                         val badge = response.body()?.data?.badgeCount
 
-                        completion(response.code(), "$username", trash, exp, badge)
+                        completion(response.code(), userid,"$username", trash, exp, badge)
                     }
                     else {
                         Log.d("통신 실패", "$response")

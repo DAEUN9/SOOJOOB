@@ -8,10 +8,11 @@
     <color name="black">#FF000000</color>
     <color name="gray">#808080</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="green">#519800</color>
+    <color name="green">#22741C</color>
     <color name="grayBG">#FBFBFB</color>
     <color name="grayBT">#505050</color>
     <color name="light_yellow">#FBF6D9</color>
     <color name="greenTxt">#001A00</color>
+    <color name="greenDark">#477500</color>
 
 </resources>

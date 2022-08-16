@@ -32,6 +32,16 @@ class UserupdateActivity : AppCompatActivity() {
             }
         })
 
+        binding.btnPw.setOnClickListener {
+            val intent = Intent(this, PasswordActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.tvUserDelete.setOnClickListener{
+            val intent = Intent(this, UserDeleteActivity::class.java)
+            startActivity(intent)
+        }
+
         binding.nextButton.setOnClickListener {
             val userDataUpdate = UserupdateRequestBody(
                 binding.ageTextInputLayout.editText?.text.toString(),

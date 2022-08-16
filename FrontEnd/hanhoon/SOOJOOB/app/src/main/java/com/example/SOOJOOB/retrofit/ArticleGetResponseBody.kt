@@ -1,6 +1,8 @@
 package com.example.SOOJOOB
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
 data class ArticleGetResponseBody(
     @SerializedName("statusCode")
@@ -10,7 +12,7 @@ data class ArticleGetResponseBody(
     @SerializedName("data")
     val result: List<Article>?
 )
-
+@Parcelize
 data class Article(
     @SerializedName("id")
     val id: Int?,
@@ -24,5 +26,5 @@ data class Article(
     val articleImage: String?,
     @SerializedName("userName")
     val userName:String?
-)
+): Parcelable
 
