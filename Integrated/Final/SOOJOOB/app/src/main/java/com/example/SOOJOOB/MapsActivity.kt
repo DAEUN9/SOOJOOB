@@ -349,7 +349,7 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
                 prelon = longitude
 
                 // 카메라를 이동한다.(이동할 위치,줌 수치)
-                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,17f))
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,17.5f))
             }
 
         }
