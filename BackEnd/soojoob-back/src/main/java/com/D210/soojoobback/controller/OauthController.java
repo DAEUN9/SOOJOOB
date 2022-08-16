@@ -13,6 +13,7 @@ import com.D210.soojoobback.repository.UserRepository;
 import com.D210.soojoobback.security.JwtTokenProvider;
 import com.D210.soojoobback.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -35,6 +36,9 @@ public class OauthController {
     private final RecordRepository recordRepository;
 
     private final JwtTokenProvider jwtTokenProvider;
+
+    @Value("${jwt.token.key}")
+    private String secretKey;
     @PostMapping("/oauth/jwt/google")
     @ResponseBody
     public ResponseDto jwtCreate(@RequestBody Map<String, Object> data, HttpServletResponse response) {
@@ -48,7 +52,7 @@ public class OauthController {
         if(userEntity == null) {
             User userRequest = User.builder()
                     .username(googleUser.getProvider()+"_"+googleUser.getName())
-                    .password(bCryptPasswordEncoder.encode("skldjficmnwl123kclknmcnfklsdkskmxxfofohue"))
+                    .password(bCryptPasswordEncoder.encode(secretKey))
                     .email(googleUser.getEmail())
                     .provider(googleUser.getProvider())
                     .providerId(googleUser.getProviderId())
