@@ -349,7 +349,7 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
                 prelon = longitude
 
                 // 카메라를 이동한다.(이동할 위치,줌 수치)
-                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,20f))
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,17.5f))
             }
 
         }
@@ -503,7 +503,7 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
                 // 인코딩하는동안의 시간을 벌어준다.
                 Handler().postDelayed({
                     startActivity(endIntent)  // 화면 전환하기
-                }, 1000)
+                }, 2000)
             }
             return@setOnLongClickListener(true)
         }
@@ -773,6 +773,7 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
         if(!muteflag) {
             pauseTTS()
         }
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,15f))
         startBtn.setImageResource(R.drawable.icon_play)
         timerTask?.cancel();
     }

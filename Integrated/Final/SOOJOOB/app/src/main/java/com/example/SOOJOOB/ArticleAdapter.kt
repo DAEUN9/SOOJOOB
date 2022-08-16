@@ -66,7 +66,7 @@ class ArticleAdapter(val articleList: List<Article>) :
 
             title?.text = itemArticle?.title
             contents?.text = itemArticle?.contents
-            createdDate?.text = dateFormat
+            createdDate?.text = itemArticle?.createdDate
             userName?.text = itemArticle?.userName
             articleImage?.setImageBitmap(itemArticle?.articleImage?.toBitmap())
             val ba = encodeImage(itemArticle?.articleImage?.toBitmap())
