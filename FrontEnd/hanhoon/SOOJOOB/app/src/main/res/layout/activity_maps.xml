@@ -1,217 +1,195 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".MapsActivity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MapsActivity">
+    android:background="@color/grayBG"
+    android:orientation="vertical">
 
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/scroll1"
         android:layout_width="match_parent"
-        android:layout_height="350dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        tools:ignore="MissingConstraints">
+        android:layout_height="400dp"
+        android:layout_alignParentTop="true"
+        android:paddingVertical="10dp">
 
         <fragment
             android:id="@+id/map"
             android:name="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
-    </LinearLayout>
 
+        <ImageView
+            android:id="@+id/trashcan_button"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="10dp"
+            android:layout_alignParentLeft="true"
+            android:src="@drawable/icon_trash"/>
+
+        <ImageView
+            android:id="@+id/toilet_button"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_below="@+id/trashcan_button"
+            android:layout_marginHorizontal="10dp"
+            android:src="@drawable/icon_bathroom" />
+
+<!--        <ImageView-->
+<!--            android:id="@+id/capture_imageView"-->
+<!--            android:layout_width="100dp"-->
+<!--            android:layout_height="100dp"-->
+<!--            android:layout_alignParentRight="true"-->
+<!--            android:layout_margin="10dp"-->
+<!--            tools:srcCompat="@tools:sample/avatars"/>-->
+
+<!--        <Button-->
+<!--            android:id="@+id/capture_button"-->
+<!--            android:layout_width="100dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginHorizontal="10dp"-->
+<!--            android:layout_alignParentRight="true"-->
+<!--            android:layout_below="@id/capture_imageView"-->
+<!--            android:text="캡처"-->
+<!--            android:textSize="16sp"/>-->
+
+
+
+    </RelativeLayout>
 
     <LinearLayout
-        android:id="@+id/distanceLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@id/scroll1">
+        android:layout_height="match_parent"
+        android:layout_below="@+id/scroll1"
+        android:background="@drawable/round_image"
+        android:orientation="vertical">
 
-
-        <TextView
-            android:id="@+id/distance"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:freezesText="false"
-            android:layout_weight="1"
-            android:text="0.0"
-            android:textAlignment="textEnd"
-            android:textAllCaps="false"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            android:textSize="50sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/scroll1"
-            app:layout_constraintVertical_bias="0.100000024" />
+            android:orientation="horizontal">
 
+            <LinearLayout
+                android:id="@+id/distanceLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+
+                <TextView
+                    android:id="@+id/distance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0.0"
+                    android:textColor="@color/greenTxt"
+                    android:textSize="52sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/distance_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="미터"
+                    android:textColor="@color/greenTxt"
+                    android:textSize="22dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/textLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/secText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text='0:0'
+                    android:textColor="@color/greenTxt"
+                    android:textSize="52sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/milliText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="시간"
+                    android:textColor="@color/greenTxt"
+                    android:textSize="22dp" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
 
         <TextView
-            android:id="@+id/distance_text"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_weight="1.5"
-            android:text="M"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            app:layout_constraintEnd_toEndOf="@id/secText"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/secText" />
-
-
-    </LinearLayout>
-    <LinearLayout
-        android:id="@+id/textLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@id/distanceLayout">
-
-
-        <TextView
-            android:id="@+id/secText"
+            android:id="@+id/trashCountText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:freezesText="false"
+            android:gravity="center"
             android:text="0"
-            android:layout_weight="1"
-            android:textAlignment="textEnd"
-            android:textAllCaps="false"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            android:textSize="50sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/scroll1"
-            app:layout_constraintVertical_bias="0.100000024" />
+            android:textColor="#3DB7CC"
+            android:textSize="65sp"
+            android:textStyle="bold"/>
 
-
-        <TextView
-            android:id="@+id/milliText"
+        <LinearLayout
+            android:id="@+id/buttonLayout"
             android:layout_width="match_parent"
-            android:layout_height="30dp"
-
-            android:text="milliSec"
-            android:layout_weight="1.5"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            app:layout_constraintEnd_toEndOf="@id/secText"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/secText" />
-
-
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/trashCountText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:freezesText="false"
-        android:text="0"
-        android:textAlignment="center"
-        android:textAllCaps="false"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textColor="@color/green"
-        android:textSize="100sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textLayout"
-        app:layout_constraintVertical_bias="0.100000024" />
-
-    <LinearLayout
-        android:id="@+id/buttonLayout"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/trashCountText">
-
-
-        <Button
-            android:id="@+id/startBtn"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="10dp"
-            android:layout_weight="1"
-            android:clickable="true"
-            android:text="시작"
-            android:tint="#FFFFFF"
-            app:layout_constraintBottom_toBottomOf="@+id/trashBtn"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.476"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/trashBtn"
-            app:layout_constraintVertical_bias="0.0" />
+            android:gravity="center"
+            android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/trashBtn"
-            android:layout_width="wrap_content"
+            <ImageView
+                android:id="@+id/end_button"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:elevation="1dp"
+                android:src="@drawable/icon_stop"/>
+
+            <ImageView
+                android:id="@+id/trashBtn"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginHorizontal="40dp"
+                android:elevation="1dp"
+                android:src="@drawable/icon_trash_can"/>
+
+            <ImageView
+                android:id="@+id/startBtn"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:elevation="1dp"
+                android:src="@drawable/icon_play"
+                android:clickable="true"/>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/buttonLayout2"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="10dp"
-            android:layout_weight="1"
-            android:text="쓰레기 줍기"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.89"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.96" />
-    </LinearLayout>
+            android:layout_marginBottom="10dp"
+            android:gravity="center"
+            android:orientation="horizontal">
 
-    <Button
-        android:id="@+id/end_button"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="10dp"
-        android:layout_marginStart="9dp"
-        android:layout_marginEnd="9dp"
-        android:text="플로깅 끝"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/buttonLayout" />
-    <!--    아래부분들은 임시 소스입니다-->
+            <ImageView
+                android:id="@+id/mute_btn"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_below="@+id/trashBtn"
+                android:layout_marginTop="5dp"
+                android:src="@drawable/ic_mute1" />
+        </LinearLayout>
 
-    <ImageView
-        android:id="@+id/capture_imageView"
-        android:layout_width="126dp"
-        android:layout_height="150dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@tools:sample/avatars" />
 
-    <Button
-        android:id="@+id/capture_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:text="캡쳐"
-        android:layout_marginEnd="20dp"
-        app:layout_constraintTop_toBottomOf="@id/capture_imageView"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="166dp" />
+</LinearLayout>
 
-    <ImageView
-        android:id="@+id/trashcan_button"
-        android:layout_width="20pt"
-        android:layout_height="20pt"
-        app:srcCompat="@drawable/trashcan"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="0dp"/>
-
-    <ImageView
-        android:id="@+id/toilet_button"
-        android:layout_width="20pt"
-        android:layout_height="20pt"
-        app:layout_constraintStart_toEndOf="@+id/trashcan_button"
-        app:srcCompat="@drawable/toilet"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteY="0dp" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

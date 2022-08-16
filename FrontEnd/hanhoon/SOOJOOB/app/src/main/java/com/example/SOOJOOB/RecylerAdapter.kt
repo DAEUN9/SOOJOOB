@@ -22,7 +22,7 @@ class RecyclerAdapter(val ploggingList: List<PloggingResult>) : RecyclerView.Ada
 
     override fun onBindViewHolder(viewHolder: ViewHolder, i: Int) {
         viewHolder.distance?.text = ploggingList[i].distance.toString() + " M"
-        viewHolder.date?.text = ploggingList[i].dateTime
+        viewHolder.date?.text = ploggingList[i].dateTime.toString().substring(0, 16)
         val second = ploggingList[i].timeRecord?.div(100)
         val minute = second?.div(60)
         val second2 = second?.rem(60)

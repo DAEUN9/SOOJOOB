@@ -22,11 +22,15 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.pm.ActivityInfo
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.location.Geocoder
+import android.os.Environment
 import android.os.Handler
 import android.os.SystemClock
 import android.speech.tts.TextToSpeech
+import android.util.Base64
 import android.util.Log
 import android.view.WindowManager
 import android.widget.Button
@@ -40,8 +44,7 @@ import com.google.maps.android.clustering.view.DefaultClusterRenderer
 import com.gun0912.tedpermission.provider.TedPermissionProvider
 import org.json.JSONArray
 import org.json.JSONObject
-import java.io.BufferedReader
-import java.io.InputStreamReader
+import java.io.*
 import java.lang.Math.*
 import java.net.URL
 import java.util.*
@@ -70,14 +73,17 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
     private lateinit var milliText: TextView
     private lateinit var trashCountText: TextView
     private lateinit var distanceText: TextView
-    private lateinit var startBtn: Button
+    private lateinit var startBtn: ImageView
     private lateinit var resetBtn: Button
-    private lateinit var trashBtn: Button
-    private lateinit var end_button: Button
+    private lateinit var trashBtn: ImageView
+    private lateinit var end_button: ImageView
     // 캡쳐
-    private lateinit var capture_button: Button
+//    private lateinit var capture_button: Button
     // 마커
     private lateinit var marker: Marker
+    // 음소거
+    private lateinit var muteBtn: ImageView
+    private var muteflag = false
     // 클러스팅
     private lateinit var toilet_button: ImageView
     private lateinit var trashcan_button: ImageView
@@ -216,7 +222,14 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
                 latLng=LatLng(latitude,longitude)
 //                // 카메라를 이동한다.(이동할 위치,줌 수치)
                 if(!endClickFlag) {
-                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 20f))
+                    // 현재 위치에 맞춰 카메라 중심 맞추기
+//                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 20f))
+                    // 폴리라인 끝에 맞춰 영역 내에 카메라 중심 맞추기
+                    val result_position = LatLngBounds(min_latLng, max_latLng)
+                    println("min_latLng :" + min_latLng)
+                    println("max_latLng :" + max_latLng)
+//                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(result_position.center, 20f))
+                    mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(result_position, 30))
                 }
                 // **********************************한훈 참고용 시작*************************************
                 // 확대/축소 : 1-세계, 5-대륙, 10-도시, 15-거리, 20-건물
@@ -367,8 +380,10 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
         startBtn = findViewById(R.id.startBtn)
         trashBtn = findViewById(R.id.trashBtn)
         trashBtn.isEnabled = false
+        trashBtn.setAlpha(100)
         end_button = findViewById(R.id.end_button)
         end_button.isEnabled = false
+        end_button.setAlpha(100)
         trashCountText = findViewById(R.id.trashCountText)
         distanceText = findViewById(R.id.distance)
 //        lap_Layout = findViewById(R.id.lap_Layout)
@@ -384,9 +399,10 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
                 Handler().postDelayed({
                     //                mMap.addMarker(MarkerOptions().position(latLng).title("Changed Location"))
                     start_latLng = LatLng(latLng.latitude-0.000023, latLng.longitude)
-                    mMap.addMarker(MarkerOptions().position(start_latLng).icon(BitmapDescriptorFactory.fromResource(R.drawable.boy_map)))
+                    mMap.addMarker(MarkerOptions().position(start_latLng).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_heart)))
                     startflag = true
                     trashBtn.isEnabled = true
+                    trashBtn.setAlpha(255)
                 }, 500)
 
                 /** 3번 터치 야매로 고침 (고치자...) */
@@ -397,10 +413,16 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
             if (isRunning) {
                 endClickFlag = false
                 end_button.isEnabled = false
+                end_button.setAlpha(100)
+                trashBtn.isEnabled = true
+                trashBtn.setAlpha(255)
                 start()
             } else {
                 endClickFlag = true
                 end_button.isEnabled = true
+                end_button.setAlpha(255)
+                trashBtn.isEnabled = false
+                trashBtn.setAlpha(100)
                 pause()
             }
         }
@@ -411,7 +433,9 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
 //            if(time!=0) lapTime()
 //        }
         trashBtn.setOnClickListener {
-            trashTTS()
+            if(!muteflag) {
+                trashTTS()
+            }
             trashCount ++
             trashCountText.text = "$trashCount"
             println(trashCount)
@@ -419,14 +443,18 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
             //            mMap.addMarker(MarkerOptions().position(latLng).title("Changed Location"))
             // 동기화 시간에 의해 다른 위치에 마커가 찍히는 현상 보정
             Handler().postDelayed({
-                mMap.addMarker(MarkerOptions().position(LatLng(latLng.latitude-0.000023, latLng.longitude)).icon(BitmapDescriptorFactory.fromResource(R.drawable.flower)))
+                mMap.addMarker(MarkerOptions().position(LatLng(latLng.latitude-0.000023, latLng.longitude)).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_flower)))
                 // 플로깅하다보면 Boy 이미지가 사라지는 현상 보정
-                mMap.addMarker(MarkerOptions().position(start_latLng).icon(BitmapDescriptorFactory.fromResource(R.drawable.boy_map)))
-            }, 500)
+                mMap.addMarker(MarkerOptions().position(start_latLng).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_heart)))
+            }, 300)
 //            addItems()
             trashBtn.isEnabled = false
+            trashBtn.setAlpha(100)
             Handler().postDelayed({
-                trashBtn.isEnabled = true
+                if(isRunning) {
+                    trashBtn.isEnabled = true
+                    trashBtn.setAlpha(255)
+                }
             }, 2000)
         }
 
@@ -434,69 +462,65 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
 
         end_button.setOnClickListener { // 버튼 클릭시 할 행동
             // 사용자에게 종료하는 방법 알려주기
-            Toast.makeText(this,"버튼을 꾹~ 눌러 종료하세요!", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this,"버튼을 길게 눌러 종료하세요.", Toast.LENGTH_SHORT).show()
         }
         end_button.setOnLongClickListener { // 버튼 클릭시 할 행동
             if(endClickFlag) {
-                endTTS()
-                pause()
+                if(!muteflag) {
+                    endTTS()
+                }
                 endIntent.putExtra("timeRecord", time)
                 endIntent.putExtra("sumDistance", sumDistance)
                 endIntent.putExtra("trashCount", trashCount)
 
-                // 폴리라인 끝에 맞춰 영역 내에 카메라 중심 맞추기
-//                val result_position = LatLngBounds(min_latLng, max_latLng)
-                val result_position = LatLngBounds(min_latLng, max_latLng)
-                println("min_latLng :" + min_latLng)
-                println("max_latLng :" + max_latLng)
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(result_position.center, 20f))
-//                mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(result_position, 30))
-                
-                // 플로깅 마무리 마킹
-                mMap.addMarker(MarkerOptions().position(latLng).icon(BitmapDescriptorFactory.fromResource(R.drawable.trophy)))
+                // 동기화 시간에 의해 다른 위치에 마커가 찍히는 현상 보정
+//                Handler().postDelayed({
+                    // 플로깅 마무리 마킹
+                    mMap.addMarker(MarkerOptions().position(latLng).icon(BitmapDescriptorFactory.fromResource(R.drawable.trophy)))
+//                }, 200)
 
-                Handler().postDelayed({
-                    // 구글맵 스크린샷 (BitMap 형식)
-                    mMap.snapshot{
-                        it?.let{
-                            // 캡쳐 이미지 반영
-                            capture_imageView.setImageBitmap(it)
-                            // 캡쳐 이미지 Intent로 넘김
-                            endIntent.putExtra("captureImage", it)
-                            println("googlemap screenshot: " + it)
-                        }
+                // 현위치 삭제
+                mMap.isMyLocationEnabled = false
+
+                Toast.makeText(this,"플러깅을 종료합니다. 잠시만 기다려 주세요.", Toast.LENGTH_SHORT).show()
+
+                // 구글맵 스크린샷 (BitMap 형식)
+                mMap.snapshot{
+                    it?.let{
+                        // 캡쳐 이미지 반영
+                        encodeImage(it)
+                        endIntent.putExtra("capture",encodeImage(it))
+//                            capture_imageView.setImageBitmap(it)
+                        println("googlemap screenshot: " + it)
                     }
-                    // 현위치 삭제
-                    mMap.isMyLocationEnabled = false
-                    Handler().postDelayed({
-                        // 모두 정지
-                        end_button.isEnabled = true
-                        onStop()
-                        /** 결과확인 떄 임시 사용 */
-                        startBtn.isEnabled = false
-                        trashBtn.isEnabled = false
-                    }, 500)
-                }, 1000)
-                // 테스트용임 없애도 됨
-                endIntent.putExtra("captureImageTest", R.drawable.ic_trash)
+                }
+                // 모두 정지
+//                onStop()
+                end_button.isEnabled = true
+                startBtn.isEnabled = false
+                trashBtn.isEnabled = false
 
-                startActivity(endIntent)  // 화면 전환하기
-                finish()
+                // 인코딩하는동안의 시간을 벌어준다.
+                Handler().postDelayed({
+                    startActivity(endIntent)  // 화면 전환하기
+                }, 1000)
             }
             return@setOnLongClickListener(true)
         }
-        capture_imageView = findViewById(R.id.capture_imageView)
-        capture_button = findViewById(R.id.capture_button)
-
-        capture_button.setOnClickListener { // 버튼 클릭시 할 행동
-            // 구글맵 스크린샷
-            mMap.snapshot{
-                it?.let{
-                    capture_imageView.setImageBitmap(it)
-                    println("googlemap screenshot: " + it)
-                }
-            }
-        }
+//        capture_imageView = findViewById(R.id.capture_imageView)
+//        capture_button = findViewById(R.id.capture_button)
+//
+//        capture_button.setOnClickListener { // 버튼 클릭시 할 행동
+//            // 구글맵 스크린샷
+//            mMap.snapshot{
+//                it?.let{
+//                    encodeImage(it)
+//                    endIntent.putExtra("capture",encodeImage(it))
+//                    capture_imageView.setImageBitmap(it)
+//                    println("googlemap screenshot: " + it)
+//                }
+//            }
+//        }
 
         // 화장실
         toilet_button = findViewById(R.id.toilet_button)
@@ -518,8 +542,10 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
                 /** OPEN API GET */
                 toiletflag = true
                 toilet_button.isEnabled = false
+                toilet_button.setAlpha(100)
                 trashcanflag = false
                 trashcan_button.isEnabled = true
+                trashcan_button.setAlpha(255)
             }
         }
         // 쓰레기통
@@ -535,8 +561,23 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
                 /** OPEN API GET */
                 trashcanflag = true
                 trashcan_button.isEnabled = false
+                trashcan_button.setAlpha(100)
                 toiletflag = false
                 toilet_button.isEnabled = true
+                toilet_button.setAlpha(255)
+            }
+        }
+
+        // 음소거
+        muteBtn = findViewById(R.id.mute_btn)
+        muteBtn.setOnClickListener{
+            muteflag = !muteflag
+            if(!muteflag) {
+                muteBtn.setImageResource(R.drawable.ic_mute1)
+                muteBtn.setAlpha(255)
+            }else{
+                muteBtn.setImageResource(R.drawable.ic_mute2)
+                muteBtn.setAlpha(100)
             }
         }
 
@@ -706,11 +747,12 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
     }
 
     private fun start() {
-        startTTS()
-
+        if(!muteflag) {
+            startTTS()
+        }
         addLocationListener2()
         locationstart()
-        startBtn.text ="중지"
+        startBtn.setImageResource(R.drawable.icon_pause)
         timerTask = timer(period = 10) { //반복주기는 peroid 프로퍼티로 설정, 단위는 1000분의 1초 (period = 1000, 1초)
             time++ // period=10으로 0.01초마다 time를 1씩 증가하게 됩니다
             var milli = time % 100 // time%100, 나눗셈의 나머지 (밀리초 부분)
@@ -728,7 +770,10 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
     }
 
     private fun pause() {
-        startBtn.text ="재실행"
+        if(!muteflag) {
+            pauseTTS()
+        }
+        startBtn.setImageResource(R.drawable.icon_play)
         timerTask?.cancel();
     }
 //
@@ -835,9 +880,12 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
     private fun startTTS() {
         tts!!.speak("플로깅을 시작합니다", TextToSpeech.QUEUE_FLUSH, null, "")
     }
+    private fun pauseTTS() {
+        tts!!.speak("플로깅을 일시정지합니다", TextToSpeech.QUEUE_FLUSH, null, "")
+    }
 
     private fun endTTS() {
-        tts!!.speak("종료", TextToSpeech.QUEUE_FLUSH, null, "")
+        tts!!.speak("플로깅을 종료합니다.", TextToSpeech.QUEUE_FLUSH, null, "")
     }
     private fun trashTTS() {
         tts!!.speak("수줍!", TextToSpeech.QUEUE_FLUSH, null, "")
@@ -1038,4 +1086,59 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
         }
     }
 
+    open fun saveImage(bitmap: Bitmap?, saveImageName: String): Boolean {
+        val saveDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM)
+            .toString() + "/directoryName"
+        val file = File(saveDir)
+        if (!file.exists()) {
+            file.mkdir()
+        }
+        val fileName = "$saveImageName.png"
+        val tempFile = File(saveDir, fileName)
+        var output: FileOutputStream? = null
+        try {
+            if (tempFile.createNewFile()) {
+                output = FileOutputStream(tempFile)
+                // 이미지 줄이기
+
+                val newBitmap = Bitmap.createScaledBitmap(bitmap!!, 200, 200, true)
+                newBitmap.compress(Bitmap.CompressFormat.PNG, 100, output)
+            } else {
+                // 같은 이름의 파일 존재
+                Log.d("TEST_LOG", "같은 이름의 파일 존재:$saveImageName")
+                return false
+            }
+        } catch (e: FileNotFoundException) {
+            Log.d("TEST_LOG", "파일을 찾을 수 없음")
+            return false
+        } catch (e: IOException) {
+            Log.d("TEST_LOG", "IO 에러")
+            e.printStackTrace()
+            return false
+        } finally {
+            if (output != null) {
+                try {
+                    output.close()
+                } catch (e: IOException) {
+                    e.printStackTrace()
+                }
+            }
+        }
+        return true
+    }
+
+    private fun encodeImage(bm: Bitmap): ByteArray {
+        val baos = ByteArrayOutputStream()
+        bm.compress(Bitmap.CompressFormat.PNG, 10, baos)
+        val b = baos.toByteArray()
+        return b
+    }
+
+
+    fun ByteArray.toBitmap(): Bitmap?{
+        val by = Base64.encodeToString(this, Base64.DEFAULT)
+        Base64.decode(by, Base64.DEFAULT).apply {
+            return BitmapFactory.decodeByteArray(this,0,size)
+        }
+    }
 }

@@ -6,17 +6,14 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.RelativeLayout
 import androidx.fragment.app.Fragment
-import com.example.SOOJOOB.BadgesActivity
-import com.example.SOOJOOB.MapsActivity
-import com.example.SOOJOOB.NoBadgeActivity
-import com.example.SOOJOOB.UserupdateActivity
+import com.example.SOOJOOB.*
 import com.example.SOOJOOB.databinding.FragmentMypageBinding
 import com.example.SOOJOOB.retrofit.BadgeWork
 import com.example.SOOJOOB.retrofit.UserWork
 
 
 class MypageFragment : Fragment() {
-
+    private var userId = 0
     private var fBinding : FragmentMypageBinding? = null
 
     override fun onCreateView(
@@ -66,13 +63,18 @@ class MypageFragment : Fragment() {
             val intent = Intent(activity, MapsActivity::class.java)
             startActivity(intent)
         }
+        binding.myTextButton.setOnClickListener{
+            val intent = Intent(activity, MyArticleActivity::class.java)
+            intent.putExtra("userId",userId)
+            startActivity(intent)
+        }
 
 //    override fun onDestroyView() {
 //        fBinding = null
 //        super.onDestroyView()
 
         val userWork = UserWork()
-        userWork.work(completion = { status, username, trash, exp, badge ->
+        userWork.work(completion = { status, userid, username, trash, exp, badge ->
             if (status in 200..300) {
                 binding.mypageUsername.text = username
                 binding.mypageMiddleUsername.text = username
@@ -80,6 +82,9 @@ class MypageFragment : Fragment() {
                 binding.mypageExp.text = exp.toString().substring(0, 4)
                 binding.mypageProgress.progress = exp!!.toInt()
                 binding.mypageBadge.text = badge.toString()
+                if (userid != null) {
+                    userId = userid
+                }
             }
         })
 

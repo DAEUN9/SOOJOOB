@@ -295,8 +295,11 @@
                 android:id="@+id/my_none_hold_badge_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="20dp"
                 android:background="#FFFFFF"
-                android:layout_margin="20dp"
                 android:text="내가 미보유한 배지"
                 android:textColor="@color/greenTxt"
                 android:textSize="18sp" />
@@ -314,7 +317,7 @@
                 android:layout_height="1dp"
                 android:layout_below="@+id/my_none_hold_badge_button"
                 android:layout_marginHorizontal="20dp"
-                android:background="#E4E4E4"/>
+                android:background="#E4E4E4" />
 
         </RelativeLayout>
 
@@ -341,17 +344,17 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingHorizontal="20dp"
-                android:src="@drawable/ic_right"
+                android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:layout_alignParentRight="true"/>
+                android:paddingHorizontal="20dp"
+                android:src="@drawable/ic_right" />
 
-            <!--            <View-->
-            <!--                android:layout_width="match_parent"-->
-            <!--                android:layout_height="1dp"-->
-            <!--                android:layout_below="@+id/my_text_button"-->
-            <!--                android:layout_marginHorizontal="20dp"-->
-            <!--                android:background="#E4E4E4"/>-->
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_below="@+id/my_text_button"
+                            android:layout_marginHorizontal="20dp"
+                            android:background="#E4E4E4"/>
 
         </RelativeLayout>
     </LinearLayout>

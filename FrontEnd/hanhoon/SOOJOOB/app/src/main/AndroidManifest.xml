@@ -32,7 +32,9 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyAS9cn9ixRM5oW2ODVy9UY5aYJbQBe273g"/>
-
+        <activity
+            android:name=".RankActivity"
+            android:exported="false" />
         <activity
             android:name="com.example.SOOJOOB.BadgesActivity"
             android:exported="false" />
@@ -50,6 +52,7 @@
             android:exported="true">
         </activity>
         <activity android:name=".WeatherActivity"/>
+        <activity android:name=".ArticleDetailActivity"/>
         <activity
             android:name=".ArticleActivity"
             android:exported="true" />
@@ -58,6 +61,14 @@
             android:exported="true" />
         <activity
             android:name="com.example.SOOJOOB.UserupdateActivity"
+            android:exported="false">
+        </activity>
+        <activity
+            android:name="com.example.SOOJOOB.PasswordActivity"
+            android:exported="false">
+        </activity>
+        <activity
+            android:name=".MyArticleActivity"
             android:exported="false">
         </activity>
         <activity
@@ -73,6 +84,11 @@
             android:name="com.example.SOOJOOB.MainActivity"
             android:exported="true">
 
+        </activity>
+
+        <activity
+            android:name="com.example.SOOJOOB.UserDeleteActivity"
+            android:exported="false">
         </activity>
     </application>
 

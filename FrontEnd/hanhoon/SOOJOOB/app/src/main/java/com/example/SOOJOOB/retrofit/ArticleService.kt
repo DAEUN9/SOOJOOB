@@ -17,5 +17,8 @@ interface ArticleService {
     @GET("article")
     fun getArticle(): Call<ArticleGetResponseBody>
 
+    @Headers("Content-Type: application/json")
+    @GET("article/{user_id}")
+    fun getUserArticle(@Path("user_id") id: Int) : Call<ArticleGetResponseBody>
 
 }
