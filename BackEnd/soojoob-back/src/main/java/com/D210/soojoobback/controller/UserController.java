@@ -36,48 +36,6 @@ public class UserController {
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 
 
-//	@GetMapping({ "", "/" })
-//	public @ResponseBody String index() {
-//		return "인덱스 페이지입니다.";
-//	}
-////
-////	@GetMapping("/user")
-////	public @ResponseBody String user(@AuthenticationPrincipal PrincipalDetails principal) {
-////		System.out.println("Principal : " + principal);
-////		System.out.println("OAuth2 : "+principal.getUser().getProvider());
-////		// iterator 순차 출력 해보기
-////		Iterator<? extends GrantedAuthority> iter = principal.getAuthorities().iterator();
-////		while (iter.hasNext()) {
-////			GrantedAuthority auth = iter.next();
-////			System.out.println(auth.getAuthority());
-////		}
-////
-////		return "유저 페이지입니다.";
-////	}
-//	// template의 로그인페이지로 감
-//	@GetMapping("/login")
-//	public String login() {
-//		return "login";
-//	}
-//
-//	@GetMapping("/join")
-//	public String join() {
-//		return "join";
-//	}
-//
-//	@GetMapping("/admin")
-//	public @ResponseBody String admin() {
-//		return "어드민 페이지입니다.";
-//	}
-//
-//	//@PostAuthorize("hasRole('ROLE_MANAGER')")
-//	//@PreAuthorize("hasRole('ROLE_MANAGER')")
-//	@Secured("ROLE_MANAGER")
-//	@GetMapping("/manager")
-//	public @ResponseBody String manager() {
-//		return "매니저 페이지입니다.";
-//	}
-
 
 
 	@PostMapping("")
@@ -141,34 +99,6 @@ public class UserController {
 
 	}
 
-//	@GetMapping("/users")
-//	@ResponseBody
-//	public ResponseDto userInfoDetails(
-//			HttpServletRequest request
-//	) {
-//		System.out.println(request);
-//		String token = request.getHeader("X-AUTH-TOKEN");
-//		System.out.println(
-//				token
-//		);
-//		if (jwtTokenProvider.validateToken(token)) {
-//			Long userId = jwtTokenProvider.getUserIdFromJwt(token);
-//
-//			// 토큰 유효성 검사를 거쳤기 때문에 무조건 정보가 존재한다.
-//			UserDTO userDto = userService.findById(userId);
-//			return new ResponseDto(200L, "회원 정보를 전송했습니다", userDto);
-//		} else {
-//			return new ResponseDto(500L, "회원조회 실패", "");
-//		}
-//	}
-
-//	@GetMapping("/{userId}/info")
-//	public ResponseDto getUserInfo(@PathVariable Long userId)
-//		throws CustomErrorException {
-//		Long id = jwtTokenProvider.getUserIdx();
-//		UserDTO userDTO = userService.findById(userId);
-//		return new ResponseDto(200L, "회원정보 전송", userDTO);
-//	}
 
 	@PutMapping("/update")
 	@ResponseBody
@@ -221,16 +151,7 @@ public class UserController {
 
 	}
 
-//	@PostMapping("/user")
-//	public String save(@RequestBody UserDTO userDTO){
-//		return userService.save(userDTO);
-//	}
 
-//	@PutMapping("/user/{id}")
-//	public Long update(@PathVariable Long id, @RequestBody UserDTO userDTO){
-//		return userService.update(id, userDTO);
-//	}
-//
 
 	// id(pk)로 유저정보 조회
 	@GetMapping("/{id}")

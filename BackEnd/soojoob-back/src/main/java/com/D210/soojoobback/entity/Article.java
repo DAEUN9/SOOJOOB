@@ -47,20 +47,7 @@ public class Article extends BaseTimeEntity {
     protected Article() {
     }
 
-//    @Builder
-//    public Article(String author, String title, String contents, LocalDateTime createdDate) {
-//        this.author = author;
-//        this.title = title;
-//        this.contents = contents;
-//        this.createdDate = createdDate;
-//    }
-//
-//    @Builder
-//    public Article(String author, String title, String contents) {
-//        this.author = author;
-//        this.title = title;
-//        this.contents = contents;
-//    }
+
 
     @Builder
     public Article(User user, String title, String contents) {
