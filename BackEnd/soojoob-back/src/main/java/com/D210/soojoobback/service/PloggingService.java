@@ -36,25 +36,6 @@ public class PloggingService {
     private final BadgeService badgeService;
 
 
-//    @Transactional
-//    public Plogging save(PostPloggingReqDto requestDto, Long userId){
-//        User ploggingUser = userId;
-//        Double distance = requestDto.getDistance();
-//        String startTime = requestDto.getStartTime();
-//        String endTime = requestDto.getEndTime();
-//        Integer stepCount = requestDto.getStepCount();
-//        Integer trashCount = requestDto.getTrashCount();
-//        String floggingImg = requestDto.getFloggingImg();
-//        Double calorie = requestDto.getCalorie();
-//        Double bpm = requestDto.getBpm();
-//
-//
-//        Plogging plogging = new Plogging(ploggingUser, distance, startTime, endTime, stepCount,
-//                trashCount, floggingImg, calorie, bpm);
-//
-//        ploggingRepository.save(plogging);
-//        return plogging;
-//    }
 
     @Transactional
     public List<BadgeListResDto> save(PostPloggingReqDto requestDto, User user) {

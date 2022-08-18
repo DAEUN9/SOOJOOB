@@ -35,13 +35,6 @@ public class Badge {
     @Column
     String imgUrl;
 
-//    public BadgeListResDto toBuildBadge() {
-//        return BadgeListResDto.builder()
-//                .badgeId(this.id)
-//                .badgeName(this.badgeName)
-//                .badgeDetail(this.badgeDetail)
-//                .imgUrl(this.imgUrl)
-//                .build();
-//    }
+
 
 }

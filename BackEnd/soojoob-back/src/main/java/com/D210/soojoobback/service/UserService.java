@@ -31,14 +31,6 @@ public class UserService {
     private final RecordRepository recordRepository;
 
 
-//    @Transactional
-//    public Long update(Long id, UserDTO userDTO){
-//        User user = userRepository.findById(id).orElseThrow(() -> new CustomErrorException("해당 아이디가 없습니다."));
-//        user.update(userDTO.getUsername(), userDTO.getEmail(), userDTO.getPassword());
-//        return id;
-//    }
-
-//    @Transactional
     public UserDTO findById(Long id){
         User user = userRepository.findById(id).orElseThrow(() ->  new CustomErrorException("해당 아이디가 없습니다."));
         return new UserDTO(user);

@@ -31,7 +31,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		return new BCryptPasswordEncoder();
 	}
 
-	// authenticationManager를 Bean 등록합니다.
+	// authenticationManager를 Bean 등록
 	@Bean
 	@Override
 	public AuthenticationManager authenticationManagerBean() throws Exception {
@@ -51,24 +51,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.cors();
 		http.headers().frameOptions().disable()
 				.and()
-				.httpBasic().disable() // rest api 만을 고려하여 기본 설정은 해제하겠습니다.
+				.httpBasic().disable() // rest api 만을 고려하여 기본 설정은 해제
 				.csrf().disable() // csrf 보안 토큰 disable처리, rest api이므로 csrf 보안이 필요없으므로 disable처리
-				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)// 토큰 기반 인증이므로 세션 역시 사용하지 않습니다.
+				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)// 토큰 기반 인증이므로 세션 x
 				.and()
 				.authorizeRequests() // 요청에 대한 사용권한 체크
 				.antMatchers("/images/**").permitAll()
 				// css 폴더를 login 없이 허용
 				.antMatchers("/css/**").permitAll()
 				// 회원 관리 처리 API 전부를 login 없이 허용
-				.antMatchers("/users/**").permitAll()
+				.antMatchers("/user/**").permitAll()
 				.antMatchers("/").permitAll()
 				.antMatchers("/main").permitAll()
-				.antMatchers(HttpMethod.GET, "/reviews").permitAll()
-				.antMatchers(HttpMethod.GET, "/reviews/{review_id}").permitAll()
-				.antMatchers("/posts/{post_id}").permitAll()
-				.antMatchers("/posts").permitAll()
-				.antMatchers("/exception/**").permitAll()
-				.antMatchers("/enum/**").permitAll()
 				//swagger
 				.antMatchers("/swagger-ui/index.html#").permitAll()
 				.antMatchers("/swagger-ui.html").permitAll()
