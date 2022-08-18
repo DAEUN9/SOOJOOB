@@ -96,7 +96,7 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
     private lateinit var min_latLng : LatLng
     private lateinit var max_latLng : LatLng
     // 이동경로를 그릴 선 설정 (10f, MAGENTA)
-    private var polyLineOptions=PolylineOptions().width(10f).color(Color.LTGRAY)
+    private var polyLineOptions=PolylineOptions().width(10f).color(Color.GREEN)
     private lateinit var mMap: GoogleMap // 마커, 카메라 지정을 위한 구글 맵 객체
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient // 위치 요청 메소드 담고 있는 객체
     private lateinit var locationRequest:LocationRequest // 위치 요청할 때 넘겨주는 데이터에 관한 객체
