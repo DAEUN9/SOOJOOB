@@ -459,6 +459,14 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
         }
         end_button.setOnLongClickListener { // 버튼 클릭시 할 행동
             if(endClickFlag) {
+                // 모든 버튼 비활성화
+                end_button.isEnabled = false
+                end_button.setAlpha(100)
+                startBtn.isEnabled = false
+                startBtn.setAlpha(100)
+                trashBtn.isEnabled = false
+                trashBtn.setAlpha(100)
+
                 if(!muteflag) {
                     endTTS()
                 }
@@ -487,9 +495,6 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
 
                 // 모두 정지
 //                onStop()
-                end_button.isEnabled = true
-                startBtn.isEnabled = false
-                trashBtn.isEnabled = false
 
                 // 캡쳐할동안의 카메라 이동시간을 벌어준다.
                 Handler().postDelayed({
@@ -599,8 +604,8 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
 //        // 거부됐으면 showPermissionInfoDialog(알림)메소드를 호출, 승인됐으면 addLocationListener(위치 요청)메소드를 호출
         permissionCheck(cancel={showPermissionInfoDialog()},
             ok={addLocationListener()})
-        permissionCheck(cancel={showPermissionInfoDialog()},
-            ok={addLocationListener2()})
+//        permissionCheck(cancel={showPermissionInfoDialog()},
+//            ok={addLocationListener2()})
     }
     // 프로그램이 중단되면 위치 요청을 삭제한다
     override fun onPause(){
@@ -701,7 +706,7 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
 
 
 
-    // 권환 관련 메서드
+    // 위치 권환 관련 메서드
     private val gps_request_code=1000 // gps에 관한 권한 요청 코드(번호)
     private fun permissionCheck(cancel:()->Unit,ok:()->Unit){
         // 앱에 GPS이용하는 권한이 없을 때
@@ -730,22 +735,26 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
             // (gps 사용에 대한 사용자의 요청)일 때
             gps_request_code->{
                 // 요청이 허용일 때
-                if(grantResults.isNotEmpty() && grantResults[0]==PackageManager.PERMISSION_GRANTED)
-                    addLocationListener()
+                if(grantResults.isNotEmpty() && grantResults[0]== PackageManager.PERMISSION_GRANTED)
+                    Toast.makeText(this,"권한 허용 됨", Toast.LENGTH_SHORT).show()
+
                 // 요청이 비허용일 때
-//                else{
-//                    toast("권한 거부 됨")
-//                    finish() }
+                else{
+                    Toast.makeText(this,"권한 거부 됨", Toast.LENGTH_SHORT).show()
+//                    finish()
+                    return
+                }
             }
         }
     }
     // 사용자가 이전에 권한을 거부했을 때 호출된다.
     private fun showPermissionInfoDialog(){
-//        alert("지도 정보를 얻으려면 위치 권한이 필수로 필요합니다",""){
+        Toast.makeText(this,"지도를 사용하려면 위치 권한이 필수로 필요합니다", Toast.LENGTH_SHORT).show()
 //            yesButton{
 //                // 권한 요청
-        ActivityCompat.requestPermissions(this@MapsActivity,
-            arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),gps_request_code)
+        finish()
+//        ActivityCompat.requestPermissions(this,
+//            arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),gps_request_code)
 //            }
 //            noButton { toast("권한 거부 됨")
 //                finish() }

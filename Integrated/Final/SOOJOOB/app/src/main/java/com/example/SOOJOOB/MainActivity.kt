@@ -6,6 +6,7 @@ import android.content.pm.PackageManager
 import android.location.Geocoder
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -101,17 +102,22 @@ class MainActivity : AppCompatActivity() {
             location?.run {
                 // 위치값 생성
                 latLng = LatLng(latitude, longitude)
-                println("latitude " + latitude)
-                println("longitude " + longitude)
-                println("latLng " + latLng)
-                val geocoder = Geocoder(TedPermissionProvider.context, KOREA)
-                val address = geocoder.getFromLocation(latitude, longitude, 1)
-                println("address : " + address)
-                try {
-                    Constants.ADDRESS = address.first().locality
-                } catch (e: NullPointerException) {
-                    Constants.ADDRESS = address.first().adminArea
-                }
+//                latLng = LatLng(36.1068496, 128.4160613)
+//                println("latitude " + latitude)
+//                println("longitude " + longitude)
+//                println("latLng " + latLng)
+//                val geocoder = Geocoder(TedPermissionProvider.context, KOREA)
+//                println("geocoder " + geocoder)
+//                val address = geocoder.getFromLocation(latitude, longitude, 1)
+//                println("address : " + address)
+
+                val address = getAddress(latLng)
+                println("address : ${address}")
+//                try {
+//                    Constants.ADDRESS = address.first().locality
+//                } catch (e: NullPointerException) {
+//                    Constants.ADDRESS = address.first().adminArea
+//                }
 
 //                Constants.ADDRESS = address.first().locality
 
@@ -151,24 +157,59 @@ class MainActivity : AppCompatActivity() {
             gps_request_code->{
                 // 요청이 허용일 때
                 if(grantResults.isNotEmpty() && grantResults[0]== PackageManager.PERMISSION_GRANTED)
-                ;
+                    Toast.makeText(this,"권한 허용 됨", Toast.LENGTH_SHORT).show()
+
                 // 요청이 비허용일 때
-//                else{
-//                    toast("권한 거부 됨")
-//                    finish() }
+                else{
+                    Toast.makeText(this,"권한 거부 됨", Toast.LENGTH_SHORT).show()
+//                    finish()
+                }
             }
         }
     }
     // 사용자가 이전에 권한을 거부했을 때 호출된다.
     private fun showPermissionInfoDialog(){
-//        alert("지도 정보를 얻으려면 위치 권한이 필수로 필요합니다",""){
+        Toast.makeText(this,"APP을 사용하려면 위치 권한이 필수로 필요합니다", Toast.LENGTH_SHORT).show()
 //            yesButton{
 //                // 권한 요청
-        ActivityCompat.requestPermissions(this@MainActivity,
-            arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),gps_request_code)
+//        ActivityCompat.requestPermissions(this@MainActivity,
+//            arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),gps_request_code)
 //            }
 //            noButton { toast("권한 거부 됨")
 //                finish() }
 //        }.show()
+    }
+    /** 주소변환!!! */
+    //위도 경도로 주소 구하는 Reverse-GeoCoding
+    private fun getAddress(position: LatLng): String {
+        val geoCoder = Geocoder(TedPermissionProvider.context, Locale.KOREA)
+        var addr = "주소 오류"
+
+        //GRPC 오류? try catch 문으로 오류 대처
+        try {
+            addr = geoCoder.getFromLocation(position.latitude, position.longitude, 1).first().getAddressLine(0)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        return addr
+    }
+    //주소로 위도,경도 구하는 GeoCoding
+    private fun getLatLng(address:String) : LatLng{
+        val geoCoder = Geocoder(TedPermissionProvider.context, Locale.KOREA)   // Geocoder 로 자기 나라에 맞게 설정
+        val list = geoCoder.getFromLocationName(address, 3)
+
+        var location = LatLng(37.554891, 126.970814)     //임시 서울역
+
+        if(list != null){
+            if (list.size ==0){
+                Log.d("GeoCoding", "해당 주소로 찾는 위도 경도가 없습니다. 올바른 주소를 입력해주세요.")
+            }else{
+                val addressLatLng = list[0]
+                location = LatLng(addressLatLng.latitude, addressLatLng.longitude)
+                return location
+            }
+        }
+
+        return location
     }
 }
