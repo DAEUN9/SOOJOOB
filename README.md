@@ -73,7 +73,7 @@
       - 랭킹확인
 
 ### 📝 게시글 작성
-<br><img src="./README/logo.png" width="40%"><br>
+<br><img src="./README/gif/boardList1.gif" width="40%"><br>
     1. 사진, 게시글 작성
 <br><img src="./README/logo.png" width="40%"><br>
     2. 최신순, 많은 순
