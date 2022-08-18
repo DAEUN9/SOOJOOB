@@ -97,31 +97,5 @@ public class JwtTokenProvider {
         return (Long) claims.getBody().get("userPk");
     }
 
-    /*
-JWT에서 userIdx 추출
-@return int
-@throws BaseException
- */
-//    public Long getUserIdx() throws CustomErrorException
-//    {
-//        //1. JWT 추출
-//        String accessToken = getUserPk();
-//        if (accessToken == null || accessToken.length() == 0) {
-//            throw new CustomErrorException("");
-//        }
-//
-//        // 2. JWT parsing
-//        Jws<Claims> claims;
-//        try {
-//            claims = Jwts.parser()
-//                    .setSigningKey(secretKey)
-//                    .parseClaimsJws(accessToken);
-//        } catch (Exception ignored) {
-//            throw new CustomErrorException("");
-//        }
-//
-//        // 3. userIdx 추출
-//        return claims.getBody().get("userIdx", Long.class);  // jwt 에서 userIdx를 추출합니다.
-//    }
 
 }
