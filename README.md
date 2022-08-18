@@ -11,13 +11,7 @@
 - 팀명 : 프리지아🌻
 
     - **프리**티한 **지**구가 **아**파요 🤎🌏😷 
-    
-    - <span style="color:black;background-color:#dcffe4;">**프리**</sapn>
-    <span style="color:gray;background-color:#ffffff;">티한 </sapn>
-    <span style="color:black;background-color:#dcffe4;">**지**</sapn>
-    <span style="color:gray;background-color:#ffffff;">구가 </sapn>
-    <span style="color:black;background-color:#dcffe4;">**아**</sapn>
-    <span style="color:gray;background-color:#ffffff;">파요 </sapn>🤎🌏😷 
+
 
 <br>
 
