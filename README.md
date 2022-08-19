@@ -133,37 +133,31 @@
 <br><br>
 
 # 💻 기술 스택
-> ### Front-End : Kotlin 1.8, Retrofit
-> ### Back-End : Java 1.8, Spring Boot 2.6.1, java, JWT, Security, Oauth 2.0
-> ### Server : Ubuntu 20.04, AWS, S3
+> ### Front-End : Kotlin 1.8, Retrofit, Firebase, Google Map API
+> ### Back-End : Java 1.8, Spring Boot 2.6.1, JWT, Security, JPA
+> ### Server : Ubuntu 20.04, AWS, EC2, Nginx, SSL인증서
 > ### DB : MySQL 8.0.28
 > ### 기획 : Figma, Notion, JIRA, GitLab, ERD Cloud
 
 <br><br>
 
 # 👨‍👩‍👧‍👦 팀원 역할
-| 팀원 | 역할 | 역할 | 담당 업무 | 한 줄 소감
+| 팀원 | 역할 | 직무 | 담당 업무 | 한 줄 소감
 | ------ | ------ | ------ |------ | ----- |
-| 이재영 | 팀장 | Front-End | JIRA 관리, Android, UI/UX, DB설계, 기능명세서 | 시간이 부족해서 기획했던 기능들을 마저 구현하지 못해 아쉽습니다. |
-| 김다은 | 팀원 | Back-End | AWS S3, DB설계, 기능명세서 | Spring과 Android와 많이 친해진거 같아요! |
-| 박민진 | 팀원 | Back-End | AWS S3, DB설계, 기능명세서 | 새로운 것을 배우면서 성장할 수 있는 경험이었습니다. |
-| 박찬석 | 팀원 | Front-End | Android, UI/UX, 기능명세서 | Kotlin과 친해질 수 있는 소중한 경험이었습니다. |
-| 박한훈 | 팀원 | Front-End | Android, UI/UX, 기능명세서 | 모든 것이 처음이라 낯설었지만 후회없는 선택이었습니다. |
-| 홍석현 | 팀원 | Back-End | AWS S3, DB설계, 기능명세서 | 다양한 기술스택을 경험할 수 있는 좋은 기회였습니다. |
+| 공통 | - | - | JIRA 관리, Android, Retrofit, UI/UX, DB설계, 기능명세서 | - |
+| 이재영 | 팀장 | Front-End | JIRA 관리, Android, Retrofit, UI/UX, DB설계, 기능명세서, **PPT 자료 구성 및 발표** | 시간이 부족해서 기획했던 기능들을 마저 구현하지 못해 아쉽습니다. |
+| 김다은 | 팀원 | Back-End | JIRA 관리, Android, Retrofit, UI/UX, DB설계, 기능명세서, 포팅메뉴얼, **서버 배포, PPT 자료 구성 및 발표** | Spring과 Android와 많이 친해진거 같아요! |
+| 박민진 | 팀원 | Back-End | JIRA 관리, Android, Retrofit, DB설계, 기능명세서, **게시판, 날씨 API** | 새로운 것을 배우면서 성장할 수 있는 경험이었습니다. |
+| 박찬석 | 팀원 | Front-End | JIRA 관리, Android, Retrofit, UI/UX, DB설계, 기능명세서, **디자인 총괄, UCC 제작** | Kotlin과 친해질 수 있는 소중한 경험이었습니다. |
+| 박한훈 | 팀원 | Front-End | JIRA 관리, Android, Retrofit, UI/UX, DB설계, 기능명세서, 포팅메뉴얼, **플로깅(GoogleMapAPI), 위치권한 설정, ReadMe.md 작성** | 모든 것이 처음이라 낯설었지만 후회없는 선택이었습니다. |
+| 홍석현 | 팀원 | Back-End | JIRA 관리, Android, Retrofit, UI/UX, DB설계, 기능명세서, **서버 배포, 위치/카메라 권한 설정, UCC 제작** | 다양한 기술스택을 경험할 수 있는 좋은 기회였습니다. |
 
 <br><br>
-
-# 🎥 UCC 링크
-<https://youtube.com>
 
 <br>
 
 # 📚 산출물
-#### [DB] https://www.  
-#### [와이어프레임] https://www.  
-#### [기능명세서] https://www.  
+#### Git Lab 내 exec 폴더 참조  
 #### [Notion] https://www.notion.so/d210/SSAFY-8d8771c733e7469e93c6bc9bb7c9efa3
-#### [프로젝트 계획서] https://www.  
-#### [최종 발표 자료 및 UCC] https://www  
 
 #
