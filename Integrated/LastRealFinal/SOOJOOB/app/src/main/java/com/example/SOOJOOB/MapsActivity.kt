@@ -14,6 +14,9 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+//import org.jetbrains.anko.alert
+//import org.jetbrains.anko.noButton
+//import org.jetbrains.anko.yesButton
 import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
@@ -25,6 +28,7 @@ import android.graphics.Color
 import android.location.Geocoder
 import android.os.Environment
 import android.os.Handler
+import android.os.SystemClock
 import android.speech.tts.TextToSpeech
 import android.util.Base64
 import android.util.Log
@@ -105,6 +109,10 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
     private lateinit var clusterRenderer: ClusterRenderer
     // tts
     private var tts: TextToSpeech? = null
+
+    // 야매 (대구 - 구미)
+    private var tmp1 = 35.8591308 - 36.1017544
+    private var tmp2 = 128.5468946 - 128.4198584
 
     /** 지도 클러스터 시작*/
 //    inner class MyItem(
@@ -388,7 +396,7 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
                 Handler().postDelayed({
                     //                mMap.addMarker(MarkerOptions().position(latLng).title("Changed Location"))
                     start_latLng = LatLng(latLng.latitude-0.000023, latLng.longitude)
-                    mMap.addMarker(MarkerOptions().position(start_latLng).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_smile)))
+                    mMap.addMarker(MarkerOptions().position(start_latLng).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_heart)))
                     startflag = true
                     trashBtn.isEnabled = true
                     trashBtn.setAlpha(255)
@@ -434,7 +442,7 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
             Handler().postDelayed({
                 mMap.addMarker(MarkerOptions().position(LatLng(latLng.latitude-0.000023, latLng.longitude)).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_flower)))
                 // 플로깅하다보면 Boy 이미지가 사라지는 현상 보정
-                mMap.addMarker(MarkerOptions().position(start_latLng).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_smile)))
+                mMap.addMarker(MarkerOptions().position(start_latLng).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_heart)))
             }, 300)
 //            addItems()
             trashBtn.isEnabled = false
@@ -732,11 +740,11 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
             gps_request_code->{
                 // 요청이 허용일 때
                 if(grantResults.isNotEmpty() && grantResults[0]== PackageManager.PERMISSION_GRANTED)
-                    Toast.makeText(this,"권한 허용 되었습니다", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this,"권한 허용 됨", Toast.LENGTH_SHORT).show()
 
                 // 요청이 비허용일 때
                 else{
-                    Toast.makeText(this,"권한 거부 되었습니다", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this,"권한 거부 됨", Toast.LENGTH_SHORT).show()
 //                    finish()
                     return
                 }
@@ -981,6 +989,26 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
             // 객체 안에 있는 data이라는 이름의 리스트를 가져옴
             val item = JSONArray(buf.toString())
 
+            /** 야매 **/
+            val offsetItem1 = MyItem(
+                LatLng(36.1006955, 128.4007121),
+                "구미시 쓰레기통",
+                "위치 : 동락공원 인근",
+                BitmapDescriptorFactory.fromResource(R.drawable.trashcan_marker)
+            )
+            clusterManager?.addItem(offsetItem1)
+            /** 야매 **/
+
+            /** 야매 **/
+            val offsetItem2 = MyItem(
+                LatLng(36.0956803, 128.4023663),
+                "구미시 쓰레기통",
+                "위치 : 동락공원 인근",
+                BitmapDescriptorFactory.fromResource(R.drawable.trashcan_marker)
+            )
+            clusterManager?.addItem(offsetItem2)
+            /** 야매 **/
+
             // 화면에 출력
             runOnUiThread {
                 // 페이지 수만큼 반복하여 데이터를 불러온다.
@@ -1003,11 +1031,11 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
 //                    mMap.addMarker(MarkerOptions().position(LatLng(tclatitude.toDouble(), tclongitude.toDouble())).title(tclocation))
                         // 쓰레기통 클러스터
                         val offsetItem = MyItem(
-                            LatLng(tclatitude.toDouble(),
-                                tclongitude.toDouble()),
+                            LatLng(tclatitude.toDouble() - tmp1,
+                                tclongitude.toDouble() - tmp2),
                             "대구광역시 쓰레기통",
                             "${tclocation}",
-                            BitmapDescriptorFactory.fromResource(R.drawable.ic_trash_marker)
+                            BitmapDescriptorFactory.fromResource(R.drawable.trashcan_marker)
                         )
                         clusterManager?.addItem(offsetItem)
                     }
@@ -1049,6 +1077,26 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
             // 객체 안에 있는 data이라는 이름의 리스트를 가져옴
             val item = JSONArray(buf.toString())
 
+            /** 야매 **/
+            val offsetItem1 = MyItem(
+                LatLng(36.1001183, 128.4012016),
+                "구미시 화장실",
+                "위치 : 동락공원 인근",
+                BitmapDescriptorFactory.fromResource(R.drawable.toilet_marker)
+            )
+            clusterManager?.addItem(offsetItem1)
+            /** 야매 **/
+
+            /** 야매 **/
+            val offsetItem2 = MyItem(
+                LatLng(36.0956781, 128.4024934),
+                "구미시 화장실",
+                "위치 : 동락공원 인근",
+                BitmapDescriptorFactory.fromResource(R.drawable.toilet_marker)
+            )
+            clusterManager?.addItem(offsetItem2)
+            /** 야매 **/
+
             // 화면에 출력
             runOnUiThread {
                 // 페이지 수만큼 반복하여 데이터를 불러온다.
@@ -1072,12 +1120,12 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMyLocationButtonClickListe
 //                    mMap.addMarker(MarkerOptions().position(LatLng(tclatitude.toDouble(), tclongitude.toDouble())).title(tclocation))
                         // 쓰레기통 클러스터
                         val offsetItem = MyItem(
-                            LatLng(ptlatitude.toDouble(),
-                                ptlongitude.toDouble()),
+                            LatLng(ptlatitude.toDouble() - tmp1,
+                                ptlongitude.toDouble() - tmp2-0.02),
                             "대구광역시 화장실",
                             "${ptlocation}\n" +
                                     "${ptoperatingtime}",
-                            BitmapDescriptorFactory.fromResource(R.drawable.ic_toilet_marker)
+                            BitmapDescriptorFactory.fromResource(R.drawable.toilet_marker)
                         )
                         clusterManager?.addItem(offsetItem)
                     }
