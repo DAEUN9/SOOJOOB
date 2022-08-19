@@ -157,7 +157,7 @@
 | ------ | ------ | ------ |------ | ----- |
 | 공통 | - | - | JIRA 관리, Android, Retrofit, UI/UX, DB설계, 기능명세서 | - |
 | 이재영 | 팀장 | Front-End | JIRA 관리, Android, Retrofit, UI/UX, DB설계, 기능명세서, 회원정보관리, **PPT 자료 구성 및 발표** | 시간이 부족해서 기획했던 기능들을 마저 구현하지 못해 아쉽습니다. |
-| 김다은 | 팀원 | Back-End | JIRA 관리, Android, Retrofit, UI/UX, DB설계, 기능명세서, 포팅메뉴얼, **서버 배포, PPT 자료 구성 및 발표** | Spring과 Android와 많이 친해진거 같아요! |
+| 김다은 | 팀원 | Back-End | JIRA 관리, Android, Retrofit, UI/UX, DB설계, 기능명세서, 포팅메뉴얼, **PPT 자료 구성 및 발표, BE: Security(jwt), 회원관리, 레코드, 랭킹, 배지로직 FE: 구글로그인, 토큰관리, 배지, 랭킹, proguard기능** | Spring과 Android와 많이 친해진거 같아요! |
 | 박민진 | 팀원 | Back-End | JIRA 관리, Android, Retrofit, DB설계, 기능명세서, **게시판, 날씨 API** | 새로운 것을 배우면서 성장할 수 있는 경험이었습니다. |
 | 박찬석 | 팀원 | Front-End | JIRA 관리, Android, Retrofit, UI/UX, DB설계, 기능명세서, **디자인 총괄, UCC 제작** | Kotlin과 친해질 수 있는 소중한 경험이었습니다. |
 | 박한훈 | 팀원 | Front-End | JIRA 관리, Android, Retrofit, UI/UX, DB설계, 기능명세서, 포팅메뉴얼, **플로깅(GoogleMapAPI), 위치권한 설정, ReadMe.md 작성** | 모든 것이 처음이라 낯설었지만 후회없는 선택이었습니다. |
