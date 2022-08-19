@@ -75,7 +75,7 @@
     
   <img src="./README/gif/plogging/ploggingStart.gif" width="30%">
   <img src="./README/gif/plogging/ploggingEnd.gif" width="30%">
-  <br>
+  <br><br>
   <img src="./README/gif/home/homeList.gif" width="30%">
   <img src="./README/gif/record/recordList.gif" width="30%">
 
