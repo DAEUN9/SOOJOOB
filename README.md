@@ -13,7 +13,8 @@
     - **프리**티한 **지**구가 **아**파요 🤎🌏😷 
 
 
-<br><br>
+
+
 
 # 🍀 서비스 소개
 
@@ -25,12 +26,14 @@
     <img height="300px" width="350px;" src="./README/trash2.png" />
     <img height="300px"width="350px;" src="./README/sweeper.png" />
 </div>
-   
+
    - 길에 보이는 쓰레기들이 장마철에 바다로 흘러가는 현상
    - 환경미화원의 업무량 과다 및 인력 부족
    - 단순히 일정기간의 캠페인에서 그치는 것이 아니라 일상에서 언제나 참여할 수 있는 플로깅 플랫폼을 만들자!
 
-<br><br>
+
+
+
 
 # 🌈 주요 기능
   ### 🏠 메인화면
@@ -42,7 +45,7 @@
 > + ##### 나의 프로필을 볼 수 있고 개인 정보를 수정하는 페이지
 > + ##### 프로필 사진, 닉네임, 손수 줍기 횟수, 활동 배지, 개인정보 수정
     1. 회원가입
-<img src="./README/gif/user/userSignUp.gif" width="30%">
+  <img src="./README/gif/user/userSignUp.gif" width="30%">
 
     2. 로그인 / 로그아웃
 <img src="./README/gif/user/userLogIn.gif" width="30%">
@@ -69,12 +72,12 @@
       - 쓰레기를 주울 때 카운팅
       - 주운 위치에 꽃이 피어나서 지도에 마칭
       - 지나간 길은 폴리라인으로 경로 확인 가능
-  <img src="./README/gif/plogging/ploggingStart.gif" width="25%">
-  &nbsp;&nbsp;&nbsp;&nbsp;
-  <img src="./README/gif/plogging/ploggingEnd.gif" width="25%">
-<br>
-  <img src="./README/gif/home/homeList.gif" width="30%">
-  <img src="./README/gif/record/recordList.gif" width="30%">
+    <img src="./README/gif/plogging/ploggingStart.gif" width="25%">
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    <img src="./README/gif/plogging/ploggingEnd.gif" width="25%">
+  <br>
+    <img src="./README/gif/home/homeList.gif" width="30%">
+    <img src="./README/gif/record/recordList.gif" width="30%">
 
 
     2. 주변 위치 정보 제공
@@ -97,7 +100,7 @@
     1. 온도 경험치 시스템
       - 활동 기록에 따라 온도 경첨치 산정
       - 36.5°C부터 100°C까지 열정이 불타요!
-<br><img src="./README/home.png" width="30%"><br>
+  <br><img src="./README/home.png" width="30%"><br>
     2. 업적 배지
 
       - 특정 조건이나 이스터에그 발견 시 얻을 수 있는 배지 시스템
@@ -107,7 +110,7 @@
 
     3. 랭킹
       - 랭킹확인
-<br><img src="./README/gif/rank/rank.gif" width="30%"><br>
+<img src="./README/gif/rank/rank.gif" width="30%">
 
 ### 📝 게시글 작성
     1. 사진, 게시글 작성
@@ -116,21 +119,27 @@
     2. 최신순, 많은 순
 <img src="./README/gif/board/boardList.gif" width="30%">
 
-<br><br>
+
+
+
 
 # 💡 '수줍'하면 일어나는 기대효과!
    1. 성취감
    2. 운동효과
    3. 선한 영향력
 
-<br><br>
+
+
+
 
 # 🏃 향후 계획
    1. 쓰레기 분류 기능
    2. 헬스 API
    3. Wear OS 활용
 
-<br><br>
+
+
+
 
 # 💻 기술 스택
 > ### Front-End : Kotlin 1.8, Retrofit, Firebase, Google Map API
@@ -139,22 +148,24 @@
 > ### DB : MySQL 8.0.28
 > ### 기획 : Figma, Notion, JIRA, GitLab, ERD Cloud
 
-<br><br>
+
+
+
 
 # 👨‍👩‍👧‍👦 팀원 역할
-| 팀원 | 역할 | 직무 | 담당 업무 | 한 줄 소감
+| 팀원 | 역할 | 직무 | 담당 업무 | 한 줄 소감|
 | ------ | ------ | ------ |------ | ----- |
 | 공통 | - | - | JIRA 관리, Android, Retrofit, UI/UX, DB설계, 기능명세서 | - |
-| 이재영 | 팀장 | Front-End | JIRA 관리, Android, Retrofit, UI/UX, DB설계, 기능명세서, **PPT 자료 구성 및 발표** | 시간이 부족해서 기획했던 기능들을 마저 구현하지 못해 아쉽습니다. |
+| 이재영 | 팀장 | Front-End | JIRA 관리, Android, Retrofit, UI/UX, DB설계, 기능명세서, 회원정보관리, **PPT 자료 구성 및 발표** | 시간이 부족해서 기획했던 기능들을 마저 구현하지 못해 아쉽습니다. |
 | 김다은 | 팀원 | Back-End | JIRA 관리, Android, Retrofit, UI/UX, DB설계, 기능명세서, 포팅메뉴얼, **서버 배포, PPT 자료 구성 및 발표** | Spring과 Android와 많이 친해진거 같아요! |
 | 박민진 | 팀원 | Back-End | JIRA 관리, Android, Retrofit, DB설계, 기능명세서, **게시판, 날씨 API** | 새로운 것을 배우면서 성장할 수 있는 경험이었습니다. |
 | 박찬석 | 팀원 | Front-End | JIRA 관리, Android, Retrofit, UI/UX, DB설계, 기능명세서, **디자인 총괄, UCC 제작** | Kotlin과 친해질 수 있는 소중한 경험이었습니다. |
 | 박한훈 | 팀원 | Front-End | JIRA 관리, Android, Retrofit, UI/UX, DB설계, 기능명세서, 포팅메뉴얼, **플로깅(GoogleMapAPI), 위치권한 설정, ReadMe.md 작성** | 모든 것이 처음이라 낯설었지만 후회없는 선택이었습니다. |
 | 홍석현 | 팀원 | Back-End | JIRA 관리, Android, Retrofit, UI/UX, DB설계, 기능명세서, **서버 배포, 위치/카메라 권한 설정, UCC 제작** | 다양한 기술스택을 경험할 수 있는 좋은 기회였습니다. |
 
-<br><br>
 
-<br>
+
+
 
 # 📚 산출물
 #### Git Lab 내 exec 폴더 참조  
