@@ -38,7 +38,7 @@
 
   ### 👶 사용자 관리
 > + ##### 회원가입, 로그인/로그아웃, 회원정보 수정, 회원탈퇴, 마이페이지
-> + ##### 토큰을 활용해~~
+> + ##### jwt 토근 인증방식을 사용한 관리
 > + ##### 나의 프로필을 볼 수 있고 개인 정보를 수정하는 페이지
 > + ##### 프로필 사진, 닉네임, 손수 줍기 횟수, 활동 배지, 개인정보 수정
     1. 회원가입
@@ -65,7 +65,7 @@
 > + ##### 지도 기반으로 Plogging을 시작할 수 있는 페이지
 > + ##### Google Map api를 활용해 현재 위치 표시 및 주변에 있는 화장실이나 쓰레기통 클러스팅 표시
 > + ##### 플로깅한 경로를 트래킹하고 시간, km를 계산하여 제공
-    1. 카운팅, 마킹, 폴리라인
+    1. 플로깅 기능
       - 쓰레기를 주울 때 카운팅
       - 주운 위치에 꽃이 피어나서 지도에 마칭
       - 지나간 길은 폴리라인으로 경로 확인 가능
@@ -80,13 +80,14 @@
     2. 주변 위치 정보 제공
       - 주변 쓰레기통 위치 정보 제공
       - 주변 화장실 위치 정보 제공
-<br><img src="./README/logo.png" width="30%"><br>
+<img src="./README/gif/plogging/ploggingTrashcan.gif" width="30%">
+<img src="./README/gif/plogging/ploggingToilet.gif" width="30%">
 
     3. SNS 사진 공유
       - 기록에는 마킹과 폴리라인이 된 지도 사진이 기본 연동
       - 필요 시 유저가 커스텀한 사진으로 변경 가능
       - SNS 공유 기능
-<br><img src="./README/logo.png" width="30%"><br>
+<img src="./README/gif/sns.gif" width="30%">
 
 ### 🏆 경혐치 & 업적 배지! 랭킹시스템까지! 참여율 UP UP!!
 > + ##### 특정조건을 달성하면 배지 획득 가능
@@ -100,10 +101,10 @@
     2. 업적 배지
 
       - 특정 조건이나 이스터에그 발견 시 얻을 수 있는 배지 시스템
-<br><img src="./README/gif/myBadge/myBadge.gif" width="30%"><br>
-
       - 아직 획득하지 못한 배지를 노리고 도전하는 재미
-<br><img src="./README/gif/myBadge/myBadgeUnearned.gif" width="30%"><br>
+<img src="./README/gif/myBadge/myBadge.gif" width="30%">
+<img src="./README/gif/myBadge/myBadgeUnearned.gif" width="30%">
+
     3. 랭킹
       - 랭킹확인
 <br><img src="./README/gif/rank/rank.gif" width="30%"><br>
