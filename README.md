@@ -72,12 +72,12 @@
       - 쓰레기를 주울 때 카운팅
       - 주운 위치에 꽃이 피어나서 지도에 마칭
       - 지나간 길은 폴리라인으로 경로 확인 가능
-    <img src="./README/gif/plogging/ploggingStart.gif" width="25%">
-    &nbsp;&nbsp;&nbsp;&nbsp;
-    <img src="./README/gif/plogging/ploggingEnd.gif" width="25%">
+    
+  <img src="./README/gif/plogging/ploggingStart.gif" width="30%">
+  <img src="./README/gif/plogging/ploggingEnd.gif" width="30%">
   <br>
-    <img src="./README/gif/home/homeList.gif" width="30%">
-    <img src="./README/gif/record/recordList.gif" width="30%">
+  <img src="./README/gif/home/homeList.gif" width="30%">
+  <img src="./README/gif/record/recordList.gif" width="30%">
 
 
     2. 주변 위치 정보 제공
