@@ -1,0 +1,39 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/user?serverTimezone=Asia/Seoul
+    username: root
+    password:
+
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            clientId: 402729697775-tnidujqegr0ghu6a1gu5n27dsmfp3vll.apps.googleusercontent.com
+            clientSecret: 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
+            redirectUri: "{baseUrl}/oauth2/callback/{registrationId}"
+            scope:
+              - email
+              - profile
+
+
+  jpa:
+    hibernate:
+      # SessionFactory가 시작될때 Drop,Create, Alter 종료될 때 Drop
+      ddl-auto: create-drop
+    properties:
+      # sql보기좋게
+      # 로깅레벨 설정
+      hibernate:
+        format_sql: true
+        show_sql: true
+    defer-datasource-initialization: true
+
+jwt:
+  header: Authorization
+  #HS512 알고리즘을 사용할 것이기 때문에 512bit, 즉 64byte 이상의 secret key를 사용해야 한다.
+  #echo 'silvernine-tech-spring-boot-jwt-tutorial-secret-silvernine-tech-spring-boot-jwt-tutorial-secret'|base64
+  secret: c2lsdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQtc2lsdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQK
+  # 토큰 만료시간
+  token-validity-in-seconds: 86400

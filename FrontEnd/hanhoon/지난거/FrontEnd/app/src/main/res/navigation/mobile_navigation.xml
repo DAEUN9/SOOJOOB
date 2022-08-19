@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_home">
+
+    <fragment
+        android:id="@+id/navigation_home"
+        android:name="com.soojoob.frontend.ui.home.HomeFragment"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/navigation_communication"
+        android:name="com.soojoob.frontend.ui.communication.CommunicationFragment"
+        android:label="fragment_communication"
+        tools:layout="@layout/fragment_communication" />
+    <fragment
+        android:id="@+id/navigation_data"
+        android:name="com.soojoob.frontend.ui.data.DataFragment"
+        android:label="fragment_data"
+        tools:layout="@layout/fragment_data" />
+    <fragment
+        android:id="@+id/navigation_profile"
+        android:name="com.soojoob.frontend.ui.profile.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/resultPloggingFragment"
+        android:name="com.soojoob.frontend.ui.map.ResultPloggingFragment"
+        android:label="fragment_result_plogging"
+        tools:layout="@layout/fragment_result_plogging" >
+        <action
+            android:id="@+id/action_resultPloggingFragment_to_navigation_home"
+            app:destination="@id/navigation_home" />
+    </fragment>
+    <fragment
+        android:id="@+id/navigation_soojoob"
+        android:name="com.soojoob.frontend.ui.map.StartPloggingFragment"
+        android:label="fragment_start_plogging"
+        tools:layout="@layout/fragment_start_plogging" >
+        <action
+            android:id="@+id/action_startPloggingFragment_to_resultPloggingFragment"
+            app:destination="@id/resultPloggingFragment" />
+    </fragment>
+
+</navigation>
